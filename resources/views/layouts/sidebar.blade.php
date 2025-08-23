@@ -1,0 +1,149 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="index3.html" class="brand-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="lucide lucide-chart-spline-icon lucide-chart-spline ml-2">
+      <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+      <path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7" />
+    </svg>
+    <span class="brand-text font-weight-light ml-2 font-weight-bold">Sensus APPS</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+        <li class="nav-header text-muted">Utama</li>
+
+        <li class="nav-item">
+          <a href="{{ route('mitra.index') }}" class="nav-link {{ request()->routeIs('mitra.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-handshake-icon lucide-handshake nav-icon">
+              <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+              <path
+                d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+              <path d="m21 3 1 11h-2" />
+              <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+              <path d="M3 4h8" />
+            </svg>
+            <p>
+              Mitra
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('anggaran.index') }}"
+            class="nav-link {{ request()->routeIs('anggaran.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-hand-coins-icon lucide-hand-coins nav-icon">
+              <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+              <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+              <path d="m2 16 6 6" />
+              <circle cx="16" cy="9" r="2.9" />
+              <circle cx="6" cy="5" r="3" />
+            </svg>
+            <p>
+              Anggaran
+            </p>
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a href="{{ route('kontrak.index') }}" class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-signature-icon lucide-signature nav-icon">
+              <path
+                d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" />
+              <path d="M3 21h18" />
+            </svg>
+            <p>
+              Kontrak
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('tugas.index') }}" class="nav-link {{ request()->routeIs('tugas.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-book-check-icon lucide-book-check nav-icon">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+              <path d="m9 9.5 2 2 4-4" />
+            </svg>
+            <p>
+              Tugas/Kegiatan
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-header text-muted">User</li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-users-icon lucide-users nav-icon">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <circle cx="9" cy="7" r="4" />
+            </svg>
+            <p>
+              User
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-user-round-cog-icon lucide-user-round-cog nav-icon">
+              <path d="m14.305 19.53.923-.382" />
+              <path d="m15.228 16.852-.923-.383" />
+              <path d="m16.852 15.228-.383-.923" />
+              <path d="m16.852 20.772-.383.924" />
+              <path d="m19.148 15.228.383-.923" />
+              <path d="m19.53 21.696-.382-.924" />
+              <path d="M2 21a8 8 0 0 1 10.434-7.62" />
+              <path d="m20.772 16.852.924-.383" />
+              <path d="m20.772 19.148.924.383" />
+              <circle cx="10" cy="8" r="5" />
+              <circle cx="18" cy="18" r="3" />
+            </svg>
+            <p>
+              Profil Anda
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-log-out-icon lucide-log-out nav-icon text-danger">
+              <path d="m16 17 5-5-5-5" />
+              <path d="M21 12H9" />
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            </svg>
+            <p class="text-danger">
+              Logout
+            </p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
