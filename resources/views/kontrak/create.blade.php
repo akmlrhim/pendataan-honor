@@ -122,9 +122,12 @@
                 $oldTugas = old('tugas', [[]]);
               @endphp
               @foreach ($oldTugas as $i => $tugas)
-                <tr class="tugas-row">
+                <tr>
                   <td>
-                    <select name="tugas[{{ $i }}][anggaran_id]" class="form-control select2">
+                    <select name="tugas[{{ $i }}][anggaran_id]" class="custom-select select2">
+                      <option value="" disabled selected {{ isset($tugas['anggaran_id']) ? '' : 'selected' }}>--
+                        Pilih
+                        Anggaran --</option>
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
                           {{ isset($tugas['anggaran_id']) && $tugas['anggaran_id'] == $a->id ? 'selected' : '' }}>
@@ -157,15 +160,21 @@
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
-                    <input type="text" step="0.01" name="tugas[{{ $i }}][harga_satuan]"
-                      inputmode="numeric"
-                      class="form-control rupiah-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
+                    <input type="text" name="tugas[{{ $i }}][harga_satuan_display]" autocomplete="off"
+                      class="form-control currency-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
+                      value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
+
+
+                    <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
                       value="{{ $tugas['harga_satuan'] ?? '' }}">
+
                     @error('tugas.' . $i . '.harga_satuan')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
                     <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
                   </td>
@@ -193,75 +202,86 @@
       });
 
       let rowIndex = 1;
+
       $('#add-row').click(function() {
         let newRow = `
-        <tr class="tugas-row">
-          <td>
-            <select name="tugas[${rowIndex}][anggaran_id]" class="form-control select2">
-              @foreach ($anggaran as $a)
-          <option value="{{ $a->id }}"
-            {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
-            {{ $a->nama_kegiatan }}
-          </option>
-              @endforeach
-            </select>
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
-          </td>
-          <td>
-            <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][harga_satuan]" class="form-control rupiah-input"
-              value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger btn-remove">Hapus</button>
-          </td>
-        </tr>
-      `;
+    <tr>
+      <td>
+        <select name="tugas[${rowIndex}][anggaran_id]" class="custom-select select2">
+          <option value="" disabled selected>-- Pilih Anggaran --</option>
+          @foreach ($anggaran as $a)
+            <option value="{{ $a->id }}"
+              {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
+              {{ $a->nama_kegiatan }}
+            </option>
+          @endforeach
+        </select>
+      </td>
+      <td>
+        <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
+          value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
+      </td>
+      <td>
+        <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
+          value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
+      </td>
+      <td>
+        <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
+          value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
+      </td>
+      <td>
+        <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off"
+               class="form-control currency-input"
+               value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') ? number_format(old('tugas.' . '${rowIndex}' . '.harga_satuan'), 0, ',', '.') : '' }}">
+        <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" 
+               class="harga-satuan-hidden"
+               value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+      </td>
+    </tr>
+  `;
+
         $('#tugas-table tbody').append(newRow);
+
+        // init select2
+        $('.select2').select2({
+          width: '100%'
+        });
+
         rowIndex++;
       });
 
-      // Hapus row
+      // format ribuan
+      function formatRibuan(angka) {
+        return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      function cleanNumber(str) {
+        return str.replace(/\./g, '');
+      }
+
+      // event format untuk semua currency-input (lama + baru)
+      $(document).on("input", ".currency-input", function() {
+        let raw = cleanNumber($(this).val());
+        if (raw === "") {
+          $(this).val("");
+          $(this).siblings(".harga-satuan-hidden").val("");
+          return;
+        }
+
+        let formatted = formatRibuan(raw);
+        $(this).val(formatted);
+
+        // update hidden input dengan angka asli
+        $(this).siblings(".harga-satuan-hidden").val(raw);
+      });
+
+      // hapus row
       $(document).on('click', '.btn-remove', function() {
         $(this).closest('tr').remove();
       });
-
-      // 🔥 Event delegation: format ke Rupiah setiap keyup di semua .rupiah-input (lama & baru)
-      $(document).on('keyup', '.rupiah-input', function() {
-        let value = $(this).val().replace(/[^,\d]/g, '');
-        $(this).val(value ? formatRupiah(value) : '');
-      });
-
-      // 🔥 Hapus format sebelum submit form
-      $('form').on('submit', function() {
-        $('.rupiah-input').each(function() {
-          $(this).val($(this).val().replace(/\D/g, '')); // hanya angka
-        });
-      });
-
-      // Fungsi format rupiah
-      function formatRupiah(angka) {
-        let number_string = angka.toString(),
-          sisa = number_string.length % 3,
-          rupiah = number_string.substr(0, sisa),
-          ribuan = number_string.substr(sisa).match(/\d{3}/gi);
-
-        if (ribuan) {
-          let separator = sisa ? '.' : '';
-          rupiah += separator + ribuan.join('.');
-        }
-        return 'Rp ' + rupiah;
-      }
     });
   </script>
 @endsection

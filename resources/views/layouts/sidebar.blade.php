@@ -114,7 +114,8 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link"
+            onclick="event.preventDefault(); document.getElementById('logout').submit();">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-log-out-icon lucide-log-out nav-icon text-danger">
@@ -126,6 +127,10 @@
               Logout
             </p>
           </a>
+
+          <form id="logout" method="POST" action="{{ route('logout') }}" class="d-none">
+            @csrf
+          </form>
         </li>
       </ul>
     </nav>

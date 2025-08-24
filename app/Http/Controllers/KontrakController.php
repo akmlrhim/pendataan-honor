@@ -104,7 +104,7 @@ class KontrakController extends Controller
     public function show($id)
     {
         $title = 'Detail Kontrak';
-        $kontrak = Kontrak::with('mitra')->findOrFail($id);
+        $kontrak = Kontrak::with(['mitra', 'tugas.anggaran'])->findOrFail($id);
         return view('kontrak.show', compact('title', 'kontrak'));
     }
 
@@ -132,7 +132,6 @@ class KontrakController extends Controller
             'tanggal_bast'    => 'required|date',
             'keterangan'      => 'nullable|string',
 
-            // validasi tugas
             'tugas'                   => 'required|array|min:1',
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
             'tugas.*.deskripsi_tugas' => 'required|string',
@@ -143,73 +142,104 @@ class KontrakController extends Controller
 
         $kontrak = Kontrak::with('tugas')->findOrFail($id);
 
-        // --- 1. Kembalikan dulu sisa_anggaran dari tugas lama ---
-        foreach ($kontrak->tugas as $oldTugas) {
-            $anggaran = Anggaran::find($oldTugas->anggaran_id);
-            $anggaran->increment('sisa_anggaran', $oldTugas->harga_total_tugas);
-        }
-
-        // --- 2. Update kontrak utama ---
-        $kontrak->update([
-            'mitra_id'        => $request->mitra_id,
-            'tanggal_kontrak' => $request->tanggal_kontrak,
-            'tanggal_surat'   => $request->tanggal_surat,
-            'tanggal_bast'    => $request->tanggal_bast,
-            'keterangan'      => $request->keterangan,
-        ]);
-
         $existingTugasIds = $kontrak->tugas()->pluck('id')->toArray();
         $requestTugasIds  = [];
         $totalHonor = 0;
 
-        // --- 3. Loop data tugas dari request ---
+        // --- 1. Cek semua validasi sisa anggaran sebelum update ---
         foreach ($request->tugas as $i => $t) {
-            $hargaTotal = $t['jumlah_dokumen'] * $t['harga_satuan'];
-
-            // cek sisa anggaran cukup atau tidak
-            $anggaran = Anggaran::find($t['anggaran_id']);
-            if ($anggaran->sisa_anggaran < $hargaTotal) {
-                return back()->withInput()->withErrors(['tugas.*.harga_satuan' => "Sisa anggaran tidak mencukupi."]);
-            }
+            $newTotal = $t['jumlah_dokumen'] * $t['harga_satuan'];
+            $anggaran = Anggaran::findOrFail($t['anggaran_id']);
 
             if (isset($t['id']) && in_array($t['id'], $existingTugasIds)) {
-                // update tugas lama
-                $kontrak->tugas()->where('id', $t['id'])->update([
-                    'anggaran_id'       => $t['anggaran_id'],
-                    'deskripsi_tugas'   => $t['deskripsi_tugas'],
-                    'jumlah_dokumen'    => $t['jumlah_dokumen'],
-                    'satuan'            => $t['satuan'],
-                    'harga_satuan'      => $t['harga_satuan'],
-                    'harga_total_tugas' => $hargaTotal,
-                ]);
-                $requestTugasIds[] = $t['id'];
+                $oldTugas = $kontrak->tugas()->find($t['id']);
+                $oldTotal = $oldTugas->harga_total_tugas;
+                $difference = $newTotal - $oldTotal;
+
+                if ($difference > 0 && $anggaran->sisa_anggaran < $difference) {
+                    return back()->withInput()->withErrors([
+                        "tugas.$i.harga_satuan" => "Sisa anggaran tidak mencukupi."
+                    ]);
+                }
             } else {
-                // buat tugas baru
-                $newTugas = $kontrak->tugas()->create([
-                    'anggaran_id'       => $t['anggaran_id'],
-                    'deskripsi_tugas'   => $t['deskripsi_tugas'],
-                    'jumlah_dokumen'    => $t['jumlah_dokumen'],
-                    'satuan'            => $t['satuan'],
-                    'harga_satuan'      => $t['harga_satuan'],
-                    'harga_total_tugas' => $hargaTotal,
-                ]);
-                $requestTugasIds[] = $newTugas->id;
+                if ($anggaran->sisa_anggaran < $newTotal) {
+                    return back()->withInput()->withErrors([
+                        "tugas.$i.harga_satuan" => "Sisa anggaran tidak mencukupi."
+                    ]);
+                }
             }
-
-            // kurangi sisa anggaran sesuai tugas baru
-            $anggaran->decrement('sisa_anggaran', $hargaTotal);
-
-            $totalHonor += $hargaTotal;
         }
 
-        // --- 4. Hapus tugas yang tidak ada di request ---
-        $kontrak->tugas()->whereNotIn('id', $requestTugasIds)->delete();
+        // --- 2. Lakukan semua update/add/delete di dalam transaksi ---
+        DB::transaction(function () use ($request, $kontrak, $existingTugasIds, &$requestTugasIds, &$totalHonor) {
+            foreach ($request->tugas as $t) {
+                $newTotal = $t['jumlah_dokumen'] * $t['harga_satuan'];
+                $anggaran = Anggaran::findOrFail($t['anggaran_id']);
 
-        // --- 5. Update total_honor kontrak ---
-        $kontrak->update(['total_honor' => $totalHonor]);
+                if (isset($t['id']) && in_array($t['id'], $existingTugasIds)) {
+                    $oldTugas = $kontrak->tugas()->find($t['id']);
+                    $oldTotal = $oldTugas->harga_total_tugas;
+                    $difference = $newTotal - $oldTotal;
+
+                    $oldTugas->update([
+                        'anggaran_id'       => $t['anggaran_id'],
+                        'deskripsi_tugas'   => $t['deskripsi_tugas'],
+                        'jumlah_dokumen'    => $t['jumlah_dokumen'],
+                        'satuan'            => $t['satuan'],
+                        'harga_satuan'      => $t['harga_satuan'],
+                        'harga_total_tugas' => $newTotal,
+                    ]);
+
+                    if ($difference > 0) {
+                        $anggaran->decrement('sisa_anggaran', $difference);
+                    } elseif ($difference < 0) {
+                        $anggaran->increment('sisa_anggaran', abs($difference));
+                    }
+
+                    $requestTugasIds[] = $t['id'];
+                } else {
+                    $newTugas = $kontrak->tugas()->create([
+                        'anggaran_id'       => $t['anggaran_id'],
+                        'deskripsi_tugas'   => $t['deskripsi_tugas'],
+                        'jumlah_dokumen'    => $t['jumlah_dokumen'],
+                        'satuan'            => $t['satuan'],
+                        'harga_satuan'      => $t['harga_satuan'],
+                        'harga_total_tugas' => $newTotal,
+                    ]);
+
+                    $anggaran->decrement('sisa_anggaran', $newTotal);
+                    $requestTugasIds[] = $newTugas->id;
+                }
+
+                $totalHonor += $newTotal;
+            }
+
+            // Hapus tugas yang tidak ada di request
+            $tugasToDelete = $kontrak->tugas()->whereNotIn('id', $requestTugasIds)->get();
+            foreach ($tugasToDelete as $tugas) {
+                $anggaran = Anggaran::find($tugas->anggaran_id);
+                if ($anggaran) {
+                    $anggaran->increment('sisa_anggaran', $tugas->harga_total_tugas);
+                }
+                $tugas->delete();
+            }
+
+            // Update kontrak utama
+            $kontrak->update([
+                'mitra_id'        => $request->mitra_id,
+                'tanggal_kontrak' => $request->tanggal_kontrak,
+                'tanggal_surat'   => $request->tanggal_surat,
+                'tanggal_bast'    => $request->tanggal_bast,
+                'keterangan'      => $request->keterangan,
+                'total_honor'     => $totalHonor,
+            ]);
+        });
 
         return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil diperbarui.');
     }
+
+
+
 
 
     /**

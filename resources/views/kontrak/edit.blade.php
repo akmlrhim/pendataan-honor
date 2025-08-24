@@ -47,7 +47,7 @@
 
     <div class="card">
       <div class="card-body">
-        <form method="POST" action="{{ route('kontrak.update', $kontrak->id) }}">
+        <form method="POST" action="{{ route('kontrak.update', $kontrak->id) }}" id="form">
           @csrf
           @method('PUT')
 
@@ -115,7 +115,7 @@
 
           <!-- Table tugas -->
           <h5>Tugas / Kegiatan</h5>
-          <table class="table table-bordered table-sm text-sm" id="tugas-table">
+          <table class="table table-bordered table-responsive text-sm" id="tugas-table">
             <thead>
               <tr>
                 <th>Anggaran</th>
@@ -127,56 +127,77 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($kontrak->tugas as $i => $tugas)
+              @php
+                $oldTugas = old('tugas', $kontrak->tugas->toArray());
+              @endphp
+
+              @foreach ($oldTugas as $i => $tugas)
                 <tr>
                   <td>
-                    <select name="tugas[{{ $i }}][anggaran_id]" class="form-control select2">
+                    <select name="tugas[{{ $i }}][anggaran_id]"
+                      class="custom-select select2 @error("tugas.$i.anggaran_id") is-invalid @enderror">
                       <option value="">-- Pilih Anggaran --</option>
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
-                          {{ old("tugas.$i.anggaran_id", $tugas->anggaran_id) == $a->id ? 'selected' : '' }}>
-                          {{ $a->kode_anggaran }} - {{ $a->uraian }}
+                          {{ old("tugas.$i.anggaran_id", $tugas['anggaran_id'] ?? null) == $a->id ? 'selected' : '' }}>
+                          {{ $a->nama_kegiatan }}
                         </option>
                       @endforeach
                     </select>
                     @error("tugas.$i.anggaran_id")
-                      <small class="text-danger">{{ $message }}</small>
+                      <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]" class="form-control"
-                      value="{{ old("tugas.$i.deskripsi_tugas", $tugas->deskripsi_tugas) }}">
+                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]"
+                      class="form-control @error("tugas.$i.deskripsi_tugas") is-invalid @enderror"
+                      value="{{ old("tugas.$i.deskripsi_tugas", $tugas['deskripsi_tugas'] ?? '') }}">
                     @error("tugas.$i.deskripsi_tugas")
-                      <small class="text-danger">{{ $message }}</small>
+                      <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
-                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]" class="form-control"
-                      value="{{ old("tugas.$i.jumlah_dokumen", $tugas->jumlah_dokumen) }}">
+                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]"
+                      class="form-control @error("tugas.$i.jumlah_dokumen") is-invalid @enderror"
+                      value="{{ old("tugas.$i.jumlah_dokumen", $tugas['jumlah_dokumen'] ?? '') }}">
                     @error("tugas.$i.jumlah_dokumen")
-                      <small class="text-danger">{{ $message }}</small>
+                      <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][satuan]" class="form-control"
-                      value="{{ old("tugas.$i.satuan", $tugas->satuan) }}">
+                    <input type="text" name="tugas[{{ $i }}][satuan]"
+                      class="form-control @error("tugas.$i.satuan") is-invalid @enderror"
+                      value="{{ old("tugas.$i.satuan", $tugas['satuan'] ?? '') }}">
                     @error("tugas.$i.satuan")
-                      <small class="text-danger">{{ $message }}</small>
+                      <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
-                    <input type="number" step="0.01" name="tugas[{{ $i }}][harga_satuan]"
-                      class="form-control" value="{{ old("tugas.$i.harga_satuan", $tugas->harga_satuan) }}">
-                    @error("tugas.$i.harga_satuan")
-                      <small class="text-danger">{{ $message }}</small>
+                    <input type="text" name="tugas[{{ $i }}][harga_satuan_display]" autocomplete="off"
+                      class="form-control currency-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
+                      value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
+
+
+                    <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
+                      value="{{ $tugas['harga_satuan'] ?? '' }}">
+
+                    @error('tugas.' . $i . '.harga_satuan')
+                      <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
+
                   <td>
                     <button type="button" class="btn btn-danger btn-sm btn-remove">Hapus</button>
                   </td>
                 </tr>
               @endforeach
             </tbody>
+
+
           </table>
 
           <button type="button" class="btn btn-success btn-sm" id="addRow">Tambah Tugas</button>
@@ -197,38 +218,84 @@
       $('.select2').select2({
         width: '100%'
       });
+    });
 
-      // tambah baris baru
-      let rowIndex = {{ $kontrak->tugas->count() }};
-      $('#addRow').click(function() {
-        let row = `
-          <tr>
-            <td>
-              <select name="tugas[${rowIndex}][anggaran_id]" class="form-control select2">
-                <option value="">-- Pilih Anggaran --</option>
-                @foreach ($anggaran as $a)
-                  <option value="{{ $a->id }}">{{ $a->kode_anggaran }} - {{ $a->uraian }}</option>
-                @endforeach
-              </select>
-            </td>
-            <td><input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"></td>
-            <td><input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"></td>
-            <td>
-              <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control">
-            </td>
-            <td><input type="number" step="0.01" name="tugas[${rowIndex}][harga_satuan]" class="form-control"></td>
-            <td><button type="button" class="btn btn-danger btn-sm btn-remove">Hapus</button></td>
-          </tr>`;
-        $('#tugas-table tbody').append(row);
-        $('.select2').select2({
-          width: '100%'
-        });
-        rowIndex++;
+    let rowIndex = {{ $kontrak->tugas->count() }};
+
+    $('#addRow').click(function() {
+      let row = `
+        <tr>
+          <td>
+            <select name="tugas[${rowIndex}][anggaran_id]" class="custom-select select2">
+              <option value="" disabled selected>-- Pilih Anggaran --</option>
+              @foreach ($anggaran as $a)
+                <option value="{{ $a->id }}"
+                  {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
+                  {{ $a->nama_kegiatan }}
+                </option>
+              @endforeach
+            </select>
+          </td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
+          </td>
+          <td>
+            <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
+          </td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
+          </td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off"
+                  class="form-control currency-input"
+                  value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') ? number_format(old('tugas.' . '${rowIndex}' . '.harga_satuan'), 0, ',', '.') : '' }}">
+            <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" 
+                  class="harga-satuan-hidden"
+                  value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+          </td>
+        </tr>
+    `;
+
+      $('#tugas-table tbody').append(row);
+
+      // re-init select2 biar jalan di row baru
+      $('.select2').select2({
+        width: '100%'
       });
 
-      // hapus baris
-      $(document).on('click', '.btn-remove', function() {
-        $(this).closest('tr').remove();
+      rowIndex++;
+    });
+
+    // handle hapus row
+    $(document).on('click', '.btn-remove', function() {
+      $(this).closest('tr').remove();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // format ribuan saat mengetik
+      document.querySelectorAll('.currency-input').forEach(input => {
+        input.addEventListener('input', function() {
+          let value = this.value.replace(/\D/g, ''); // hapus karakter non-angka
+          if (value) {
+            this.value = new Intl.NumberFormat('id-ID').format(value);
+          } else {
+            this.value = '';
+          }
+        });
+      });
+
+      // hapus titik sebelum submit
+      const form = document.querySelector('form'); // pastikan ini form yang sesuai
+      form.addEventListener('submit', function() {
+        document.querySelectorAll('.currency-input').forEach(input => {
+          input.value = input.value.replace(/\./g, '');
+        });
       });
     });
   </script>

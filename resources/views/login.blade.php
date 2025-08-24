@@ -60,7 +60,7 @@
             <div class="form-group mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                name="password" placeholder="Masukkan password">
+                name="password" placeholder="Masukkan password" autocomplete="off">
               @error('password')
                 <span class="invalid-feedback" role="alert">
                   {{ ucfirst($message) }}
