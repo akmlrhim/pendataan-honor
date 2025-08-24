@@ -154,6 +154,12 @@ return [
     'attributes' => [
         'nms' => 'NMS',
         'mitra_id' => 'Mitra',
+        'tugas'                     => 'Daftar Tugas',
+        'tugas.*.anggaran_id'       => 'Anggaran',
+        'tugas.*.deskripsi_tugas'   => 'Deskripsi tugas',
+        'tugas.*.jumlah_dokumen'    => 'Jumlah okumen',
+        'tugas.*.satuan'            => 'Satuan',
+        'tugas.*.harga_satuan'      => 'Harga persatuan',
     ],
 
 ];

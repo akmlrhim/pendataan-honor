@@ -20,4 +20,9 @@ class Kontrak extends Model
     {
         return $this->belongsTo(Mitra::class);
     }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }

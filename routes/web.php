@@ -9,5 +9,3 @@ Route::resource('mitra', App\Http\Controllers\MitraController::class)->except('s
 Route::resource('anggaran', App\Http\Controllers\AnggaranController::class)->except('show');
 
 Route::resource('kontrak', App\Http\Controllers\KontrakController::class);
-
-Route::resource('tugas', App\Http\Controllers\TugasController::class);

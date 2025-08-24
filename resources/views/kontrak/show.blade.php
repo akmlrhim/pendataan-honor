@@ -9,7 +9,7 @@
           <h5 class="card-title">Data Mitra</h5>
         </div>
         <div class="card-body">
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered">
             <tbody>
               <tr>
                 <th style="width:200px;">Nama Lengkap</th>
@@ -40,7 +40,7 @@
           <h5 class="card-title">Data Kontrak</h5>
         </div>
         <div class="card-body">
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered">
             <tbody>
               <tr>
                 <th style="width:200px;">Tanggal Kontrak</th>
@@ -58,9 +58,64 @@
                 <th>Keterangan</th>
                 <td>{{ $kontrak->keterangan ?? '-' }}</td>
               </tr>
+              <tr>
+                <th>Total Honor</th>
+                <td>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</td>
+              </tr>
             </tbody>
           </table>
         </div>
+
+      </div>
+    </div>
+
+    <!-- Data Tugas -->
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-light">
+          <h5 class="card-title">Daftar Tugas</h5>
+        </div>
+        <div class="card-body table-responsive p-0">
+          <table class="table table-bordered table-sm text-sm">
+            <thead class="bg-light">
+              <tr>
+                <th>#</th>
+                <th>Anggaran</th>
+                <th>Deskripsi Tugas</th>
+                <th>Jumlah Dokumen</th>
+                <th>Satuan</th>
+                <th>Harga Satuan</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse($kontrak->tugas as $index => $tugas)
+                <tr>
+                  <td>{{ $index + 1 }}</td>
+                  <td>{{ $tugas->anggaran->nama_kegiatan ?? '-' }}</td>
+                  <td>{{ $tugas->deskripsi_tugas }}</td>
+                  <td>{{ $tugas->jumlah_dokumen }}</td>
+                  <td>{{ $tugas->satuan }}</td>
+                  <td>Rp {{ number_format($tugas->harga_satuan, 0, ',', '.') }}</td>
+                  <td>Rp {{ number_format($tugas->harga_total_tugas, 0, ',', '.') }}</td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="7" class="text-center">Belum ada tugas</td>
+                </tr>
+              @endforelse
+            </tbody>
+            @if ($kontrak->tugas->count())
+              <tfoot>
+                <tr>
+                  <th colspan="6" class="text-right">Total Honor</th>
+                  <th>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</th>
+                </tr>
+              </tfoot>
+            @endif
+          </table>
+        </div>
+
         <div class="card-footer">
           <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
           <a href="{{ route('kontrak.edit', $kontrak->id) }}" class="btn btn-primary">Edit</a>

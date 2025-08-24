@@ -14,4 +14,9 @@ class Anggaran extends Model
         'batas_honor',
         'sisa_anggaran',
     ];
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }
