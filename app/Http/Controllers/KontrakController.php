@@ -53,13 +53,16 @@ class KontrakController extends Controller
 
         // Hitung total honor dulu, sambil cek anggaran
         $totalHonor = 0;
-        foreach ($request->tugas as $tugasData) {
+        foreach ($request->tugas as $i => $tugasData) {
             $hargaTotalTugas = $tugasData['jumlah_dokumen'] * $tugasData['harga_satuan'];
             $totalHonor += $hargaTotalTugas;
 
             $anggaran = Anggaran::findOrFail($tugasData['anggaran_id']);
+
             if ($anggaran->sisa_anggaran < $hargaTotalTugas) {
-                return redirect()->back()->withInput()->with('error', "Sisa anggaran untuk {$anggaran->nama_kegiatan} tidak mencukupi.");
+                return redirect()->back()->withInput()->withErrors([
+                    "tugas.$i.harga_satuan" => "Sisa anggaran tidak mencukupi."
+                ]);
             }
         }
 
@@ -160,13 +163,13 @@ class KontrakController extends Controller
         $totalHonor = 0;
 
         // --- 3. Loop data tugas dari request ---
-        foreach ($request->tugas as $t) {
+        foreach ($request->tugas as $i => $t) {
             $hargaTotal = $t['jumlah_dokumen'] * $t['harga_satuan'];
 
             // cek sisa anggaran cukup atau tidak
             $anggaran = Anggaran::find($t['anggaran_id']);
             if ($anggaran->sisa_anggaran < $hargaTotal) {
-                return back()->withInput()->with('error', "Sisa anggaran untuk {$anggaran->nama_kegiatan} tidak mencukupi.");
+                return back()->withInput()->withErrors(['tugas.*.harga_satuan' => "Sisa anggaran tidak mencukupi."]);
             }
 
             if (isset($t['id']) && in_array($t['id'], $existingTugasIds)) {
@@ -207,8 +210,6 @@ class KontrakController extends Controller
 
         return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil diperbarui.');
     }
-
-
 
 
     /**

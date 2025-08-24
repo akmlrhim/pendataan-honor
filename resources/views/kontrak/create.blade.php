@@ -106,7 +106,7 @@
           <hr>
           <!-- Tugas -->
           <h5> Input Tugas</h5>
-          <table class="table table-bordered table-sm text-sm" id="tugas-table">
+          <table class="table table-bordered text-sm table-responsive" id="tugas-table">
             <thead>
               <tr>
                 <th>Anggaran</th>
@@ -118,48 +118,59 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="tugas-row">
-                <td>
-                  <select name="tugas[0][anggaran_id]" class="form-control select2">
-                    @foreach ($anggaran as $a)
-                      <option value="{{ $a->id }}">{{ $a->nama_kegiatan }}</option>
-                    @endforeach
-                  </select>
-                </td>
-                <td>
-                  <input type="text" name="tugas[0][deskripsi_tugas]"
-                    class="form-control @error('tugas.0.deskripsi_tugas') is-invalid @enderror">
-                  @error('tugas.0.deskripsi_tugas')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </td>
-
-                <td>
-                  <input type="number" name="tugas[0][jumlah_dokumen]"
-                    class="form-control @error('tugas.0.jumlah_dokumen') is-invalid @enderror">
-                  @error('tugas.0.jumlah_dokumen')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </td>
-
-                <td>
-                  <input type="text" name="tugas[0][satuan]"
-                    class="form-control @error('tugas.0.satuan') is-invalid @enderror">
-                  @error('tugas.0.satuan')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </td>
-
-                <td>
-                  <input type="text" step="0.01" name="tugas[0][harga_satuan]" inputmode="numeric"
-                    class="form-control rupiah-input @error('tugas.0.harga_satuan') is-invalid @enderror">
-                  @error('tugas.0.harga_satuan')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </td>
-
-                <td><button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button></td>
-              </tr>
+              @php
+                $oldTugas = old('tugas', [[]]);
+              @endphp
+              @foreach ($oldTugas as $i => $tugas)
+                <tr class="tugas-row">
+                  <td>
+                    <select name="tugas[{{ $i }}][anggaran_id]" class="form-control select2">
+                      @foreach ($anggaran as $a)
+                        <option value="{{ $a->id }}"
+                          {{ isset($tugas['anggaran_id']) && $tugas['anggaran_id'] == $a->id ? 'selected' : '' }}>
+                          {{ $a->nama_kegiatan }}
+                        </option>
+                      @endforeach
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]"
+                      class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror"
+                      value="{{ $tugas['deskripsi_tugas'] ?? '' }}">
+                    @error('tugas.' . $i . '.deskripsi_tugas')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+                  <td>
+                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]"
+                      class="form-control @error('tugas.' . $i . '.jumlah_dokumen') is-invalid @enderror"
+                      value="{{ $tugas['jumlah_dokumen'] ?? '' }}">
+                    @error('tugas.' . $i . '.jumlah_dokumen')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+                  <td>
+                    <input type="text" name="tugas[{{ $i }}][satuan]"
+                      class="form-control @error('tugas.' . $i . '.satuan') is-invalid @enderror"
+                      value="{{ $tugas['satuan'] ?? '' }}">
+                    @error('tugas.' . $i . '.satuan')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+                  <td>
+                    <input type="text" step="0.01" name="tugas[{{ $i }}][harga_satuan]"
+                      inputmode="numeric"
+                      class="form-control rupiah-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
+                      value="{{ $tugas['harga_satuan'] ?? '' }}">
+                    @error('tugas.' . $i . '.harga_satuan')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+                  </td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
           <button type="button" id="add-row" class="btn btn-success mb-3 btn-sm">Tambah Tugas</button>
@@ -186,17 +197,34 @@
         let newRow = `
         <tr class="tugas-row">
           <td>
-            <select name="tugas[${rowIndex}][anggaran_id]" class="form-control">
+            <select name="tugas[${rowIndex}][anggaran_id]" class="form-control select2">
               @foreach ($anggaran as $a)
-                <option value="{{ $a->id }}">{{ $a->nama_kegiatan }}</option>
+          <option value="{{ $a->id }}"
+            {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
+            {{ $a->nama_kegiatan }}
+          </option>
               @endforeach
             </select>
           </td>
-          <td><input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"></td>
-          <td><input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"></td>
-          <td><input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"></td>
-          <td><input type="text" name="tugas[${rowIndex}][harga_satuan]" class="form-control rupiah-input"></td>
-          <td><button type="button" class="btn btn-danger btn-remove">Hapus</button></td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
+          </td>
+          <td>
+            <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
+          </td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
+              value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
+          </td>
+          <td>
+            <input type="text" name="tugas[${rowIndex}][harga_satuan]" class="form-control rupiah-input"
+              value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-remove">Hapus</button>
+          </td>
         </tr>
       `;
         $('#tugas-table tbody').append(newRow);

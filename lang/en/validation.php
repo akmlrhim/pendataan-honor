@@ -159,7 +159,7 @@ return [
         'tugas.*.deskripsi_tugas'   => 'Deskripsi tugas',
         'tugas.*.jumlah_dokumen'    => 'Jumlah okumen',
         'tugas.*.satuan'            => 'Satuan',
-        'tugas.*.harga_satuan'      => 'Harga persatuan',
+        'tugas.*.harga_satuan'      => 'Harga per satuan',
     ],
 
 ];
