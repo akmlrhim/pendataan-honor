@@ -8,8 +8,8 @@
         <div class="card-header bg-light">
           <h5 class="card-title">Data Mitra</h5>
         </div>
-        <div class="card-body">
-          <table class="table table-bordered">
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-sm">
             <tbody>
               <tr>
                 <th style="width:200px;">Nama Lengkap</th>
@@ -39,8 +39,8 @@
         <div class="card-header bg-light">
           <h5 class="card-title">Data Kontrak</h5>
         </div>
-        <div class="card-body">
-          <table class="table table-bordered">
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-sm">
             <tbody>
               <tr>
                 <th style="width:200px;">Tanggal Kontrak</th>
@@ -76,12 +76,13 @@
           <h5 class="card-title">Daftar Tugas</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-sm">
+          <table class="table table-bordered table-sm">
             <thead class="bg-light">
               <tr>
                 <th>#</th>
                 <th>Anggaran</th>
                 <th>Deskripsi Tugas</th>
+                <th>Jumlah Target Dokumen</th>
                 <th>Jumlah Dokumen</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
@@ -94,6 +95,7 @@
                   <td>{{ $index + 1 }}</td>
                   <td>{{ $tugas->anggaran->nama_kegiatan ?? '-' }}</td>
                   <td>{{ $tugas->deskripsi_tugas }}</td>
+                  <td>{{ $tugas->jumlah_target_dokumen }}</td>
                   <td>{{ $tugas->jumlah_dokumen }}</td>
                   <td>{{ $tugas->satuan }}</td>
                   <td>Rp {{ number_format($tugas->harga_satuan, 0, ',', '.') }}</td>
@@ -108,7 +110,7 @@
             @if ($kontrak->tugas->count())
               <tfoot>
                 <tr>
-                  <th colspan="6" class="text-right">Total Honor</th>
+                  <th colspan="7" class="text-right">Total Honor</th>
                   <th>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</th>
                 </tr>
               </tfoot>

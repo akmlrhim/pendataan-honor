@@ -111,7 +111,8 @@
               <tr>
                 <th>Anggaran</th>
                 <th>Deskripsi</th>
-                <th>Jumlah</th>
+                <th>Jumlah Target</th>
+                <th>Jumlah dicapai</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
                 <th>Aksi</th>
@@ -124,10 +125,10 @@
               @foreach ($oldTugas as $i => $tugas)
                 <tr>
                   <td>
-                    <select name="tugas[{{ $i }}][anggaran_id]" class="custom-select select2">
-                      <option value="" disabled selected {{ isset($tugas['anggaran_id']) ? '' : 'selected' }}>--
-                        Pilih
-                        Anggaran --</option>
+                    <select name="tugas[{{ $i }}][anggaran_id]"
+                      class="custom-select select2 @error('tugas.' . $i . '.anggaran_id') is-invalid @enderror">
+                      <option value="" {{ isset($tugas['anggaran_id']) ? '' : 'selected' }}>-- Pilih Anggaran --
+                      </option>
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
                           {{ isset($tugas['anggaran_id']) && $tugas['anggaran_id'] == $a->id ? 'selected' : '' }}>
@@ -135,12 +136,24 @@
                         </option>
                       @endforeach
                     </select>
+                    @error('tugas.' . $i . '.anggaran_id')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                   </td>
+
                   <td>
                     <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]"
                       class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror"
                       value="{{ $tugas['deskripsi_tugas'] ?? '' }}">
                     @error('tugas.' . $i . '.deskripsi_tugas')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+                  <td>
+                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]"
+                      class="form-control @error('tugas.' . $i . '.jumlah_target_dokumen') is-invalid @enderror"
+                      value="{{ $tugas['jumlah_target_dokumen'] ?? '' }}">
+                    @error('tugas.' . $i . '.jumlah_target_dokumen')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </td>
@@ -220,6 +233,10 @@
       <td>
         <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
           value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
+      </td>
+      <td>
+        <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control"
+          value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_target_dokumen') }}">
       </td>
       <td>
         <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"

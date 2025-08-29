@@ -13,8 +13,8 @@ class Tugas extends Model
         'anggaran_id',
         'deskripsi_tugas',
         'jumlah_dokumen',
+        'jumlah_target_dokumen',
         'satuan',
-        'harga_satuan',
         'harga_satuan',
         'harga_total_tugas'
     ];

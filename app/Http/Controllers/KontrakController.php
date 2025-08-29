@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mitra;
 use App\Models\Kontrak;
 use App\Models\Anggaran;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,7 @@ class KontrakController extends Controller
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
             'tugas.*.deskripsi_tugas' => 'required|string',
             'tugas.*.jumlah_dokumen'  => 'required|integer|min:1',
+            'tugas.*.jumlah_target_dokumen'  => 'required|integer|min:1',
             'tugas.*.satuan'          => 'required|string|max:40',
             'tugas.*.harga_satuan'    => 'required|numeric|min:0',
         ]);
@@ -84,6 +86,7 @@ class KontrakController extends Controller
                 'anggaran_id'       => $tugasData['anggaran_id'],
                 'deskripsi_tugas'   => $tugasData['deskripsi_tugas'],
                 'jumlah_dokumen'    => $tugasData['jumlah_dokumen'],
+                'jumlah_target_dokumen'  => $tugasData['jumlah_target_dokumen'],
                 'satuan'            => $tugasData['satuan'],
                 'harga_satuan'      => $tugasData['harga_satuan'],
                 'harga_total_tugas' => $hargaTotalTugas,
@@ -136,6 +139,7 @@ class KontrakController extends Controller
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
             'tugas.*.deskripsi_tugas' => 'required|string',
             'tugas.*.jumlah_dokumen'  => 'required|integer|min:1',
+            'tugas.*.jumlah_target_dokumen'  => 'required|integer|min:1',
             'tugas.*.satuan'          => 'required|string|max:40',
             'tugas.*.harga_satuan'    => 'required|numeric|min:0',
         ]);
@@ -185,6 +189,7 @@ class KontrakController extends Controller
                         'anggaran_id'       => $t['anggaran_id'],
                         'deskripsi_tugas'   => $t['deskripsi_tugas'],
                         'jumlah_dokumen'    => $t['jumlah_dokumen'],
+                        'jumlah_target_dokumen'   => $t['jumlah_target_dokumen'],
                         'satuan'            => $t['satuan'],
                         'harga_satuan'      => $t['harga_satuan'],
                         'harga_total_tugas' => $newTotal,
@@ -202,6 +207,7 @@ class KontrakController extends Controller
                         'anggaran_id'       => $t['anggaran_id'],
                         'deskripsi_tugas'   => $t['deskripsi_tugas'],
                         'jumlah_dokumen'    => $t['jumlah_dokumen'],
+                        'jumlah_target_dokumen'   => $t['jumlah_target_dokumen'],
                         'satuan'            => $t['satuan'],
                         'harga_satuan'      => $t['harga_satuan'],
                         'harga_total_tugas' => $newTotal,
@@ -238,10 +244,6 @@ class KontrakController extends Controller
         return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil diperbarui.');
     }
 
-
-
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -266,5 +268,13 @@ class KontrakController extends Controller
         }
 
         return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil dihapus dan anggaran dikembalikan.');
+    }
+
+    public function fileKontrak($id)
+    {
+        $kontrak = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])->findOrFail($id);
+        $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream('File Kontrak ' . $kontrak->id . '.pdf');
     }
 }

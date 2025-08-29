@@ -120,7 +120,8 @@
               <tr>
                 <th>Anggaran</th>
                 <th>Deskripsi Tugas</th>
-                <th>Jumlah</th>
+                <th>Jumlah Target</th>
+                <th>Jumlah Dicapai</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
                 <th>Aksi</th>
@@ -159,6 +160,15 @@
                   </td>
 
                   <td>
+                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]"
+                      class="form-control @error("tugas.$i.jumlah_target_dokumen") is-invalid @enderror"
+                      value="{{ old("tugas.$i.jumlah_target_dokumen", $tugas['jumlah_target_dokumen'] ?? '') }}">
+                    @error("tugas.$i.jumlah_target_dokumen")
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </td>
+
+                  <td>
                     <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]"
                       class="form-control @error("tugas.$i.jumlah_dokumen") is-invalid @enderror"
                       value="{{ old("tugas.$i.jumlah_dokumen", $tugas['jumlah_dokumen'] ?? '') }}">
@@ -177,19 +187,21 @@
                   </td>
 
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][harga_satuan_display]" autocomplete="off"
-                      class="form-control currency-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
+                    <!-- input tampilan -->
+                    <input type="text"
+                      class="form-control currency-input @error("tugas.$i.harga_satuan") is-invalid @enderror"
+                      autocomplete="off"
                       value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
 
-
-                    <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
+                    <input type="hidden" name="tugas[{{ $i }}][harga_satuan]"
+                      class="harga-satuan-hidden @error("tugas.$i.harga_satuan") is-invalid @enderror"
                       value="{{ $tugas['harga_satuan'] ?? '' }}">
 
-                    @error('tugas.' . $i . '.harga_satuan')
+                    @error("tugas.$i.harga_satuan")
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                  </td>
 
+                  </td>
                   <td>
                     <button type="button" class="btn btn-danger btn-sm btn-remove">Hapus</button>
                   </td>
@@ -224,42 +236,37 @@
 
     $('#addRow').click(function() {
       let row = `
-        <tr>
-          <td>
-            <select name="tugas[${rowIndex}][anggaran_id]" class="custom-select select2">
-              <option value="" disabled selected>-- Pilih Anggaran --</option>
-              @foreach ($anggaran as $a)
-                <option value="{{ $a->id }}"
-                  {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
-                  {{ $a->nama_kegiatan }}
-                </option>
-              @endforeach
-            </select>
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
-          </td>
-          <td>
-            <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
-              value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
-          </td>
-          <td>
-            <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off"
-                  class="form-control currency-input"
-                  value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') ? number_format(old('tugas.' . '${rowIndex}' . '.harga_satuan'), 0, ',', '.') : '' }}">
-            <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" 
-                  class="harga-satuan-hidden"
-                  value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
-          </td>
-        </tr>
+      <tr>
+        <td>
+          <select name="tugas[${rowIndex}][anggaran_id]" class="custom-select select2">
+            <option value="" disabled selected>-- Pilih Anggaran --</option>
+            @foreach ($anggaran as $a)
+              <option value="{{ $a->id }}">{{ $a->nama_kegiatan }}</option>
+            @endforeach
+          </select>
+        </td>
+        <td>
+          <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control">
+        </td>
+        <td>
+          <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control">
+        </td>
+        <td>
+          <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control">
+        </td>
+        <td>
+          <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control">
+        </td>
+        <td>
+          <!-- input tampilan -->
+          <input type="text" class="form-control currency-input" autocomplete="off">
+          <!-- input hidden untuk validasi -->
+          <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" class="harga-satuan-hidden">
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+        </td>
+      </tr>
     `;
 
       $('#tugas-table tbody').append(row);
@@ -269,6 +276,9 @@
         width: '100%'
       });
 
+      // aktifkan formatter untuk currency input baru
+      document.querySelectorAll('.currency-input').forEach(setupCurrencyInput);
+
       rowIndex++;
     });
 
@@ -277,26 +287,21 @@
       $(this).closest('tr').remove();
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // format ribuan saat mengetik
-      document.querySelectorAll('.currency-input').forEach(input => {
-        input.addEventListener('input', function() {
-          let value = this.value.replace(/\D/g, ''); // hapus karakter non-angka
-          if (value) {
-            this.value = new Intl.NumberFormat('id-ID').format(value);
-          } else {
-            this.value = '';
-          }
-        });
-      });
+    // fungsi untuk sinkronisasi currency input ke hidden field
+    function setupCurrencyInput(input) {
+      input.addEventListener('input', function() {
+        let raw = this.value.replace(/\D/g, ''); // angka mentah
 
-      // hapus titik sebelum submit
-      const form = document.querySelector('form'); // pastikan ini form yang sesuai
-      form.addEventListener('submit', function() {
-        document.querySelectorAll('.currency-input').forEach(input => {
-          input.value = input.value.replace(/\./g, '');
-        });
+        // update hidden input di td yang sama
+        let hidden = this.closest('td').querySelector('.harga-satuan-hidden');
+        if (hidden) hidden.value = raw;
+
+        // tampilkan format ribuan di input user
+        this.value = raw ? new Intl.NumberFormat('id-ID').format(raw) : '';
       });
-    });
+    }
+
+    // inisialisasi untuk semua input awal
+    document.querySelectorAll('.currency-input').forEach(setupCurrencyInput);
   </script>
 @endsection

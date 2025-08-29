@@ -40,14 +40,13 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover table-sm text-nowrap">
+            <table class="table table-bordered table-sm text-nowrap">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Mitra - NMS</th>
-                  <th>Tanggal kontrak</th>
-                  <th>Tanggal surat</th>
-                  <th>Tanggal BAST</th>
+                  <th>Dokumen Kontrak</th>
+
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -56,9 +55,19 @@
                   <tr>
                     <td>{{ $index + $kontrak->firstItem() }}</td>
                     <td>{{ $k->mitra->nama_lengkap }} - {{ $k->mitra->nms }}</td>
-                    <td>{{ \Carbon\Carbon::parse($k->tanggal_kontrak)->translatedFormat('d F Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($k->tanggal_surat)->translatedFormat('d F Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($k->tanggal_bast)->translatedFormat('d F Y') }}</td>
+                    <td> <a href="{{ route('kontrak.file', $k->id) }}" class="btn btn-secondary btn-sm" target="_blank"
+                        title="Cetak">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" class="lucide lucide-printer-check-icon lucide-printer-check mr-2">
+                          <path d="M13.5 22H7a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v.5" />
+                          <path d="m16 19 2 2 4-4" />
+                          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2" />
+                          <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+                        </svg>
+                        Cetak Kontrak
+                      </a>
+                    </td>
                     <td>
                       <a href="{{ route('kontrak.show', $k->id) }}" class="btn btn-info btn-sm" title="Detail">Detail</a>
                       <a href="{{ route('kontrak.edit', $k->id) }}" class="btn btn-warning btn-sm" title="Edit">Edit</a>

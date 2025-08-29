@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('anggaran_id')->nullable()->constrained('anggaran')->nullOnDelete();
             $table->text('deskripsi_tugas');
             $table->integer('jumlah_dokumen');
+            $table->integer('jumlah_target_dokumen');
             $table->string('satuan', 40);
             $table->decimal('harga_satuan', 15, 0);
             $table->decimal('harga_total_tugas', 15, 0);
