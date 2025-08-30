@@ -51,6 +51,8 @@
           @csrf
           @method('PUT')
 
+          <h5 class="text-primary">Kontrak</h5>
+
           <div class="row">
             <!-- Kiri -->
             <div class="col-sm-6">
@@ -114,7 +116,7 @@
           <hr>
 
           <!-- Table tugas -->
-          <h5>Tugas / Kegiatan</h5>
+          <h5 class="text-primary">Tugas / Kegiatan</h5>
           <table class="table table-bordered table-responsive text-sm" id="tugas-table">
             <thead>
               <tr>
@@ -151,7 +153,7 @@
                   </td>
 
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]"
+                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]" autocomplete="off"
                       class="form-control @error("tugas.$i.deskripsi_tugas") is-invalid @enderror"
                       value="{{ old("tugas.$i.deskripsi_tugas", $tugas['deskripsi_tugas'] ?? '') }}">
                     @error("tugas.$i.deskripsi_tugas")
@@ -160,7 +162,7 @@
                   </td>
 
                   <td>
-                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]"
+                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]" autocomplete="off"
                       class="form-control @error("tugas.$i.jumlah_target_dokumen") is-invalid @enderror"
                       value="{{ old("tugas.$i.jumlah_target_dokumen", $tugas['jumlah_target_dokumen'] ?? '') }}">
                     @error("tugas.$i.jumlah_target_dokumen")
@@ -169,7 +171,7 @@
                   </td>
 
                   <td>
-                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]"
+                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]" autocomplete="off"
                       class="form-control @error("tugas.$i.jumlah_dokumen") is-invalid @enderror"
                       value="{{ old("tugas.$i.jumlah_dokumen", $tugas['jumlah_dokumen'] ?? '') }}">
                     @error("tugas.$i.jumlah_dokumen")
@@ -178,7 +180,7 @@
                   </td>
 
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][satuan]"
+                    <input type="text" name="tugas[{{ $i }}][satuan]" autocomplete="off"
                       class="form-control @error("tugas.$i.satuan") is-invalid @enderror"
                       value="{{ old("tugas.$i.satuan", $tugas['satuan'] ?? '') }}">
                     @error("tugas.$i.satuan")
@@ -246,16 +248,16 @@
           </select>
         </td>
         <td>
-          <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control">
+          <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off">
         </td>
         <td>
-          <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control">
+          <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control" autocomplete="off">
         </td>
         <td>
-          <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control">
+          <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control" autocomplete="off">
         </td>
         <td>
-          <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control">
+          <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control" autocomplete="off">
         </td>
         <td>
           <!-- input tampilan -->

@@ -76,7 +76,7 @@
           <h5 class="card-title">Daftar Tugas</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-sm text-sm">
             <thead class="bg-light">
               <tr>
                 <th>#</th>
@@ -112,6 +112,12 @@
                 <tr>
                   <th colspan="7" class="text-right">Total Honor</th>
                   <th>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</th>
+                </tr>
+                <tr>
+                  <th colspan="7" class="text-right">Realisasi</th>
+                  <th>
+                    {{ number_format(($kontrak->tugas->sum('jumlah_dokumen') / $kontrak->tugas->sum('jumlah_target_dokumen')) * 100, 1) }}%
+                  </th>
                 </tr>
               </tfoot>
             @endif

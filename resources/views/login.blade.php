@@ -109,13 +109,16 @@
               @enderror
             </div>
 
-
-
             <!-- Button -->
             <button type="submit" class="btn btn-primary w-100 shadow-sm">
               <i class="fas fa-sign-in-alt mr-2"></i> Login
             </button>
           </form>
+
+          {{-- <div class="text-right mt-2 text-sm text-primary">
+            <a href="{{ route('register') }}">Register</a>
+          </div> --}}
+
         </div>
       </div>
 

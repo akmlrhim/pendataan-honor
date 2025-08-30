@@ -1,18 +1,17 @@
 @extends('layouts.template')
-
 @section('content')
   <div class="row">
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('kontrak.create') }}" class="btn btn-success mb-3">Tambah kontrak</a>
+      <a href="{{ route('user.create') }}" class="btn btn-success mb-3">Tambah user</a>
     </div>
 
     {{-- flashdata --}}
     <x-alert />
 
     <div class="col-12">
-      @if ($kontrak->isEmpty())
+      @if ($user->isEmpty())
         <div class="mb-4">
           <div class="alert alert-warning border-0 shadow-sm" role="alert"
             style="border-left: 4px solid #ffc107 !important; background: #fff8e1;">
@@ -39,7 +38,7 @@
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 300px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search" />
 
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
@@ -60,34 +59,24 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Mitra - NMS</th>
-                  <th>Dokumen Kontrak</th>
-
+                  <th>Nama Lengkap</th>
+                  <th>Email</th>
+                  <th>NIP</th>
+                  <th>Jabatan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($kontrak as $index => $k)
+                @foreach ($user as $index => $row)
                   <tr>
-                    <td>{{ $index + $kontrak->firstItem() }}</td>
-                    <td>{{ $k->mitra->nama_lengkap }} - {{ $k->mitra->nms }}</td>
-                    <td> <a href="{{ route('kontrak.file', $k->id) }}" class="btn btn-secondary btn-sm" target="_blank"
-                        title="Cetak">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                          stroke-linejoin="round" class="lucide lucide-printer-check-icon lucide-printer-check mr-2">
-                          <path d="M13.5 22H7a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v.5" />
-                          <path d="m16 19 2 2 4-4" />
-                          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2" />
-                          <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
-                        </svg>
-                        Cetak Kontrak
-                      </a>
-                    </td>
+                    <td>{{ $index + $user->firstItem() }}</td>
+                    <td>{{ $row->nama_lengkap }}</td>
+                    <td>{{ $row->email }}</td>
+                    <td>{{ $row->nip }}</td>
+                    <td>{{ $row->jabatan }}</td>
                     <td>
-                      <a href="{{ route('kontrak.show', $k->id) }}" class="btn btn-info btn-sm" title="Detail">Detail</a>
-                      <a href="{{ route('kontrak.edit', $k->id) }}" class="btn btn-warning btn-sm" title="Edit">Edit</a>
-                      <x-confirm-delete action="{{ route('kontrak.destroy', $k->id) }}" />
+                      <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>
+                      <x-confirm-delete action="{{ route('user.destroy', $row->id) }}" />
                     </td>
                   </tr>
                 @endforeach
@@ -97,7 +86,7 @@
           </div>
 
           <div class="p-2">
-            {{ $kontrak->links() }}
+            {{ $user->links() }}
           </div>
           <!-- /.card -->
         </div>

@@ -9,6 +9,7 @@ Route::middleware('throttle:60,1')->group(function () {
 
 	Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
 	Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+	Route::get('register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
 
 	Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -18,4 +19,6 @@ Route::middleware('throttle:60,1')->group(function () {
 
 	Route::resource('kontrak', App\Http\Controllers\KontrakController::class);
 	Route::get('kontrak/{id}/file', [App\Http\Controllers\KontrakController::class, 'fileKontrak'])->name('kontrak.file');
+
+	Route::resource('user', App\Http\Controllers\UserController::class)->except('show');
 });

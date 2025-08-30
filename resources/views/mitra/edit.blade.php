@@ -2,6 +2,7 @@
 
 @section('content')
   <div class="col-md-12">
+
     <div class="card card-primary">
 
       <!-- form start -->
@@ -17,7 +18,8 @@
                 <input type="text" class="form-control @error('nms')
 									is-invalid
 								@enderror"
-                  id="nms" name="nms" placeholder="Masukkan NMS" value="{{ old('nms', $mitra->nms) }}">
+                  id="nms" name="nms" placeholder="Masukkan NMS" value="{{ old('nms', $mitra->nms) }}"
+                  autocomplete="off">
                 @error('nms')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
                 @enderror
@@ -28,7 +30,7 @@
                 <input type="text" class="form-control @error('nama_lengkap')
 									is-invalid
 								@enderror"
-                  name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan nama lengkap"
+                  name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan nama lengkap" autocomplete="off"
                   value="{{ old('nama_lengkap', $mitra->nama_lengkap) }}">
                 @error('nama_lengkap')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
@@ -79,6 +81,6 @@
           <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
       </div>
-
     </div>
-  @endsection
+  </div>
+@endsection

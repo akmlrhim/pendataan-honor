@@ -161,6 +161,7 @@ return [
         'tugas.*.jumlah_target_dokumen' => 'Jumlah target dokumen',
         'tugas.*.satuan'            => 'Satuan',
         'tugas.*.harga_satuan'      => 'Harga per satuan',
+        'nip' => 'NIP'
     ],
 
 ];

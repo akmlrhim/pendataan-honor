@@ -39,7 +39,7 @@
 
     <div class="card card-primary">
       <div class="card-body">
-        <h5> Input Kontrak</h5>
+        <h5 class="text-primary">Kontrak</h5>
 
         <form method="POST" action="{{ route('kontrak.store') }}">
           @csrf
@@ -105,7 +105,7 @@
 
           <hr>
           <!-- Tugas -->
-          <h5> Input Tugas</h5>
+          <h5 class="text-primary">Tugas / Kegiatan</h5>
           <table class="table table-bordered text-sm table-responsive" id="tugas-table">
             <thead>
               <tr>
@@ -142,7 +142,7 @@
                   </td>
 
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]"
+                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]" autocomplete="off"
                       class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror"
                       value="{{ $tugas['deskripsi_tugas'] ?? '' }}">
                     @error('tugas.' . $i . '.deskripsi_tugas')
@@ -150,7 +150,7 @@
                     @enderror
                   </td>
                   <td>
-                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]"
+                    <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]" autocomplete="off"
                       class="form-control @error('tugas.' . $i . '.jumlah_target_dokumen') is-invalid @enderror"
                       value="{{ $tugas['jumlah_target_dokumen'] ?? '' }}">
                     @error('tugas.' . $i . '.jumlah_target_dokumen')
@@ -158,7 +158,7 @@
                     @enderror
                   </td>
                   <td>
-                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]"
+                    <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]" autocomplete="off"
                       class="form-control @error('tugas.' . $i . '.jumlah_dokumen') is-invalid @enderror"
                       value="{{ $tugas['jumlah_dokumen'] ?? '' }}">
                     @error('tugas.' . $i . '.jumlah_dokumen')
@@ -166,7 +166,7 @@
                     @enderror
                   </td>
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][satuan]"
+                    <input type="text" name="tugas[{{ $i }}][satuan]" autocomplete="off"
                       class="form-control @error('tugas.' . $i . '.satuan') is-invalid @enderror"
                       value="{{ $tugas['satuan'] ?? '' }}">
                     @error('tugas.' . $i . '.satuan')
@@ -231,23 +231,23 @@
         </select>
       </td>
       <td>
-        <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control"
+        <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off"
           value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
       </td>
       <td>
-        <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control"
+        <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control" autocomplete="off"
           value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_target_dokumen') }}">
       </td>
       <td>
-        <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control"
+        <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control" autocomplete="off"
           value="{{ old('tugas.' . '${rowIndex}' . '.jumlah_dokumen') }}">
       </td>
       <td>
-        <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control"
+        <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control" autocomplete="off"
           value="{{ old('tugas.' . '${rowIndex}' . '.satuan') }}">
       </td>
       <td>
-        <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off"
+        <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off" 
                class="form-control currency-input"
                value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') ? number_format(old('tugas.' . '${rowIndex}' . '.harga_satuan'), 0, ',', '.') : '' }}">
         <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" 

@@ -17,7 +17,7 @@
                 <input type="text" class="form-control @error('kode_anggaran')
 									is-invalid
 								@enderror"
-                  id="kode_anggaran" name="kode_anggaran" placeholder="Masukkan kode anggaran"
+                  id="kode_anggaran" name="kode_anggaran" placeholder="Masukkan kode anggaran" autocomplete="off"
                   value="{{ old('kode_anggaran', $anggaran->kode_anggaran) }}">
                 @error('kode_anggaran')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
@@ -29,7 +29,7 @@
                 <input type="text" class="form-control @error('nama_kegiatan')
 									is-invalid
 								@enderror"
-                  id="nama_kegiatan" name="nama_kegiatan" placeholder="Masukkan nama kegiatan"
+                  id="nama_kegiatan" name="nama_kegiatan" placeholder="Masukkan nama kegiatan" autocomplete="off"
                   value="{{ old('nama_kegiatan', $anggaran->nama_kegiatan) }}">
                 @error('nama_kegiatan')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
