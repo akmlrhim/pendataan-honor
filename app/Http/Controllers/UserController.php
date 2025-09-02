@@ -37,18 +37,18 @@ class UserController extends Controller
             'nama_lengkap' => 'required|unique:users,nama_lengkap,except,id',
             'email' => 'email|required|unique:users,email,except,id',
             'nip' => 'required|numeric|unique:users,nip,except,id',
-            'jabatan' => 'required'
+            'role' => 'required'
         ]);
 
         $created = User::create([
             'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'nip' => $request->nip,
-            'jabatan' => $request->jabatan,
+            'role' => $request->role,
             'password' => Hash::make('bpstapin25')
         ]);
 
-        if ($created) {
+        if (!$created) {
             return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan.');
         }
 
@@ -75,14 +75,14 @@ class UserController extends Controller
             'nama_lengkap' => 'required|unique:users,nama_lengkap,' . $id,
             'email' => 'email|required|unique:users,email,' . $id,
             'nip' => 'required|numeric|unique:users,nip,' . $id,
-            'jabatan' => 'required'
+            'role' => 'required'
         ]);
 
         $user = User::findOrFail($id);
         $user->nama_lengkap = $request->nama_lengkap;
         $user->email = $request->email;
         $user->nip = $request->nip;
-        $user->jabatan = $request->jabatan;
+        $user->role = $request->role;
         $updated = $user->save();
 
         if (!$updated) {

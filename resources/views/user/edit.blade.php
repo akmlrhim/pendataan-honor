@@ -49,16 +49,25 @@
               </div>
 
               <div class="form-group">
-                <label for="jabatan">Jabatan</label>
-                <input type="jabatan" class="form-control @error('jabatan')
-									is-invalid
-								@enderror"
-                  id="jabatan" name="jabatan" placeholder="Masukkan jabatan" value="{{ old('jabatan', $user->jabatan) }}"
-                  autocomplete="off">
-                @error('jabatan')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                <label for="role">Role/Hak Akses</label>
+                <select name="role" class="custom-select @error('role') is-invalid @enderror" id="role">
+                  <option value="" disabled {{ old('role', $user->role) ? '' : 'selected' }}>
+                    {{ match ($user->role) {
+                        'ketua_tim' => 'Ketua Tim',
+                        'umum' => 'Umum',
+                        'user' => 'User',
+                    } }}
+                  </option>
+                  <option value="ketua_tim" {{ old('role', $user->role) == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim
+                  </option>
+                  <option value="umum" {{ old('role', $user->role) == 'umum' ? 'selected' : '' }}>Umum</option>
+                  <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User Biasa</option>
+                </select>
+                @error('role')
+                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
+
             </div>
 
           </div>

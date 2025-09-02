@@ -19,7 +19,7 @@
                   id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama lengkap"
                   value="{{ old('nama_lengkap') }}" autocomplete="off">
                 @error('nama_lengkap')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
 
@@ -30,33 +30,32 @@
 								@enderror"
                   id="nip" name="nip" placeholder="Masukkan NIP" value="{{ old('nip') }}" autocomplete="off">
                 @error('nip')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
 
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control @error('email')
-									is-invalid
-								@enderror"
-                  id="email" name="email" placeholder="Masukkan email" value="{{ old('email') }}"
-                  autocomplete="off">
+                <input type="email" class="form-control @error('email')	is-invalid @enderror" id="email"
+                  name="email" placeholder="Masukkan email" value="{{ old('email') }}" autocomplete="off">
                 @error('email')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="jabatan">Jabatan</label>
-                <input type="jabatan" class="form-control @error('jabatan')
-									is-invalid
-								@enderror"
-                  id="jabatan" name="jabatan" placeholder="Masukkan jabatan" value="{{ old('jabatan') }}"
-                  autocomplete="off">
-                @error('jabatan')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                <label for="role">Role/Hak Akses</label>
+                <select name="role" class="custom-select @error('role') is-invalid @enderror" id="role">
+                  <option value="" disabled {{ old('role') ? '' : 'selected' }}>-- Pilih Role --</option>
+                  <option value="ketua_tim" {{ old('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
+                  <option value="umum" {{ old('role') == 'umum' ? 'selected' : '' }}>Umum</option>
+                  <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User Biasa</option>
+                </select>
+                @error('role')
+                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
+
             </div>
 
           </div>

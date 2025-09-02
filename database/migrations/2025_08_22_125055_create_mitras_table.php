@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mitra', function (Blueprint $table) {
             $table->id();
             $table->string('nms', 120)->unique();
-            $table->string('nama_lengkap', 120);
+            $table->string('nama_lengkap', 120)->index();
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->text('alamat');
             $table->timestamps();

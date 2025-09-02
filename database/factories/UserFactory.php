@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'nama_lengkap' => fake()->name(),
             'nip' => fake()->unique()->numerify('################'),
             'email' => fake()->unique()->safeEmail(),
-            'jabatan' => fake()->jobTitle(),
+            'role' => fake()->randomElement(['ketua_tim', 'umum', 'user']),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

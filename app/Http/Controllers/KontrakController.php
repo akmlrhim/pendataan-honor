@@ -30,6 +30,11 @@ class KontrakController extends Controller
         $title = 'Tambah Kontrak';
         $mitra = Mitra::select('id', 'nama_lengkap', 'nms')->get();
         $anggaran = Anggaran::select('id', 'kode_anggaran', 'nama_kegiatan', 'sisa_anggaran')->get();
+
+        if ($mitra->isEmpty() && $anggaran->isEmpty()) {
+            return redirect()->back()->with('error', 'Data anggaran atau mitra masih kosong silahkan isi terlebih dahulu.');
+        }
+
         return view('kontrak.create', compact('title', 'mitra', 'anggaran'));
     }
 
@@ -120,6 +125,11 @@ class KontrakController extends Controller
         $kontrak = Kontrak::findOrFail($id);
         $mitra = Mitra::select('id', 'nama_lengkap', 'nms')->get();
         $anggaran = Anggaran::select('id', 'kode_anggaran', 'nama_kegiatan', 'sisa_anggaran')->get();
+
+        if ($mitra->isEmpty() && $anggaran->isEmpty()) {
+            return redirect()->back()->with('error', 'Data anggaran atau mitra masih kosong silahkan isi terlebih dahulu.');
+        }
+
         return view('kontrak.edit', compact('title', 'kontrak', 'mitra', 'anggaran'));
     }
 
