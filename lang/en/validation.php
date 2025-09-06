@@ -164,7 +164,7 @@ return [
         'nip' => 'NIP',
         'current_password' => 'Password saat ini',
         'new_password' => 'Password baru',
-        'confirm_password' => 'Konfirmasi password'
+        'new_password_confirmation' => 'Konfirmasi password'
     ],
 
 ];

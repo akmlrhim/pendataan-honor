@@ -10,12 +10,21 @@ class MitraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Mitra';
-        $mitra = Mitra::paginate(10);
-        return view('mitra.index', compact('title', 'mitra'));
+
+        $keyword = $request->search;
+
+        $mitra = Mitra::when($keyword, function ($query, $keyword) {
+            return $query->where('nama_lengkap', 'like', "%{$keyword}%");
+        })
+            ->paginate(10)
+            ->appends(['search' => $keyword]);
+
+        return view('mitra.index', compact('title', 'mitra', 'keyword'));
     }
+
 
     /**
      * Show the form for creating a new resource.

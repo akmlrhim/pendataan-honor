@@ -85,6 +85,10 @@
       width: 45%;
     }
 
+    .uppercase {
+      text-transform: uppercase
+    }
+
     .page-break {
       page-break-after: always;
     }
@@ -95,14 +99,14 @@
 
   <div class="header">
     <p class="bold underline">PERJANJIAN KERJA</p>
-    <p class="bold">PETUGAS PENGUMPULAN DATA SURVEI</p>
+    <p class="bold uppercase">PETUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
     <p class="bold">KEGIATAN BULAN JUNI 2025</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
   <p class="nomor-surat">NOMOR: 221/SPK/63051/KP.200/06/2025</p>
   <br>
   <div class="content">
-    <p>Pada hari ini, Jum'at, Tanggal Tiga Puluh Bulan Mei Tahun Dua Ribu Dua Puluh Lima, bertempat di kantor Badan
+    <p>Pada hari ini, {{ $kontrak->tanggal_kontrak_terbilang }}, bertempat di kantor Badan
       Pusat Statistik Kabupaten Tapin Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:</p>
     <table style="border: none">
       <tr style="border: none;">
@@ -115,20 +119,23 @@
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none;">Petugas Pengumpulan Data Survei, berkedudukan di Perintis Raya Kabupaten Tapin,
+        <td style="border: none;">Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei,
+          berkedudukan di Perintis Raya Kabupaten Tapin,
           bertindak untuk dan atas nama diri sendiri, selanjutnya disebut sebagai <span class="bold">PIHAK
             KEDUA</span>.</td>
       </tr>
     </table>
     <p>bahwa <span class="bold">PIHAK PERTAMA</span> dan <span class="bold">PIHAK KEDUA</span> yang secara
       bersama-sama disebut <span class="bold">PARA PIHAK</span>, sepakat untuk mengikatkan diri dalam Perjanjian Kerja
-      Petugas Pengumpulan Data Survei di Badan Pusat Statistik Kabupaten Tapin, yang selanjutnya disebut Perjanjian,
+      Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei di Badan Pusat Statistik Kabupaten
+      Tapin, yang selanjutnya disebut Perjanjian,
       dengan ketentuan-ketentuan sebagai berikut:</p>
 
     <p class="pasal">Pasal 1</p>
     <p><span class="bold">PIHAK PERTAMA</span> memberikan pekerjaan kepada <span class="bold">PIHAK KEDUA</span> dan
       <span class="bold">PIHAK KEDUA</span> menerima pekerjaan dari <span class="bold">PIHAK PERTAMA</span> sebagai
-      Petugas Pengumpulan Data Survei dengan lingkup pekerjaan yang ditetapkan oleh <span class="bold">PIHAK
+      Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei dengan lingkup pekerjaan yang
+      ditetapkan oleh <span class="bold">PIHAK
         PERTAMA</span>.
     </p>
 

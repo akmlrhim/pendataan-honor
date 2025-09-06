@@ -7,12 +7,16 @@
   <meta http-equiv="Content-Type" content="text/html, charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Sensus APPS</title>
+  <title>BPS Kab.Tapin - Login</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
     rel="stylesheet">
+
+  <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
+
+  <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
 
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
@@ -122,7 +126,6 @@
         </div>
       </div>
 
-      <!-- Footer kecil -->
       <div class="text-center mt-3">
         <p class="text-muted">&copy; {{ date('Y') }} BPS Kab. Tapin</p>
       </div>

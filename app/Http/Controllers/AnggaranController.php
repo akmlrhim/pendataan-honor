@@ -11,12 +11,21 @@ class AnggaranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Anggaran';
-        $anggaran = Anggaran::paginate(10);
-        return view('anggaran.index', compact('title', 'anggaran'));
+        $search = $request->input('search');
+
+        $anggaran = Anggaran::when($search, function ($query, $search) {
+            $query->where('kode_anggaran', 'like', "%{$search}%")
+                ->orWhere('nama_kegiatan', 'like', "%{$search}%");
+        })->paginate(10);
+
+        $anggaran->appends(['search' => $search]);
+
+        return view('anggaran.index', compact('title', 'anggaran', 'search'));
     }
+
 
     /**
      * Show the form for creating a new resource.

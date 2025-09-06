@@ -12,12 +12,28 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Pengguna';
-        $user = User::where('id', '!=', Auth::id())->paginate(10);
+
+        $query = User::where('id', '!=', Auth::id());
+
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+
+        if ($request->filled('keyword')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('nama_lengkap', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('nip', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        $user = $query->paginate(10)->withQueryString();
+
         return view('user.index', compact('title', 'user'));
     }
+
 
     /**
      * Show the form for creating a new resource.

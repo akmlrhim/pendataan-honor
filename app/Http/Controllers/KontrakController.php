@@ -14,13 +14,24 @@ class KontrakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Kontrak';
-        $kontrak = Kontrak::with('mitra')->paginate(10);
+        $mitra_id = $request->mitra_id;
 
-        return view('kontrak.index', compact('title', 'kontrak'));
+        $kontrak = Kontrak::with('mitra')
+            ->when($mitra_id, function ($query, $mitra_id) {
+                $query->where('mitra_id', $mitra_id);
+            })
+            ->paginate(10);
+
+        $kontrak->appends(['mitra_id' => $mitra_id]);
+
+        $mitra = Mitra::all();
+
+        return view('kontrak.index', compact('title', 'kontrak', 'mitra', 'mitra_id'));
     }
+
 
     /**
      * Show the form for creating a new resource.

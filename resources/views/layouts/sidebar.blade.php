@@ -1,18 +1,30 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
+  {{-- Logo --}}
   <a href="index3.html" class="brand-link">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-      class="lucide lucide-chart-spline-icon lucide-chart-spline ml-2">
-      <path d="M3 3v16a2 2 0 0 0 2 2h16" />
-      <path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7" />
-    </svg>
-    <span class="brand-text font-weight-light ml-2 font-weight-bold">Sensus APPS</span>
+    <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" alt="AdminLTE Logo" class="brand-image img-circle" />
+    <span class="brand-text font-weight-light">BPS Kab. Tapin</span>
   </a>
 
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar Menu -->
+
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{{ asset('img/default_user.webp') }}" loading="lazy" class="img-circle" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">{{ Auth::user()->nama_lengkap }}</a>
+        <small class="d-block text-light">
+          {{ match (Auth::user()->role) {
+              'ketua_tim' => 'Ketua Tim',
+              'umum' => 'Umum',
+              'user' => 'User',
+          } }}
+        </small>
+      </div>
+    </div>
+
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
@@ -74,7 +86,8 @@
 
 
         <li class="nav-item">
-          <a href="{{ route('kontrak.index') }}" class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
+          <a href="{{ route('kontrak.index') }}"
+            class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-signature-icon lucide-signature nav-icon">
