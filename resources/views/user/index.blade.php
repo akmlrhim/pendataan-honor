@@ -32,7 +32,7 @@
               <div class="col-md-4 mb-2">
                 <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
                 <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
-                  placeholder="Masukkan Nama Lengkap atau NIP">
+                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" />
               </div>
 
               <!-- Tombol -->
