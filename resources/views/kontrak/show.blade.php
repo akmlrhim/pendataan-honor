@@ -76,7 +76,7 @@
           <h5 class="card-title">Daftar Tugas</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-sm">
+          <table class="table table-bordered table-sm">
             <thead class="bg-light">
               <tr>
                 <th>#</th>

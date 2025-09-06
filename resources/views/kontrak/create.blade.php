@@ -106,7 +106,7 @@
           <hr>
           <!-- Tugas -->
           <h5 class="text-primary">Tugas / Kegiatan</h5>
-          <table class="table table-bordered text-sm table-responsive" id="tugas-table">
+          <table class="table table-bordered table-responsive" id="tugas-table">
             <thead>
               <tr>
                 <th>Anggaran</th>
@@ -250,7 +250,7 @@
         <input type="text" name="tugas[${rowIndex}][harga_satuan_display]"  automplete="off" 
                class="form-control currency-input"
                value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') ? number_format(old('tugas.' . '${rowIndex}' . '.harga_satuan'), 0, ',', '.') : '' }}">
-        <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" 
+        <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" autocomplete="off"
                class="harga-satuan-hidden"
                value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
       </td>

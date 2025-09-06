@@ -21,7 +21,7 @@
         <li class="nav-header text-muted">Utama</li>
 
         <li class="nav-item">
-          <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home.*') ? 'active' : '' }}">
+          <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard nav-icon">
@@ -107,7 +107,8 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('profil.index') }}"
+            class="nav-link {{ request()->routeIs('profil.*') ? 'active' : '' }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-user-round-cog-icon lucide-user-round-cog nav-icon">

@@ -161,7 +161,10 @@ return [
         'tugas.*.jumlah_target_dokumen' => 'Jumlah target dokumen',
         'tugas.*.satuan'            => 'Satuan',
         'tugas.*.harga_satuan'      => 'Harga per satuan',
-        'nip' => 'NIP'
+        'nip' => 'NIP',
+        'current_password' => 'Password saat ini',
+        'new_password' => 'Password baru',
+        'confirm_password' => 'Konfirmasi password'
     ],
 
 ];

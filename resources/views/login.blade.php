@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
     rel="stylesheet">
 
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -20,7 +20,7 @@
 
   <style>
     body {
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-family: "Source Sans 3", system-ui, sans-serif;
     }
   </style>
 </head>
@@ -33,8 +33,8 @@
 
           <!-- Header -->
           <div class="text-center mb-4">
-            <h3 class="mb-1 font-weight-bold text-primary">Login</h3>
-            <small class="text-muted">Silakan masuk untuk melanjutkan</small>
+            <h1 class="mb-1 font-weight-bold text-primary">Login</h1>
+            <h6 class="text-muted">Silakan masuk untuk melanjutkan</h6>
           </div>
 
           <!-- Alert error -->
@@ -71,7 +71,7 @@
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary toggle-password" type="button">
                     <!-- 👁️ eye (default visible) -->
-                    <span class="icon-eye">
+                    <span class="icon-eye-off d-none">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-eye">
@@ -84,7 +84,7 @@
                     </span>
 
                     <!-- 🚫👁️ eye-off (hidden by default) -->
-                    <span class="icon-eye-off d-none">
+                    <span class="icon-eye">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-eye-off">
@@ -124,7 +124,7 @@
 
       <!-- Footer kecil -->
       <div class="text-center mt-3">
-        <small class="text-muted">&copy; {{ date('Y') }} BPS Kab. Tapin</small>
+        <p class="text-muted">&copy; {{ date('Y') }} BPS Kab. Tapin</p>
       </div>
     </div>
   </div>
@@ -133,8 +133,8 @@
     document.addEventListener("DOMContentLoaded", function() {
       const toggleBtn = document.querySelector(".toggle-password");
       const passwordInput = document.getElementById("password");
-      const eye = toggleBtn.querySelector(".icon-eye");
-      const eyeOff = toggleBtn.querySelector(".icon-eye-off");
+      const eye = toggleBtn.querySelector(".icon-eye-off");
+      const eyeOff = toggleBtn.querySelector(".icon-eye");
 
       toggleBtn.addEventListener("click", function() {
         const isPassword = passwordInput.getAttribute("type") === "password";
