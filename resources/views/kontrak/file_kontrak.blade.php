@@ -97,14 +97,18 @@
 
 <body>
 
+  {{-- perjanjian kerja  --}}
   <div class="header">
-    <p class="bold underline">PERJANJIAN KERJA</p>
+    <p class="bold">PERJANJIAN KERJA</p>
     <p class="bold uppercase">PETUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
-    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }} 2025</p>
+    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }}
+      {{ $kontrak->created_at->format('Y') }}
+    </p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
   <p class="nomor-surat">NOMOR:
-    {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}</p>
+    {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+  </p>
   <br>
   <div class="content">
     <p>Pada hari ini, {{ $kontrak->tanggal_kontrak_terbilang }}, bertempat di kantor Badan
@@ -132,6 +136,7 @@
       Tapin, yang selanjutnya disebut Perjanjian,
       dengan ketentuan-ketentuan sebagai berikut:</p>
 
+    {{-- pasal 1 --}}
     <p class="pasal">Pasal 1</p>
     <p><span class="bold">PIHAK PERTAMA</span> memberikan pekerjaan kepada <span class="bold">PIHAK KEDUA</span> dan
       <span class="bold">PIHAK KEDUA</span> menerima pekerjaan dari <span class="bold">PIHAK PERTAMA</span> sebagai
@@ -140,6 +145,7 @@
         PERTAMA</span>.
     </p>
 
+    {{-- pasal 2 --}}
     <p class="pasal">Pasal 2</p>
     <ol type="(1)">
       <li>
@@ -160,6 +166,7 @@
       </li>
     </ol>
 
+    {{-- pasal 3 --}}
     <p class="pasal">Pasal 3</p>
     <p>Pelaksanaan pekerjaan pada Perjanjian ini, dilakukan melalui:</p>
     <ol type="a">
@@ -175,102 +182,174 @@
       </li>
     </ol>
 
+    <br />
+
+    {{-- pasal 4 --}}
     <p class="pasal">Pasal 4</p>
-    <p>Jangka waktu Perjanjian ini terhitung selama satu bulan terhitung sejak tanggal 2 Juni 2025 sampai dengan tanggal
-      30 Juni 2025. Dikecualikan sebagaimana diatur pada ayat (1), apabila dari hasil evaluasi sebagaimana Pasal 2 ayat
-      (3) dianggap tidak layak sebagai petugas Pengumpulan Data Survei, maka <span class="bold">PIHAK PERTAMA</span>
-      dapat mengakhiri perjanjian ini secara sepihak.</p>
+    <ol type="1">
+      <li> Jangka waktu Perjanjian ini terhitung selama satu bulan terhitung sejak tanggal
+        {{ $kontrak->tanggal_mulai->translatedFormat('d F Y') }} sampai dengan tanggal
+        {{ $kontrak->tanggal_berakhir->translatedFormat('d F Y') }}.
+      </li>
 
+      <li>Dikecualikan sebagaimana diatur pada ayat (1), apabila dari hasil evaluasi sebagaimana Pasal 2 ayat (3)
+        dianggap tidak layak sebagai petugas Pengumpulan Data Survei, maka <span class="bold">PIHAK PERTAMA</span>
+        dapat mengakhiri perjanjian ini secara sepihak.
+      </li>
+    </ol>
+
+    {{-- pasal 5 --}}
     <p class="pasal">Pasal 5</p>
-    <p><span class="bold">PIHAK KEDUA</span> berkewajiban menyelesaikan seluruh pekerjaan yang diberikan oleh <span
-        class="bold">PIHAK PERTAMA</span> sesuai ruang lingkup pekerjaan sebagaimana dimaksud dalam Pasal 2. <span
-        class="bold">PIHAK KEDUA</span> untuk waktu yang tidak terbatas dan/atau tidak terikat kepada masa berlakunya
-      Perjanjian ini, menjamin untuk memberlakukan sebagai rahasia setiap data/informasi yang diterima atau
-      diperolehnya, serta menjamin bahwa keterangan demikian hanya dipergunakan untuk melaksanakan tujuan menurut
-      Perjanjian ini.</p>
+    <ol type="1">
+      <li>
+        <span class="bold">PIHAK KEDUA</span> berkewajiban menyelesaikan seluruh pekerjaan yang diberikan oleh <span
+          class="bold">PIHAK PERTAMA</span> sesuai ruang lingkup pekerjaan sebagaimana dimaksud dalam Pasal 2.
+      </li>
+      <li>
+        <span class="bold">PIHAK KEDUA</span> untuk waktu yang tidak terbatas dan/atau tidak terikat kepada masa
+        berlakunya Perjanjian ini, menjamin untuk memberlakukan sebagai rahasia setiap data/informasi yang diterima atau
+        diperolehnya, serta menjamin bahwa keterangan demikian hanya dipergunakan untuk melaksanakan tujuan menurut
+        Perjanjian ini.</p>
+      </li>
+    </ol>
 
+    {{-- pasal 6 --}}
     <p class="pasal">Pasal 6</p>
-    <p><span class="bold">PIHAK KEDUA</span> apabila melakukan peminjaman dokumen/data/aset milik <span
-        class="bold">PIHAK PERTAMA</span>, wajib menjaga dan menggunakan sesuai dengan tujuan perjanjian dan
-      mengembalikan dalam keadaan utuh sama dengan saat peminjaman, serta dilarang menggandakan, menyalin, dan/atau
-      mendokumentasikan dalam bentuk foto atau bentuk apapun untuk kepentingan pribadi ataupun kepentingan lain yang
-      tidak berkaitan dengan tujuan perjanjian ini. <span class="bold">PIHAK KEDUA</span> dilarang memberikan
-      dokumen/data/asset milik <span class="bold">PIHAK PERTAMA</span> yang berada dalam penguasaan <span
-        class="bold">PIHAK KEDUA</span>, baik secara langsung maupun tidak langsung, termasuk memberikan akses kepada
-      pihak lain untuk menggunakan, menyalin, memfotokopi, dan/atau mendokumentasikan dalam bentuk foto atau bentuk
-      apapun, sehingga informasi diketahui oleh pihak lain untuk tujuan apapun.</p>
+    <ol type="1">
+      <li>
+        <span class="bold">PIHAK KEDUA</span> apabila melakukan peminjaman dokumen/data/aset milik <span
+          class="bold">PIHAK PERTAMA</span>, wajib menjaga dan menggunakan sesuai dengan tujuan perjanjian dan
+        mengembalikan dalam keadaan utuh sama dengan saat peminjaman, serta dilarang menggandakan, menyalin, dan/atau
+        mendokumentasikan dalam bentuk foto atau bentuk apapun untuk kepentingan pribadi ataupun kepentingan lain yang
+        tidak berkaitan dengan tujuan perjanjian ini.
+      </li>
+      <li>
+        <span class="bold">PIHAK KEDUA</span> dilarang memberikan
+        dokumen/data/asset milik <span class="bold">PIHAK PERTAMA</span> yang berada dalam penguasaan <span
+          class="bold">PIHAK KEDUA</span>, baik secara langsung maupun tidak langsung, termasuk memberikan akses
+        kepada
+        pihak lain untuk menggunakan, menyalin, memfotokopi, dan/atau mendokumentasikan dalam bentuk foto atau bentuk
+        apapun, sehingga informasi diketahui oleh pihak lain untuk tujuan apapun.
+      </li>
+    </ol>
 
+    {{-- pasal 7 --}}
     <p class="pasal">Pasal 7</p>
-    <p><span class="bold">PIHAK KEDUA</span> berhak untuk mendapatkan honorarium dari <span class="bold">PIHAK
-        PERTAMA</span> maksimal sebesar Rp1,126,000.- (Satu Juta Seratus Dua Puluh Enam Ribu Rupiah) dengan alokasi
-      beban kerja seperti terlampir, sudah termasuk uang transport (kecuali jika wilayah kerjanya merupakan daerah
-      sulit), uang makan, biaya pajak, bea materai, pulsa dan kuota internet untuk komunikasi, dan jasa pelayanan
-      keuangan. Pembayaran honorarium sebagaimana ayat (1) dilakukan setelah seluruh pekerjaan diselesaikan yang
-      dibuktikan dengan Berita Acara Serah Terima. Dikecualikan sebagaimana diatur pada ayat 1, apabila <span
-        class="bold">PIHAK KEDUA</span> tidak dapat menyelesaikan pekerjaan sesuai alokasi beban, maka <span
-        class="bold">PIHAK PERTAMA</span> membayarkan honorarium kepada <span class="bold">PIHAK KEDUA</span> sesuai
-      pekerjaan yang telah diselesaikan dengan melampirkan keterangan dan bukti dukungnya bila ada bagian pekerjaan yang
-      belum diselesaikan.</p>
+    <ol type="1">
+      <li>
+        <span class="bold">PIHAK KEDUA</span> berhak untuk mendapatkan honorarium dari <span class="bold">PIHAK
+          PERTAMA</span> maksimal sebesar <span
+          class="bold">Rp{{ number_format($kontrak->total_honor, 0, ',', ',') }}.-
+          ({{ $kontrak->total_honor_terbilang }})</span> dengan alokasi beban kerja seperti terlampir, sudah termasuk
+        uang transport (kecuali jika wilayah kerjanya merupakan daerah sulit), uang makan, biaya pajak, bea materai,
+        pulsa dan kuota internet untuk komunikasi, dan jasa pelayanan keuangan.
+      </li>
+      <li>
+        Pembayaran honorarium sebagaimana ayat (1) dilakukan setelah seluruh pekerjaan diselesaikan yang
+        dibuktikan dengan Berita Acara Serah Terima.
+      </li>
+      <li>
+        Dikecualikan sebagaimana diatur pada ayat 1, apabila <span class="bold">PIHAK KEDUA</span> tidak dapat
+        menyelesaikan pekerjaan sesuai alokasi beban, maka <span class="bold">PIHAK PERTAMA</span> membayarkan
+        honorarium kepada <span class="bold">PIHAK KEDUA</span> sesuai pekerjaan yang telah diselesaikan dengan
+        melampirkan keterangan dan bukti dukungnya bila ada bagian pekerjaan yang belum diselesaikan.
+      </li>
+    </ol>
 
+    {{-- pasal 8 --}}
     <p class="pasal">Pasal 8</p>
     <p>Pembayaran honorarium sebagaimana dimaksud dalam Pasal 7, dilakukan setelah <span class="bold">PIHAK
         KEDUA</span> menyerahkan seluruh hasil pekerjaan yang telah diselesaikan kepada <span class="bold">PIHAK
         PERTAMA</span> atau seperti yang disebutkan dalam pasal 7 ayat 3. Pembayaran honorarium dilaksanakan pada bulan
       berikutnya setelah bulan pelaksanaan pekerjaan.</p>
 
+    {{-- pasal 9 --}}
     <p class="pasal">Pasal 9</p>
     <p><span class="bold">PIHAK PERTAMA</span> melakukan evaluasi atas target penyelesaian pekerjaan dan kualitas
-      hasil Pengumpulan Data Survei yang dilaksanakan oleh <span class="bold">PIHAK KEDUA</span> secara berkala setiap
+      hasil {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei yang dilaksanakan oleh <span
+        class="bold">PIHAK KEDUA</span> secara berkala setiap
       minggu.</p>
 
+    {{-- Pasal 10  --}}
     <p class="pasal">Pasal 10</p>
     <p>Penyerahan seluruh hasil pekerjaan yang dilaksanakan oleh <span class="bold">PIHAK KEDUA</span> kepada <span
         class="bold">PIHAK PERTAMA</span> dinyatakan dalam Berita Acara Serah Terima Hasil Pekerjaan dan
       ditandatangani oleh <span class="bold">PARA PIHAK</span> selambat-lambatnya sesuai jangka waktu Perjanjian.</p>
 
+    {{-- Pasal 11 --}}
     <p class="pasal">Pasal 11</p>
     <p><span class="bold">PIHAK PERTAMA</span> dapat mengakhiri Perjanjian ini secara sepihak sewaktu-waktu apabila
       <span class="bold">PIHAK KEDUA</span> tidak dapat melaksanakan kewajibannya sebagaimana dimaksud dalam
       Perjanjian ini.
     </p>
 
+    {{-- Pasal 12 --}}
     <p class="pasal">Pasal 12</p>
-    <p>Apabila <span class="bold">PIHAK KEDUA</span> mengundurkan diri dengan tidak menyelesaikan pekerjaan yang
-      menjadi tanggung jawabnya, maka dikenakan sanksi administratif dikeluarkan dari daftar Mitra Statistik dan wajib
-      membayar ganti rugi kepada <span class="bold">PIHAK PERTAMA</span> sebesar biaya yang sudah dikeluarkan untuk
-      pelatihan/briefing. Dikecualikan tidak membayar ganti rugi sebagaimana dimaksud pada ayat (1) kepada <span
-        class="bold">PIHAK PERTAMA</span>, apabila <span class="bold">PIHAK KEDUA</span> meninggal dunia,
-      mengundurkan diri karena sakit dengan keterangan rawat inap, dan/atau telah diberikan Surat Pemutusan Perjanjian
-      Kerja dari <span class="bold">PIHAK PERTAMA</span>. Dalam hal terjadi peristiwa sebagaimana dimaksud pada ayat
-      (2), <span class="bold">PIHAK PERTAMA</span> membayarkan honorarium kepada <span class="bold">PIHAK
-        KEDUA</span> sesuai pekerjaan yang telah diselesaikan dinyatakan dengan surat keterangan oleh kepala satuan
-      kerja. Apabila <span class="bold">PIHAK KEDUA</span> melanggar ketentuan dalam Pasal 6 perjanjian ini, akan
-      diberhentikan dengan membayar denda dan diberikan sanksi sesuai ketentuan peraturan perundang-undangan.</p>
+    <ol type="1">
+      <li>
+        Apabila <span class="bold">PIHAK KEDUA</span> mengundurkan diri dengan tidak menyelesaikan pekerjaan yang
+        menjadi tanggung jawabnya, maka dikenakan sanksi administratif dikeluarkan dari daftar Mitra Statistik dan wajib
+        membayar ganti rugi kepada <span class="bold">PIHAK PERTAMA</span> sebesar biaya yang sudah dikeluarkan untuk
+        pelatihan/briefing.
+      </li>
+      <li>
+        Dikecualikan tidak membayar ganti rugi sebagaimana dimaksud pada ayat (1) kepada <span class="bold">PIHAK
+          PERTAMA</span>, apabila <span class="bold">PIHAK KEDUA</span> meninggal dunia, mengundurkan diri karena
+        sakit dengan keterangan rawat inap, dan/atau telah diberikan Surat Pemutusan Perjanjian
+        Kerja dari <span class="bold">PIHAK PERTAMA</span>.
+      </li>
+      <li>alam hal terjadi peristiwa sebagaimana dimaksud pada ayat (2), <span class="bold">PIHAK PERTAMA</span>
+        membayarkan honorarium kepada <span class="bold">PIHAK KEDUA</span> sesuai pekerjaan yang telah diselesaikan
+        dinyatakan dengan surat keterangan oleh kepala satuan kerja. </li>
+      <li>
+        Apabila <span class="bold">PIHAK KEDUA</span> melanggar ketentuan dalam Pasal 6 perjanjian ini, akan
+        diberhentikan dengan membayar denda dan diberikan sanksi sesuai ketentuan peraturan perundang-undangan.
+      </li>
+    </ol>
 
+    {{-- pasal 13 --}}
     <p class="pasal">Pasal 13</p>
-    <p>Apabila terjadi Keadaan Kahar, yang meliputi bencana alam dan bencana sosial, <span class="bold">PIHAK
-        KEDUA</span> memberitahukan kepada <span class="bold">PIHAK PERTAMA</span> dalam waktu paling lambat 7 (tujuh)
-      hari sejak mengetahui atas kejadian Keadaan Kahar dengan menyertakan bukti. Pada saat terjadi Keadaan Kahar,
-      pelaksanaan pekerjaan oleh <span class="bold">PIHAK KEDUA</span> dihentikan sementara dan dilanjutkan kembali
-      setelah Keadaan Kahar berakhir, namun apabila akibat Keadaan Kahar tidak memungkinkan dilanjutkan/diselesaikannya
-      pelaksanaan pekerjaan, <span class="bold">PIHAK KEDUA</span> berhak menerima honorarium sesuai pekerjaan yang
-      telah diselesaikan.</p>
+    <ol type="1">
+      <li>
+        Apabila terjadi Keadaan Kahar, yang meliputi bencana alam dan bencana sosial, <span class="bold">PIHAK
+          KEDUA</span> memberitahukan kepada <span class="bold">PIHAK PERTAMA</span> dalam waktu paling lambat 7
+        (tujuh) hari sejak mengetahui atas kejadian Keadaan Kahar dengan menyertakan bukti.
+      </li>
+      <li>
+        Pada saat terjadi Keadaan Kahar, pelaksanaan pekerjaan oleh <span class="bold">PIHAK KEDUA</span> dihentikan
+        sementara dan dilanjutkan kembali setelah Keadaan Kahar berakhir, namun apabila akibat Keadaan Kahar tidak
+        memungkinkan dilanjutkan/diselesaikannya pelaksanaan pekerjaan, <span class="bold">PIHAK KEDUA</span> berhak
+        menerima honorarium sesuai pekerjaan yang telah diselesaikan.
+      </li>
+    </ol>
 
+    {{-- pasal 14 --}}
     <p class="pasal">Pasal 14</p>
-    <p>Segala perselisihan yang mungkin timbul sebagai akibat dari Perjanjian ini, diselesaikan secara musyawarah untuk
-      mufakat oleh <span class="bold">PARA PIHAK</span>. Apabila musyawarah untuk mufakat sebagaimana dimaksud pada
-      ayat (1) tidak berhasil, maka <span class="bold">PARA PIHAK</span> sepakat untuk menyelesaikan melalui
-      Kepaniteraan Pengadilan Negeri Rantau. Selama perselisihan dalam proses penyelesaian pengadilan, <span
-        class="bold">PIHAK PERTAMA</span> dan <span class="bold">PIHAK KEDUA</span> wajib tetap melaksanakan
-      kewajiban masing-masing berdasarkan Perjanjian ini.</p>
+    <ol>
+      <li>
+        Segala perselisihan yang mungkin timbul sebagai akibat dari Perjanjian ini, diselesaikan secara musyawarah untuk
+        mufakat oleh <span class="bold">PARA PIHAK</span>.
+      </li>
+      <li>
+        Apabila musyawarah untuk mufakat sebagaimana dimaksud pada ayat (1) tidak berhasil, maka <span
+          class="bold">PARA PIHAK</span> sepakat untuk menyelesaikan melalui Kepaniteraan Pengadilan Negeri Rantau.
+      </li>
+      <li>
+        Selama perselisihan dalam proses penyelesaian pengadilan, <span class="bold">PIHAK PERTAMA</span> dan <span
+          class="bold">PIHAK KEDUA</span> wajib tetap melaksanakan kewajiban masing-masing berdasarkan Perjanjian
+        ini.
+      </li>
+    </ol>
 
+    {{-- pasal 15  --}}
     <p class="pasal">Pasal 15</p>
     <p>Hal-hal yang belum diatur dalam Perjanjian ini atau segala perubahan terhadap Perjanjian ini diatur lebih lanjut
       oleh <span class="bold">PARA PIHAK</span> dalam perjanjian tambahan/adendum dan merupakan bagian tidak
       terpisahkan dari Perjanjian ini.</p>
 
     <p>Demikian Perjanjian ini dibuat dan ditandatangani oleh <span class="bold">PARA PIHAK</span> dalam 2 (dua)
-      rangkap asli bermeterai cukup, tanpa paksaan dari <span class="bold">PIHAK</span> manapun dan untuk dilaksanakan
+      rangkap asli bermeterai cukup, tanpa paksaan dari <span class="bold">PIHAK</span> manapun dan untuk
+      dilaksanakan
       oleh <span class="bold">PARA PIHAK</span>.</p>
   </div>
 
@@ -279,7 +358,7 @@
       <tr style="border:none;">
         <td style="border:none; width:50%; text-align:center;">
           PIHAK KEDUA,<br><br><br><br>
-          <span class="bold underline">Susi Herlina</span>
+          <span class="bold underline">{{ $kontrak->mitra->nama_lengkap }}</span>
         </td>
         <td style="border:none; width:50%; text-align:center;">
           PIHAK PERTAMA,<br><br><br><br>
@@ -293,9 +372,11 @@
 
   <div class="page-break"></div>
 
+  {{-- alokasi  --}}
   <div class="sub-header">
-    <p class="bold">ALOKASI TUGAS PENGUMPULAN DATA SURVEI</p>
-    <p class="bold">BULAN JUNI 2025 BPS KABUPATEN TAPIN</p>
+    <p class="bold uppercase">ALOKASI TUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
+    <p class="bold uppercase">BULAN {{ $kontrak->created_at->translatedFormat('F') }}
+      {{ $kontrak->created_at->format('Y') }} BPS KABUPATEN TAPIN</p>
   </div>
   <br>
   <table style="border: none">
@@ -307,7 +388,9 @@
     <tr style="border: none;">
       <td style="border: none;">No. SURAT PERJANJIAN</td>
       <td style="border: none;">:</td>
-      <td style="border: none;">221/SPK/63051/KP.630/06/2025</td>
+      <td style="border: none;">
+        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.630/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+      </td>
     </tr>
   </table>
 
@@ -338,7 +421,7 @@
           <td class="center">{{ $index + 1 }}</td>
           <td>{{ $item->anggaran->kode_anggaran }}</td>
           <td>{{ $item->deskripsi_tugas }}</td>
-          <td class="center">{{ $item->jumlah_dokumen }}</td>
+          <td class="center">{{ $item->jumlah_dokumen }} {{ $item->satuan }}</td>
           <td>{{ 'Rp ' . number_format($item->harga_satuan, 0, ',', '.') }}
           </td>
           <td style="text-align: right;">{{ 'Rp ' . number_format($item->harga_total_tugas, 0, ',', '.') }}</td>
@@ -348,9 +431,10 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="6" class="bold" style="text-align: center;">TOTAL KESELURUHAN</td>
-        <td class="bold" style="text-align: right;">
-          {{ 'Rp ' . number_format($kontrak->total_honor, 0, ',', '.') }}
+        <td colspan="2" class="bold" style="text-align: center;">TOTAL KESELURUHAN</td>
+        <td colspan="5" class="bold" style="text-align: right;">
+          Rp{{ number_format($kontrak->total_honor, 0, ',', ',') }}.-
+          ({{ $kontrak->total_honor_terbilang }})
         </td>
       </tr>
     </tfoot>
@@ -371,8 +455,10 @@
   </div>
   <div class="page-break"></div>
 
+
+  {{-- berita acara serah terima  --}}
   <div class="header">
-    <p class="bold underline">BERITA ACARA SERAH TERIMA PEKERJAAN</p>
+    <p class="bold">BERITA ACARA SERAH TERIMA PEKERJAAN</p>
     <p class="bold">PENGUMPULAN DATA SURVEI</p>
     <p class="bold">KEGIATAN BULAN JUNI 2025</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>

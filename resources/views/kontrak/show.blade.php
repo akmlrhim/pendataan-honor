@@ -44,15 +44,22 @@
             <tbody>
               <tr>
                 <th style="width:200px;">Tanggal Kontrak</th>
-                <td>{{ \Carbon\Carbon::parse($kontrak->tanggal_kontrak)->translatedFormat('d F Y') }}</td>
+                <td>{{ $kontrak->tanggal_kontrak->translatedFormat('d F Y') }}</td>
               </tr>
               <tr>
                 <th>Tanggal Surat</th>
-                <td>{{ \Carbon\Carbon::parse($kontrak->tanggal_surat)->translatedFormat('d F Y') }}</td>
+                <td>{{ $kontrak->tanggal_surat->translatedFormat('d F Y') }}</td>
               </tr>
               <tr>
                 <th>Tanggal BAST</th>
-                <td>{{ \Carbon\Carbon::parse($kontrak->tanggal_bast)->translatedFormat('d F Y') }}</td>
+                <td>{{ $kontrak->tanggal_bast->translatedFormat('d F Y') }}</td>
+              </tr>
+              <tr>
+                <th>Jadwal</th>
+                <td>
+                  {{ $kontrak->tanggal_mulai->translatedFormat('d F Y') }} -
+                  {{ $kontrak->tanggal_berakhir->translatedFormat('d F Y') }}
+                </td>
               </tr>
               <tr>
                 <th>Keterangan</th>
