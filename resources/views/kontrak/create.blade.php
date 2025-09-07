@@ -92,15 +92,41 @@
 
             <!-- Kanan -->
             <div class="col-sm-6">
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="tanggal_mulai">Jadwal (Tgl. Mulai)</label>
+                    <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                      id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_mulai')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="tanggal_berakhir">Jadwal (Tgl. Berakhir)</label>
+                    <input type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror"
+                      id="tanggal_berakhir" name="tanggal_berakhir" value="{{ old('tanggal_berakhir') }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_berakhir')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="keterangan">Keterangan</label>
-                <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" rows="12"
+                <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" rows="2"
                   placeholder="Masukkan keterangan (opsional)" name="keterangan">{{ old('keterangan') }}</textarea>
                 @error('keterangan')
                   <small class="text-danger">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
             </div>
+
           </div>
 
           <hr>
@@ -132,7 +158,7 @@
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
                           {{ isset($tugas['anggaran_id']) && $tugas['anggaran_id'] == $a->id ? 'selected' : '' }}>
-                          {{ $a->nama_kegiatan }}
+                          {{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}
                         </option>
                       @endforeach
                     </select>
@@ -181,7 +207,7 @@
 
 
                     <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
-                      value="{{ $tugas['harga_satuan'] ?? '' }}">
+                      autocomplete="off" value="{{ $tugas['harga_satuan'] ?? '' }}">
 
                     @error('tugas.' . $i . '.harga_satuan')
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -225,7 +251,7 @@
           @foreach ($anggaran as $a)
             <option value="{{ $a->id }}"
               {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
-              {{ $a->nama_kegiatan }}
+              {{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}
             </option>
           @endforeach
         </select>

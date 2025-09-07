@@ -59,6 +59,8 @@ class KontrakController extends Controller
             'tanggal_kontrak' => 'required|date',
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
+            'tanggal_mulai'    => 'required|date',
+            'tanggal_berakhir'    => 'required|date',
             'keterangan'      => 'nullable|string',
             'tugas'           => 'required|array|min:1',
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
@@ -85,11 +87,17 @@ class KontrakController extends Controller
         }
 
         // Simpan kontrak
+        $lastNumber = Kontrak::max('nomor_kontrak');
+        $nextNumber = $lastNumber ? $lastNumber + 1 : 1;
+
         $kontrak = Kontrak::create([
+            'nomor_kontrak'   => str_pad($nextNumber, 3, '0', STR_PAD_LEFT),
             'mitra_id'        => $request->mitra_id,
             'tanggal_kontrak' => $request->tanggal_kontrak,
             'tanggal_surat'   => $request->tanggal_surat,
             'tanggal_bast'    => $request->tanggal_bast,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_berakhir' => $request->tanggal_berakhir,
             'keterangan'      => $request->keterangan,
             'total_honor'     => $totalHonor,
         ]);
@@ -154,6 +162,8 @@ class KontrakController extends Controller
             'tanggal_kontrak' => 'required|date',
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
+            'tanggal_mulai'    => 'required|date',
+            'tanggal_berakhir'    => 'required|date',
             'keterangan'      => 'nullable|string',
 
             'tugas'                   => 'required|array|min:1',
@@ -257,6 +267,8 @@ class KontrakController extends Controller
                 'tanggal_kontrak' => $request->tanggal_kontrak,
                 'tanggal_surat'   => $request->tanggal_surat,
                 'tanggal_bast'    => $request->tanggal_bast,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_berakhir' => $request->tanggal_berakhir,
                 'keterangan'      => $request->keterangan,
                 'total_honor'     => $totalHonor,
             ]);
@@ -296,6 +308,6 @@ class KontrakController extends Controller
         $kontrak = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])->findOrFail($id);
         $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak'))->setPaper('a4', 'portrait');
 
-        return $pdf->stream('File Kontrak ' . $kontrak->id . '.pdf');
+        return $pdf->stream('File Kontrak ' . $kontrak->nomor_kontrak . '.pdf');
     }
 }

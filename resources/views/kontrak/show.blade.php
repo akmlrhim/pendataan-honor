@@ -80,10 +80,11 @@
             <thead class="bg-light">
               <tr>
                 <th>#</th>
+                <th>Kode</th>
                 <th>Anggaran</th>
                 <th>Deskripsi Tugas</th>
-                <th>Jumlah Target Dokumen</th>
-                <th>Jumlah Dokumen</th>
+                <th>Jlh. Target Dokumen</th>
+                <th>Jlh. Dokumen</th>
                 <th>Satuan</th>
                 <th>Harga Satuan</th>
                 <th>Total</th>
@@ -93,6 +94,7 @@
               @forelse($kontrak->tugas as $index => $tugas)
                 <tr>
                   <td>{{ $index + 1 }}</td>
+                  <td>{{ $tugas->anggaran->kode_anggaran ?? '-' }}</td>
                   <td>{{ $tugas->anggaran->nama_kegiatan ?? '-' }}</td>
                   <td>{{ $tugas->deskripsi_tugas }}</td>
                   <td>{{ $tugas->jumlah_target_dokumen }}</td>
@@ -110,11 +112,11 @@
             @if ($kontrak->tugas->count())
               <tfoot>
                 <tr>
-                  <th colspan="7" class="text-right">Total Honor</th>
+                  <th colspan="8" class="text-right">Total Honor</th>
                   <th>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</th>
                 </tr>
                 <tr>
-                  <th colspan="7" class="text-right">Realisasi</th>
+                  <th colspan="8" class="text-right">Realisasi</th>
                   <th>
                     {{ number_format(($kontrak->tugas->sum('jumlah_dokumen') / $kontrak->tugas->sum('jumlah_target_dokumen')) * 100, 1) }}%
                   </th>

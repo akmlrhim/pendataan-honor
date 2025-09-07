@@ -95,7 +95,6 @@ class AnggaranController extends Controller
         $anggaran->kode_anggaran = $request->kode_anggaran;
         $anggaran->nama_kegiatan = $request->nama_kegiatan;
         $anggaran->batas_honor = $request->batas_honor;
-        $anggaran->sisa_anggaran = $request->batas_honor; // Reset sisa_anggaran to the new batas_honor value
         $updated = $anggaran->save();
 
         if ($updated) {

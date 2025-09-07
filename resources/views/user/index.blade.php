@@ -13,14 +13,14 @@
 
     <div class="col-12">
       <form action="{{ route('user.index') }}" method="GET">
-        <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card shadow-sm rounded-lg">
           <div class="card-body">
             <div class="form-row align-items-center">
 
               <!-- Filter Role -->
               <div class="col-md-3 mb-2">
                 <label for="role" class="text-primary font-weight-bold">Role</label>
-                <select name="role" id="role" class="form-control" onchange="this.form.submit()">
+                <select name="role" id="role" class="custom-select" onchange="this.form.submit()">
                   <option value="">-- Semua Role --</option>
                   <option value="ketua_tim" {{ request('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
                   <option value="umum" {{ request('role') == 'umum' ? 'selected' : '' }}>Umum</option>

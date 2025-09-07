@@ -8,13 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Kontrak extends Model
 {
     protected $table = 'kontrak';
+
     protected $fillable = [
+        'nomor_kontrak',
         'mitra_id',
         'tanggal_kontrak',
         'tanggal_surat',
         'tanggal_bast',
         'status',
-        'total_honor'
+        'total_honor',
+        'keterangan',
+        'tanggal_mulai',
+        'tanggal_berakhir'
     ];
 
     public function mitra()

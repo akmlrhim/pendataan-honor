@@ -102,15 +102,42 @@
 
             <!-- Kanan -->
             <div class="col-sm-6">
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="tanggal_mulai">Jadwal (Tgl. Mulai)</label>
+                    <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                      id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai', $kontrak->tanggal_mulai) }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_mulai')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="tanggal_berakhir">Jadwal (Tgl. Berakhir)</label>
+                    <input type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror"
+                      id="tanggal_berakhir" name="tanggal_berakhir"
+                      value="{{ old('tanggal_berakhir', $kontrak->tanggal_berakhir) }}" onclick="this.showPicker()" />
+                    @error('tanggal_berakhir')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="keterangan">Keterangan</label>
-                <textarea class="form-control" id="keterangan" rows="12" name="keterangan"
-                  placeholder="Masukkan keterangan (opsional)">{{ old('keterangan', $kontrak->keterangan) }}</textarea>
+                <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" rows="2"
+                  placeholder="Masukkan keterangan (opsional)" name="keterangan">{{ old('keterangan', $kontrak->keterangan) }}</textarea>
                 @error('keterangan')
-                  <small class="text-danger">{{ $message }}</small>
+                  <small class="text-danger">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
+
             </div>
+
           </div>
 
           <hr>
@@ -143,7 +170,7 @@
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
                           {{ old("tugas.$i.anggaran_id", $tugas['anggaran_id'] ?? null) == $a->id ? 'selected' : '' }}>
-                          {{ $a->nama_kegiatan }}
+                          {{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}
                         </option>
                       @endforeach
                     </select>
@@ -243,7 +270,7 @@
           <select name="tugas[${rowIndex}][anggaran_id]" class="custom-select select2">
             <option value="" disabled selected>-- Pilih Anggaran --</option>
             @foreach ($anggaran as $a)
-              <option value="{{ $a->id }}">{{ $a->nama_kegiatan }}</option>
+              <option value="{{ $a->id }}">{{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}</option>
             @endforeach
           </select>
         </td>

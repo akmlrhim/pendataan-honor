@@ -100,10 +100,11 @@
   <div class="header">
     <p class="bold underline">PERJANJIAN KERJA</p>
     <p class="bold uppercase">PETUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
-    <p class="bold">KEGIATAN BULAN JUNI 2025</p>
+    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }} 2025</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
-  <p class="nomor-surat">NOMOR: 221/SPK/63051/KP.200/06/2025</p>
+  <p class="nomor-surat">NOMOR:
+    {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}</p>
   <br>
   <div class="content">
     <p>Pada hari ini, {{ $kontrak->tanggal_kontrak_terbilang }}, bertempat di kantor Badan
@@ -140,13 +141,24 @@
     </p>
 
     <p class="pasal">Pasal 2</p>
-    <p>Lingkup pekerjaan dalam Perjanjian ini mengacu pada alokasi tugas, dan ketentuan-ketentuan yang ditetapkan oleh
-      <span class="bold">PIHAK PERTAMA</span>. Alokasi tugas dalam Pasal 2 ayat 1 ditetapkan oleh <span
-        class="bold">PIHAK PERTAMA</span> sebagai bagian yang tidak terpisahkan dari surat perjanjian ini. <span
-        class="bold">PIHAK PERTAMA</span> melaksanakan evaluasi atas alokasi tugas surat perjanjian ini. <span
-        class="bold">PIHAK KEDUA</span> melaksanakan alokasi tugas dan perubahan-perubahannya yang ditetapkan oleh
-      <span class="bold">PIHAK PERTAMA</span>.
-    </p>
+    <ol type="(1)">
+      <li>
+        Lingkup pekerjaan dalam Perjanjian ini mengacu pada alokasi tugas, dan ketentuan-ketentuan yang ditetapkan oleh
+        <span class="bold">PIHAK PERTAMA</span>.
+      </li>
+      <li>
+        Alokasi tugas dalam Pasal 2 ayat 1 ditetapkan oleh <span class="bold">PIHAK PERTAMA</span> sebagai bagian yang
+        tidak terpisahkan dari surat perjanjian ini.
+      </li>
+      <li>
+        <span class="bold">PIHAK PERTAMA</span> melaksanakan evaluasi atas alokasi tugas surat perjanjian ini.
+      </li>
+      <li>
+        <span class="bold">PIHAK KEDUA</span> melaksanakan alokasi tugas dan
+        perubahan-perubahannya yang ditetapkan oleh
+        <span class="bold">PIHAK PERTAMA</span>.
+      </li>
+    </ol>
 
     <p class="pasal">Pasal 3</p>
     <p>Pelaksanaan pekerjaan pada Perjanjian ini, dilakukan melalui:</p>

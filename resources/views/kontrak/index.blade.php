@@ -43,11 +43,11 @@
     {{-- flashdata --}}
     <x-alert />
 
-    <div class="col-12">
+    <div class="col-sm-6">
       <form action="{{ route('kontrak.index') }}" method="GET">
         <div class="card shadow-sm border-0 rounded-lg">
           <div class="card-body">
-            <div class="form-group d-flex align-items-center mb-0">
+            <div class="form-group align-items-center mb-0">
               <label for="mitra_id" class="me-2 text-primary mb-0">Cari Mitra:</label>
               <select name="mitra_id" id="mitra_id" class="form-select select2" onchange="this.form.submit()"
                 style="max-width: 250px;">
