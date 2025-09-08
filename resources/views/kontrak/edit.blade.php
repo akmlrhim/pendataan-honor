@@ -75,7 +75,8 @@
               <div class="form-group">
                 <label for="tanggal_kontrak">Tanggal kontrak</label>
                 <input type="date" class="form-control" id="tanggal_kontrak" name="tanggal_kontrak"
-                  value="{{ old('tanggal_kontrak', $kontrak->tanggal_kontrak) }}" onclick="this.showPicker()">
+                  value="{{ old('tanggal_kontrak', $kontrak->tanggal_kontrak->format('Y-m-d')) }}"
+                  onclick="this.showPicker()">
                 @error('tanggal_kontrak')
                   <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -84,7 +85,8 @@
               <div class="form-group">
                 <label for="tanggal_surat">Tanggal surat</label>
                 <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat"
-                  value="{{ old('tanggal_surat', $kontrak->tanggal_surat) }}" onclick="this.showPicker()">
+                  value="{{ old('tanggal_surat', $kontrak->tanggal_surat->format('Y-m-d')) }}"
+                  onclick="this.showPicker()">
                 @error('tanggal_surat')
                   <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -93,7 +95,7 @@
               <div class="form-group">
                 <label for="tanggal_bast">Tanggal BAST</label>
                 <input type="date" class="form-control" id="tanggal_bast" name="tanggal_bast"
-                  value="{{ old('tanggal_bast', $kontrak->tanggal_bast) }}" onclick="this.showPicker()">
+                  value="{{ old('tanggal_bast', $kontrak->tanggal_bast->format('Y-m-d')) }}" onclick="this.showPicker()">
                 @error('tanggal_bast')
                   <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -108,7 +110,8 @@
                   <div class="col-sm-6">
                     <label for="tanggal_mulai">Jadwal (Tgl. Mulai)</label>
                     <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
-                      id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai', $kontrak->tanggal_mulai) }}"
+                      id="tanggal_mulai" name="tanggal_mulai"
+                      value="{{ old('tanggal_mulai', $kontrak->tanggal_mulai->format('Y-m-d')) }}"
                       onclick="this.showPicker()" />
                     @error('tanggal_mulai')
                       <small class="text-danger">{{ ucfirst($message) }}</small>
@@ -119,7 +122,8 @@
                     <label for="tanggal_berakhir">Jadwal (Tgl. Berakhir)</label>
                     <input type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror"
                       id="tanggal_berakhir" name="tanggal_berakhir"
-                      value="{{ old('tanggal_berakhir', $kontrak->tanggal_berakhir) }}" onclick="this.showPicker()" />
+                      value="{{ old('tanggal_berakhir', $kontrak->tanggal_berakhir->format('Y-m-d')) }}"
+                      onclick="this.showPicker()" />
                     @error('tanggal_berakhir')
                       <small class="text-danger">{{ ucfirst($message) }}</small>
                     @enderror

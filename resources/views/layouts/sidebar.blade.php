@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   {{-- Logo --}}
-  <a href="index3.html" class="brand-link">
+  <a href="{{ route('home') }}" class="brand-link">
     <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" alt="AdminLTE Logo" class="brand-image img-circle" />
     <span class="brand-text font-weight-light">BPS Kab. Tapin</span>
   </a>
@@ -10,11 +10,10 @@
     <!-- Sidebar Menu -->
 
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="{{ asset('img/default_user.webp') }}" loading="lazy" class="img-circle" alt="User Image">
-      </div>
       <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->nama_lengkap }}</a>
+        <a href="#" class="d-block">
+          {{ Auth::user()->nama_lengkap }}
+        </a>
         <small class="d-block text-light">
           {{ match (Auth::user()->role) {
               'ketua_tim' => 'Ketua Tim',
@@ -24,6 +23,7 @@
         </small>
       </div>
     </div>
+
 
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

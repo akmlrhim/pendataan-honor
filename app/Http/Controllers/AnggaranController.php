@@ -53,7 +53,7 @@ class AnggaranController extends Controller
 
         $created = Anggaran::create([
             'kode_anggaran' => Str::upper($request->kode_anggaran),
-            'nama_kegiatan' => $request->nama_kegiatan,
+            'nama_kegiatan' => ucwords(strtolower($request->nama_kegiatan)),
             'batas_honor' => $request->batas_honor,
             'sisa_anggaran' => $request->batas_honor,
         ]);
@@ -92,8 +92,8 @@ class AnggaranController extends Controller
             'batas_honor' => 'required|numeric|min:0',
         ]);
 
-        $anggaran->kode_anggaran = $request->kode_anggaran;
-        $anggaran->nama_kegiatan = $request->nama_kegiatan;
+        $anggaran->kode_anggaran = Str::upper($request->kode_anggaran);
+        $anggaran->nama_kegiatan = ucwords(strtolower($request->nama_kegiatan));
         $anggaran->batas_honor = $request->batas_honor;
         $updated = $anggaran->save();
 

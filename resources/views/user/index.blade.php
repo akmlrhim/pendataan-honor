@@ -31,13 +31,13 @@
               <!-- Input Cari -->
               <div class="col-md-4 mb-2">
                 <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
-                <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
+                <input type="text" name="search" id="keyword" class="form-control" value="{{ request('keyword') }}"
                   placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" />
               </div>
 
               <!-- Tombol -->
               <div class="col-md-4 mb-2 d-flex align-items-end">
-                <a href="{{ route('user.index') }}" class="btn btn-secondary">
+                <a href="{{ route('user.index') }}" class="btn btn-secondary" title="Reset">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-refresh-cw">

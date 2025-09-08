@@ -45,7 +45,7 @@
             <circle cx="6" cy="5" r="3" />
           </svg>
         </div>
-        <a href="{{ route('mitra.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
+        <a href="{{ route('anggaran.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
       </div>
     </div>
 
@@ -70,5 +70,53 @@
         <a href="{{ route('user.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
       </div>
     </div>
+
   </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex">
+            <p class="d-flex flex-column">
+              <span class="text-bold text-lg">{{ $totalVisits }}</span>
+              <span>Jumlah Pengunjung Web</span>
+            </p>
+            <p class="ml-auto d-flex flex-column text-right">
+            <form action="{{ route('home') }}" method="GET">
+              <select name="range" onchange="this.form.submit()" class="form-control custom-select w-auto">
+                <option value="1" {{ request('range') == 1 ? 'selected' : '' }}>Hari Ini</option>
+                <option value="3" {{ request('range') == 3 ? 'selected' : '' }}>3 Hari Terakhir</option>
+                <option value="7" {{ request('range') == 7 ? 'selected' : '' }}>7 Hari Terakhir</option>
+                <option value="30" {{ request('range') == 30 ? 'selected' : '' }}>30 Hari Terakhir</option>
+              </select>
+            </form>
+            </p>
+          </div>
+          <canvas id="visitsChart" height="60px"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
+
+@section('scripts')
+  <script src="{{ asset('js/chart.js') }}"></script>
+  <script>
+    const ctx = document.getElementById('visitsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: {!! json_encode($visitsPerDay->pluck('date')) !!},
+        datasets: [{
+          label: 'Pengunjung Unik',
+          data: {!! json_encode($visitsPerDay->pluck('count')) !!},
+          borderColor: 'blue',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+    });
+  </script>
 @endsection

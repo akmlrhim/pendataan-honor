@@ -459,14 +459,18 @@
   {{-- berita acara serah terima  --}}
   <div class="header">
     <p class="bold">BERITA ACARA SERAH TERIMA PEKERJAAN</p>
-    <p class="bold">PENGUMPULAN DATA SURVEI</p>
-    <p class="bold">KEGIATAN BULAN JUNI 2025</p>
+    <p class="bold uppercase">{{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
+    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }}
+      {{ $kontrak->created_at->format('Y') }}</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
-  <p class="nomor-surat">NOMOR: 221/BAST/63051/KP.200/2025</p>
+  <p class="nomor-surat">NOMOR:
+    {{ $kontrak->nomor_kontrak }}/BAST/63051/KP.200/{{ $kontrak->created_at->format('Y') }}</p>
   <br>
   <div class="content">
-    <p>Pada hari ini senin, tanggal tiga puluh bulan juni tahun dua ribu dua puluh lima (30/06/2025), bertempat di
+    <p>Pada hari ini {{ $kontrak->tanggal_kontrak_terbilang }} ({{ $kontrak->created_at->format('d/m/Y') }}),
+      bertempat
+      di
       Kantor BPS Kabupaten Tapin dengan alamat Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:</p>
     <table style="border: none;">
       <tr style="border: none;">
@@ -480,18 +484,29 @@
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none;">Pengumpulan Data Survei, berkedudukan di Perintis Raya Kabupaten Tapin, bertindak
-          untuk dan atas nama diri sendiri, selanjutnya disebut sebagai <span class="bold">PIHAK KEDUA</span>.</td>
+        <td style="border: none;">{{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }} Data Survei,
+          berkedudukan di Perintis Raya Kabupaten Tapin, bertindak untuk dan atas nama diri sendiri, selanjutnya disebut
+          sebagai <span class="bold">PIHAK KEDUA</span>.
+        </td>
       </tr>
     </table>
-    <p>Berdasarkan Surat Perjanjian Kerja (SPK) Nomor: 221/SPK/63051/KP.200/06/2025, 30 Mei 2025, bersama ini PIHAK
-      KEDUA telah menyerahkan hasil pekerjaan Pengumpulan Data Survei Kegiatan Bulan JUNI 2025 di Kabupaten Tapin kepada
-      PIHAK PERTAMA, dengan ketentuan sebagai berikut:</p>
+    <p>Berdasarkan Surat Perjanjian Kerja (SPK) Nomor:
+      {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }},
+      {{ $kontrak->tanggal_kontrak->translatedFormat('d F Y') }}, bersama ini PIHAK KEDUA telah menyerahkan hasil
+      pekerjaan {{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }} Data Survei Kegiatan Bulan <span
+        class="uppercase">{{ $kontrak->created_at->translatedFormat('F') }}</span>
+      {{ $kontrak->created_at->format('Y') }} di Kabupaten Tapin kepada PIHAK PERTAMA, dengan ketentuan sebagai
+      berikut:
+    </p>
     <ol type="a">
-      <li>Hasil pekerjaan PIHAK KEDUA telah sesuai dengan jumlah dan spesifikasi teknis/kualitas yang ditetapkan dalam
-        SPK.</li>
-      <li>Hasil pekerjaan sebagaimana tersebut pada huruf a telah diperiksa oleh Petugas Pengawas, dan diterima
-        kelengkapannya oleh PIHAK PERTAMA.</li>
+      <li>
+        Hasil pekerjaan PIHAK KEDUA telah sesuai dengan jumlah dan spesifikasi teknis/kualitas yang ditetapkan dalam
+        SPK.
+      </li>
+      <li>
+        Hasil pekerjaan sebagaimana tersebut pada huruf a telah diperiksa oleh Petugas Pengawas, dan diterima
+        kelengkapannya oleh PIHAK PERTAMA.
+      </li>
     </ol>
     <p>Demikian Berita Acara ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
   </div>
@@ -521,9 +536,14 @@
 
   <div class="page-break"></div>
 
+  {{-- Realisasi kegiatan  --}}
   <div class="sub-header">
-    <p class="bold">REALISASI KEGIATAN PENGUMPULAN DATA SURVEI</p>
-    <p class="bold">BULAN JUNI 2025 BPS KABUPATEN TAPIN</p>
+    <p class="bold uppercase">
+      REALISASI KEGIATAN {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI
+    </p>
+    <p class="bold uppercase">BULAN {{ $kontrak->created_at->translatedFormat('F') }}
+      {{ $kontrak->created_at->format('Y') }} BPS KABUPATEN TAPIN
+    </p>
   </div>
   <br>
   <table style="border: none">
@@ -535,11 +555,13 @@
     <tr style="border: none;">
       <td style="border: none;">No. SURAT PERJANJIAN</td>
       <td style="border: none;">:</td>
-      <td style="border: none;">221/SPK/63051/KP.200/06/2025</td>
+      <td style="border: none;">
+        {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+      </td>
     </tr>
   </table>
 
-  <table>
+  <table style="font-size:12px">
     <thead>
       <tr>
         <th>No.</th>
@@ -579,24 +601,33 @@
       </tr>
     </tfoot>
   </table>
-  <p style="text-align: right;">Rantau, 30 Juni 2025</p>
   <div style="text-align:center; margin-top:50px;">
     <table style="width:80%; margin:0 auto; border:none;">
       <tr style="border:none;">
         <td style="border:none; width:50%; text-align:center;">
-          PIHAK KEDUA,<br><br><br><br>
-          <span class="bold underline">{{ $kontrak->mitra->nama_lengkap }}</span>
+          <!-- Kosong untuk pihak kedua -->
         </td>
         <td style="border:none; width:50%; text-align:center;">
+          Rantau, {{ $kontrak->tanggal_surat->format('d F Y') }}
+        </td>
+      </tr>
+      <tr style="border:none;">
+        <td style="border:none; width:50%; text-align:center;" class="bold">
+          PIHAK KEDUA,<br><br><br><br>
+          <span class="bold">{{ $kontrak->mitra->nama_lengkap }}</span>
+        </td>
+        <td style="border:none; width:50%; text-align:center;" class="bold">
           PIHAK PERTAMA,<br><br><br><br>
-          <span class="bold underline">Warkani, SE</span>
+          <span class="bold">Warkani, SE</span>
         </td>
       </tr>
     </table>
   </div>
 
+
   <div class="page-break"></div>
 
+  {{-- Fakta integritas  --}}
   <div class="header">
     <p class="bold underline">PAKTA INTEGRITAS</p>
   </div>
@@ -616,7 +647,11 @@
       </tr>
     </table>
     <p>Bertindak untuk dan atas nama Mitra Statistik BPS Kabupaten Tapin</p>
-    <p>Sehubungan dengan pelaksanaan kegiatan Pengumpulan data Sensus/Survei* TA 2025 bulan : JUNI 2025, dengan ini saya
+    <p>Sehubungan dengan pelaksanaan kegiatan {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} data
+      Sensus/Survei* TA {{ date('Y') }} bulan : <span
+        class="uppercase">{{ $kontrak->created_at->translatedFormat('F') }}</span>
+      {{ $kontrak->created_at->format('Y') }},
+      dengan ini saya
       menyatakan bahwa :</p>
     <ol>
       <li>Menjaga kerahasian data yang menjadi tugas dan tanggung jawab;</li>
@@ -627,10 +662,10 @@
     </ol>
   </div>
   <div style="width: 30%; float: right; text-align: center; margin-top: 30px;">
-    <p>Rantau, 2 Juni 2025</p>
+    <p>Rantau, {{ $kontrak->tanggal_kontrak->format('d F Y') }}</p>
     <p>Mitra Statistik</p>
     <div class="signature-space"></div>
-    <p class="bold underline">Susi Herlina</p>
+    <p class="bold underline">{{ $kontrak->mitra->nama_lengkap }}</p>
   </div>
 </body>
 
