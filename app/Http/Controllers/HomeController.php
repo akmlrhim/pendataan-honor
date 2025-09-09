@@ -17,29 +17,27 @@ class HomeController extends Controller
         $anggaran = Anggaran::count();
         $user = User::count();
 
-        // Ambil range dari request, default 7 hari
-        $range = request('range', 7);
+        $range = request('range', 1);
 
-        // Total kunjungan sesuai filter periode
-        $totalVisits = Visit::where('created_at', '>=', now()->subDays($range))->count();
-
-        // Pengunjung unik sesuai filter periode
-        $uniqueVisitors = Visit::select(DB::raw("
-        COALESCE(CAST(user_id AS CHAR), ip) as visitor
-    "))
-            ->where('created_at', '>=', now()->subDays($range))
-            ->distinct()
-            ->count();
-
-        // Statistik pengunjung per hari sesuai filter periode
-        $visitsPerDay = Visit::select(
-            DB::raw('DATE(created_at) as date'),
-            DB::raw('COUNT(DISTINCT COALESCE(CAST(user_id AS CHAR), ip)) as count')
-        )
-            ->where('created_at', '>=', now()->subDays($range))
-            ->groupBy('date')
-            ->orderBy('date', 'ASC')
+        $visits = Visit::where('created_at', '>=', now()->subDays($range))
             ->get();
+
+        // Total kunjungan
+        $totalVisits = $visits->count();
+
+        // Pengunjung unik
+        $uniqueVisitors = $visits->map(function ($v) {
+            return $v->user_id ?? $v->ip;
+        })->unique()->count();
+
+        // Statistik per hari
+        $visitsPerDay = $visits->groupBy(fn($v) => $v->created_at->format('Y-m-d'))
+            ->map(fn($group) => $group->map(function ($v) {
+                return $v->user_id ?? $v->ip;
+            })->unique()->count())
+            ->map(function ($count, $date) {
+                return ['date' => $date, 'count' => $count];
+            })->values();
 
         return view('home', compact(
             'title',

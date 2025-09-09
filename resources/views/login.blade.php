@@ -41,15 +41,9 @@
             <h6 class="text-muted">Silakan masuk untuk melanjutkan</h6>
           </div>
 
-          <!-- Alert error -->
-          @if (session('error'))
-            <div class="alert alert-danger text-center small shadow-sm rounded">
-              {{ session('error') }}
-            </div>
-          @endif
+          <x-alert />
 
-          <!-- Form -->
-          <form method="POST" action="{{ route('login') }}">
+          <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf
 
             <!-- Email -->
@@ -105,13 +99,15 @@
                   </button>
                 </div>
               </div>
-
               @error('password')
                 <span class="invalid-feedback d-block" role="alert">
                   {{ ucfirst($message) }}
                 </span>
               @enderror
             </div>
+
+            {{-- recapthca  --}}
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
 
             <!-- Button -->
             <button type="submit" class="btn btn-primary w-100 shadow-sm">
@@ -132,6 +128,7 @@
     </div>
   </div>
 
+  <script src="https://www.google.com/recaptcha/api.js?render={{ env('RECAPTCHA_SITE_KEY') }}"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const toggleBtn = document.querySelector(".toggle-password");
@@ -147,10 +144,16 @@
         eye.classList.toggle("d-none", !isPassword);
         eyeOff.classList.toggle("d-none", isPassword);
       });
+
+      grecaptcha.ready(function() {
+        grecaptcha.execute('{{ env('RECAPTCHA_SITE_KEY') }}', {
+          action: 'login'
+        }).then(function(token) {
+          document.getElementById('g-recaptcha-response').value = token;
+        });
+      });
     });
   </script>
-
-
 </body>
 
 </html>

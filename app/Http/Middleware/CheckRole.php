@@ -17,11 +17,11 @@ class CheckRole
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!Auth::check()) {
-            return redirect()->back();
+            return redirect()->route('login');
         }
 
-        if (!empty($roles) && in_array(Auth::user()->role, $roles)) {
-            return redirect()->back();
+        if (! in_array(Auth::user()->role, $roles)) {
+            abort(403, 'Anda tidak punya akses ke halaman ini.');
         }
 
         return $next($request);

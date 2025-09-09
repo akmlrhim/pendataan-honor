@@ -23,5 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('web', LogVisits::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $request) {
+            if (url()->previous() && url()->previous() !== url()->current()) {
+                return redirect()->back();
+            };
+        });
     })->create();

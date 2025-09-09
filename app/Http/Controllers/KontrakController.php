@@ -32,7 +32,6 @@ class KontrakController extends Controller
         return view('kontrak.index', compact('title', 'kontrak', 'mitra', 'mitra_id'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -326,6 +325,18 @@ class KontrakController extends Controller
     {
         $kontrak = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])->findOrFail($id);
         $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak'))->setPaper('a4', 'portrait');
+
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_text(
+            280,   // posisi X (tengah halaman A4 = ~270px)
+            20,    // posisi Y (20px dari atas)
+            "- {PAGE_NUM} -", // format
+            null,  // font (null = default)
+            12,    // ukuran font
+            [0, 0, 0] // warna hitam
+        );
 
         return $pdf->stream('File Kontrak ' . $kontrak->nomor_kontrak . '.pdf');
     }

@@ -22,7 +22,6 @@
             <path d="M3 4h8" />
           </svg>
         </div>
-        <a href="{{ route('mitra.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
       </div>
     </div>
 
@@ -45,7 +44,6 @@
             <circle cx="6" cy="5" r="3" />
           </svg>
         </div>
-        <a href="{{ route('anggaran.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
       </div>
     </div>
 
@@ -67,13 +65,12 @@
             <circle cx="9" cy="7" r="4" />
           </svg>
         </div>
-        <a href="{{ route('user.index') }}" class="small-box-footer">Lihat selengkapnya &raquo;</a>
       </div>
     </div>
 
   </div>
 
-  <div class="row mt-4">
+  <div class="row mt-2">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
@@ -109,7 +106,7 @@
       data: {
         labels: {!! json_encode($visitsPerDay->pluck('date')) !!},
         datasets: [{
-          label: 'Pengunjung Unik',
+          label: 'Pengunjung',
           data: {!! json_encode($visitsPerDay->pluck('count')) !!},
           borderColor: 'blue',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',

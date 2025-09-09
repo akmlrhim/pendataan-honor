@@ -6,14 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Surat Perjanjian Kerja - BPS Kabupaten Tapin</title>
   <style>
+    @page {
+      size: A4;
+    }
+
     body {
-      font-family: 'Bookman Old Style', serif;
-      line-height: 1.3;
-      margin: 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.2;
+      margin-left: 1cm;
+      margin-right: 1cm;
+      margin-top: 0.5cm;
+      margin-bottom: 0.5cm;
+    }
+
+    header {
+      position: fixed;
+      top: -80px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      text-align: center;
+      line-height: 1.5;
+      font-size: 14px;
     }
 
     p {
       margin: 4px 0;
+      text-justify: justify;
     }
 
     .center {
@@ -97,6 +116,10 @@
 
 <body>
 
+  <header>
+    <span class="page"></span> <span class="topage"></span>
+  </header>
+
   {{-- perjanjian kerja  --}}
   <div class="header">
     <p class="bold">PERJANJIAN KERJA</p>
@@ -115,19 +138,18 @@
       Pusat Statistik Kabupaten Tapin Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:</p>
     <table style="border: none">
       <tr style="border: none;">
-        <td style="border: none; width: 15%;">Warkani, SE</td>
-        <td style="border: none; width: 5%;">:</td>
-        <td style="border: none;">Pejabat Pembuat Komitmen Badan Pusat Statistik Kabupaten Tapin, berkedudukan di Jl.
-          Haryono MT Rantau, bertindak untuk dan atas nama Badan Pusat Statistik Kabupaten Tapin, selanjutnya disebut
-          sebagai <span class="bold">PIHAK PERTAMA</span>.</td>
+        <td style="border: none; width: 20%;">Warkani, SE</td>
+        <td style="border: none; width: 3%;">:</td>
+        <td style="border: none; text-align:justify">Pejabat Pembuat Komitmen Badan Pusat Statistik Kabupaten Tapin,
+          berkedudukan di Jl. Haryono MT Rantau, bertindak untuk dan atas nama Badan Pusat Statistik Kabupaten Tapin,
+          selanjutnya disebut sebagai <span class="bold">PIHAK PERTAMA</span>.</td>
       </tr>
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none;">Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei,
-          berkedudukan di Perintis Raya Kabupaten Tapin,
-          bertindak untuk dan atas nama diri sendiri, selanjutnya disebut sebagai <span class="bold">PIHAK
-            KEDUA</span>.</td>
+        <td style="border: none; text-align:justify;">Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }}
+          Data Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama diri
+          sendiri, selanjutnya disebut sebagai <span class="bold">PIHAK KEDUA</span>.</td>
       </tr>
     </table>
     <p>bahwa <span class="bold">PIHAK PERTAMA</span> dan <span class="bold">PIHAK KEDUA</span> yang secara
@@ -135,6 +157,8 @@
       Petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei di Badan Pusat Statistik Kabupaten
       Tapin, yang selanjutnya disebut Perjanjian,
       dengan ketentuan-ketentuan sebagai berikut:</p>
+
+    <br />
 
     {{-- pasal 1 --}}
     <p class="pasal">Pasal 1</p>
@@ -144,6 +168,8 @@
       ditetapkan oleh <span class="bold">PIHAK
         PERTAMA</span>.
     </p>
+
+    <br />
 
     {{-- pasal 2 --}}
     <p class="pasal">Pasal 2</p>
@@ -160,9 +186,8 @@
         <span class="bold">PIHAK PERTAMA</span> melaksanakan evaluasi atas alokasi tugas surat perjanjian ini.
       </li>
       <li>
-        <span class="bold">PIHAK KEDUA</span> melaksanakan alokasi tugas dan
-        perubahan-perubahannya yang ditetapkan oleh
-        <span class="bold">PIHAK PERTAMA</span>.
+        <span class="bold">PIHAK KEDUA</span> melaksanakan alokasi tugas dan perubahan-perubahannya yang ditetapkan
+        oleh <span class="bold">PIHAK PERTAMA</span>.
       </li>
     </ol>
 
@@ -193,8 +218,8 @@
       </li>
 
       <li>Dikecualikan sebagaimana diatur pada ayat (1), apabila dari hasil evaluasi sebagaimana Pasal 2 ayat (3)
-        dianggap tidak layak sebagai petugas Pengumpulan Data Survei, maka <span class="bold">PIHAK PERTAMA</span>
-        dapat mengakhiri perjanjian ini secara sepihak.
+        dianggap tidak layak sebagai petugas {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} Data Survei, maka
+        <span class="bold">PIHAK PERTAMA</span> dapat mengakhiri perjanjian ini secara sepihak.
       </li>
     </ol>
 
@@ -468,29 +493,33 @@
     {{ $kontrak->nomor_kontrak }}/BAST/63051/KP.200/{{ $kontrak->created_at->format('Y') }}</p>
   <br>
   <div class="content">
-    <p>Pada hari ini {{ $kontrak->tanggal_kontrak_terbilang }} ({{ $kontrak->created_at->format('d/m/Y') }}),
-      bertempat
-      di
-      Kantor BPS Kabupaten Tapin dengan alamat Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini
+      {{ $kontrak->tanggal_bast_terbilang }} ({{ $kontrak->tanggal_bast->format('d/m/Y') }}),
+      bertempat di Kantor BPS Kabupaten Tapin dengan alamat Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:
+    </p>
     <table style="border: none;">
       <tr style="border: none;">
         <td style="border: none; width: 20%;">Warkani, SE</td>
         <td style="border: none; width: 5%;">:</td>
-        <td style="border: none;">Pejabat Pembuat Komitmen Badan Pusat Statistik BPS Kabupaten Tapin, alamat Jl.
-          Haryono MT Rantau bertindak untuk dan atas nama Badan Pusat Statistik BPS Kabupaten Tapin selanjutnya disebut
+        <td style="border: none;text-align:justify;">Pejabat Pembuat Komitmen Badan Pusat Statistik BPS Kabupaten
+          Tapin, alamat Jl. Haryono MT Rantau bertindak untuk dan atas nama Badan Pusat Statistik BPS Kabupaten Tapin
+          selanjutnya disebut
           <span class="bold">PIHAK PERTAMA</span>.
         </td>
       </tr>
       <tr style="border: none;">
         <td style="border: none;">{{ $kontrak->mitra->nama_lengkap }}</td>
         <td style="border: none;">:</td>
-        <td style="border: none;">{{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }} Data Survei,
-          berkedudukan di Perintis Raya Kabupaten Tapin, bertindak untuk dan atas nama diri sendiri, selanjutnya disebut
+        <td style="border: none;text-align:justify;">{{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }}
+          Data Survei, berkedudukan di {{ $kontrak->mitra->alamat }} Kabupaten Tapin, bertindak untuk dan atas nama
+          diri sendiri,
+          selanjutnya disebut
           sebagai <span class="bold">PIHAK KEDUA</span>.
         </td>
       </tr>
     </table>
-    <p>Berdasarkan Surat Perjanjian Kerja (SPK) Nomor:
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Berdasarkan Surat Perjanjian Kerja (SPK)
+      Nomor:
       {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }},
       {{ $kontrak->tanggal_kontrak->translatedFormat('d F Y') }}, bersama ini PIHAK KEDUA telah menyerahkan hasil
       pekerjaan {{ ucfirst($kontrak->tugas->first()->anggaran->nama_kegiatan) }} Data Survei Kegiatan Bulan <span
@@ -608,7 +637,7 @@
           <!-- Kosong untuk pihak kedua -->
         </td>
         <td style="border:none; width:50%; text-align:center;">
-          Rantau, {{ $kontrak->tanggal_surat->format('d F Y') }}
+          Rantau, {{ $kontrak->tanggal_surat->translatedFormat('d F Y') }}
         </td>
       </tr>
       <tr style="border:none;">
@@ -629,7 +658,7 @@
 
   {{-- Fakta integritas  --}}
   <div class="header">
-    <p class="bold underline">PAKTA INTEGRITAS</p>
+    <p class="bold">PAKTA INTEGRITAS</p>
   </div>
   <br>
   <div class="content">
@@ -654,14 +683,14 @@
       dengan ini saya
       menyatakan bahwa :</p>
     <ol>
-      <li>Menjaga kerahasian data yang menjadi tugas dan tanggung jawab;</li>
+      <li>Menjaga kerahasian data yang menjadi tugas dan tanggung jawab.</li>
       <li>Menjalankan tugas sesuai dengan ketentuan dan SOP pelaksanaan lapangan.</li>
-      <li>Tidak akan melakukan praktek Korupsi, kolusi dan Nepotisme;</li>
+      <li>Tidak akan melakukan praktek Korupsi, kolusi dan Nepotisme.</li>
       <li>Apabila melanggar hal-hal yang dinyatakan dalam PAKTA INTEGRITAS ini, besedia menerima sanksi administratif,
         digugat secara perdata dan/atau dilaporkan secara pidana.</li>
     </ol>
   </div>
-  <div style="width: 30%; float: right; text-align: center; margin-top: 30px;">
+  <div style="width: 50%; float: right; text-align: center; margin-top: 30px;">
     <p>Rantau, {{ $kontrak->tanggal_kontrak->format('d F Y') }}</p>
     <p>Mitra Statistik</p>
     <div class="signature-space"></div>

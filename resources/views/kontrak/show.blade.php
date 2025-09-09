@@ -135,7 +135,10 @@
 
         <div class="card-footer">
           <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
-          <a href="{{ route('kontrak.edit', $kontrak->id) }}" class="btn btn-primary">Edit</a>
+
+          @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
+            <a href="{{ route('kontrak.edit', $kontrak->id) }}" class="btn btn-primary">Edit</a>
+          @endif
         </div>
       </div>
     </div>

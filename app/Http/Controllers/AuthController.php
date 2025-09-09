@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ReCaptchaServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ class AuthController extends Controller
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required|string|min:6',
+            'g-recaptcha-response' => 'required',
         ]);
 
         // cek apakah email ada
@@ -29,6 +31,12 @@ class AuthController extends Controller
             return back()->withErrors([
                 'password' => 'Password salah.',
             ])->onlyInput('email');
+        }
+
+        $captcha = ReCaptchaServices::verify($request->input('g-recaptcha-response'));
+
+        if (!$captcha['success'] ?? false  || ($captcha['score'] ?? 0) < 0.5) {
+            return back()->withErrors(['captcha' => 'Verifikasi ReCaptcha gagal, coba lagi.']);
         }
 
         Auth::login($user);
