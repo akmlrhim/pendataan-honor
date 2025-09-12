@@ -1,8 +1,8 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-light-danger elevation-4">
   {{-- Logo --}}
   <a href="{{ route('home') }}" class="brand-link">
-    <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" alt="AdminLTE Logo" class="brand-image img-circle" />
-    <span class="brand-text font-weight-light">BPS Kab. Tapin</span>
+    <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" alt="Logo" class="brand-image img-circle" />
+    <span class="brand-text font-weight-medium">BPS Kab. Tapin</span>
   </a>
 
   <!-- Sidebar -->
@@ -11,10 +11,10 @@
 
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="info">
-        <a href="#" class="d-block">
+        <a href="#" class="d-block font-weight-medium">
           {{ Auth::user()->nama_lengkap }}
         </a>
-        <small class="d-block text-light">
+        <small class="d-block text-medium text-dark">
           {{ match (Auth::user()->role) {
               'ketua_tim' => 'Ketua Tim',
               'umum' => 'Umum',

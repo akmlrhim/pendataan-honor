@@ -62,7 +62,7 @@
       <div class="card">
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap">
-            <thead>
+            <thead class="bg-danger">
               <tr>
                 <th>#</th>
                 <th>Nama Lengkap</th>

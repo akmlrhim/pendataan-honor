@@ -61,32 +61,55 @@
                 @enderror
               </div>
 
-              <div class="form-group">
-                <label for="tanggal_kontrak">Tanggal Kontrak</label>
-                <input type="date" class="form-control @error('tanggal_kontrak') is-invalid @enderror"
-                  id="tanggal_kontrak" name="tanggal_kontrak" value="{{ old('tanggal_kontrak') }}"
-                  onclick="this.showPicker()" />
-                @error('tanggal_kontrak')
-                  <small class="text-danger">{{ ucfirst($message) }}</small>
-                @enderror
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="tanggal_kontrak">Tanggal Kontrak</label>
+                    <input type="date" class="form-control @error('tanggal_kontrak') is-invalid @enderror"
+                      id="tanggal_kontrak" name="tanggal_kontrak" value="{{ old('tanggal_kontrak') }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_kontrak')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="tanggal_surat">Tanggal Surat</label>
+                    <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
+                      id="tanggal_surat" name="tanggal_surat" value="{{ old('tanggal_surat') }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_surat')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="tanggal_surat">Tanggal Surat</label>
-                <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror" id="tanggal_surat"
-                  name="tanggal_surat" value="{{ old('tanggal_surat') }}" onclick="this.showPicker()" />
-                @error('tanggal_surat')
-                  <small class="text-danger">{{ ucfirst($message) }}</small>
-                @enderror
-              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="tanggal_bast">Tanggal BAST</label>
+                    <input type="date" class="form-control @error('tanggal_bast') is-invalid @enderror"
+                      id="tanggal_bast" name="tanggal_bast" value="{{ old('tanggal_bast') }}"
+                      onclick="this.showPicker()" />
+                    @error('tanggal_bast')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
 
-              <div class="form-group">
-                <label for="tanggal_bast">Tanggal BAST</label>
-                <input type="date" class="form-control @error('tanggal_bast') is-invalid @enderror" id="tanggal_bast"
-                  name="tanggal_bast" value="{{ old('tanggal_bast') }}" onclick="this.showPicker()" />
-                @error('tanggal_bast')
-                  <small class="text-danger">{{ ucfirst($message) }}</small>
-                @enderror
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="tanggal_bast">Periode Kontrak</label>
+                    <input type="month" class="form-control @error('periode') is-invalid @enderror" id="periode"
+                      name="periode" value="{{ old('periode') }}" onclick="this.showPicker()" />
+                    @error('periode')
+                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                    @enderror
+                  </div>
+                </div>
               </div>
             </div>
 

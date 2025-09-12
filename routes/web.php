@@ -48,6 +48,7 @@ Route::middleware('throttle:60,1')->group(function () {
 			->only(['index', 'show']);
 
 		Route::get('kontrak/{id}/file', [KontrakController::class, 'fileKontrak'])->name('kontrak.file')->middleware('role:umum');
+		Route::post('kontrak/laporan', [KontrakController::class, 'report'])->name('kontrak.laporan')->middleware('role:ketua_tim,umum');
 
 		Route::resource('user', UserController::class)->except('show')->middleware('role:ketua_tim,umum');
 

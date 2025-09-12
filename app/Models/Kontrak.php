@@ -15,6 +15,7 @@ class Kontrak extends Model
         'tanggal_kontrak',
         'tanggal_surat',
         'tanggal_bast',
+        'periode',
         'status',
         'total_honor',
         'keterangan',
@@ -28,6 +29,7 @@ class Kontrak extends Model
         'tanggal_bast'      => 'date',
         'tanggal_mulai'     => 'date',
         'tanggal_berakhir'  => 'date',
+        'periode' => 'date'
     ];
 
     public function mitra()

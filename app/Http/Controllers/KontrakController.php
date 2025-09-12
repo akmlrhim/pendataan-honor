@@ -18,18 +18,25 @@ class KontrakController extends Controller
     {
         $title = 'Kontrak';
         $mitra_id = $request->mitra_id;
+        $periode  = $request->periode; // input "YYYY-MM"
 
         $kontrak = Kontrak::with('mitra')
             ->when($mitra_id, function ($query, $mitra_id) {
                 $query->where('mitra_id', $mitra_id);
             })
-            ->paginate(10);
+            ->when($periode, function ($query, $periode) {
+                $year  = substr($periode, 0, 4);
+                $month = substr($periode, 5, 2);
 
-        $kontrak->appends(['mitra_id' => $mitra_id]);
+                $query->whereYear('periode', $year)
+                    ->whereMonth('periode', $month);
+            })
+            ->paginate(10)
+            ->appends($request->all());
 
         $mitra = Mitra::all();
 
-        return view('kontrak.index', compact('title', 'kontrak', 'mitra', 'mitra_id'));
+        return view('kontrak.index', compact('title', 'mitra', 'kontrak', 'mitra_id', 'periode'));
     }
 
     /**
@@ -60,6 +67,7 @@ class KontrakController extends Controller
             'tanggal_bast'    => 'required|date',
             'tanggal_mulai'    => 'required|date',
             'tanggal_berakhir'    => 'required|date',
+            'periode' => 'required|date_format:Y-m',
             'keterangan'      => 'nullable|string',
             'tugas'           => 'required|array|min:1',
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
@@ -97,6 +105,7 @@ class KontrakController extends Controller
             'tanggal_bast'    => $request->tanggal_bast,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_berakhir' => $request->tanggal_berakhir,
+            'periode' => $request->periode . '-01',
             'keterangan'      => $request->keterangan,
             'total_honor'     => $totalHonor,
         ]);
@@ -121,8 +130,6 @@ class KontrakController extends Controller
 
         return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil ditambahkan.');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -163,6 +170,7 @@ class KontrakController extends Controller
             'tanggal_bast'    => 'required|date',
             'tanggal_mulai'   => 'required|date',
             'tanggal_berakhir' => 'required|date',
+            'periode' => 'required|date_format:Y-m',
             'keterangan'      => 'nullable|string',
 
             'tugas'                   => 'required|array|min:1',
@@ -286,6 +294,7 @@ class KontrakController extends Controller
                 'tanggal_bast'    => $request->tanggal_bast,
                 'tanggal_mulai'   => $request->tanggal_mulai,
                 'tanggal_berakhir' => $request->tanggal_berakhir,
+                'periode' => $request->periode . '-01',
                 'keterangan'      => $request->keterangan,
                 'total_honor'     => $totalHonor,
             ]);
@@ -339,5 +348,27 @@ class KontrakController extends Controller
         );
 
         return $pdf->stream('File Kontrak ' . $kontrak->nomor_kontrak . '.pdf');
+    }
+
+    public function report(Request $request)
+    {
+        $periode = $request->periode;
+        $laporan = collect();
+
+        if ($periode) {
+            [$tahun, $bulan] = explode('-', $periode);
+
+            $laporan = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])
+                ->whereYear('periode', $tahun)
+                ->whereMonth('periode', $bulan)
+                ->get();
+        }
+
+        $pdf = Pdf::loadView('kontrak.laporan', [
+            'periode' => $periode,
+            'laporan' => $laporan
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->download("Laporan_Kontrak_{$periode}.pdf");
     }
 }

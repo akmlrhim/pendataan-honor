@@ -124,13 +124,12 @@
   <div class="header">
     <p class="bold">PERJANJIAN KERJA</p>
     <p class="bold uppercase">PETUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
-    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }}
-      {{ $kontrak->created_at->format('Y') }}
+    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->periode->translatedFormat('F Y') }}
     </p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
   <p class="nomor-surat">NOMOR:
-    {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->created_at->format('m') }}/{{ $kontrak->created_at->format('Y') }}
+    {{ $kontrak->nomor_kontrak }}/SPK/63051/KP.200/{{ $kontrak->periode->format('m') }}/{{ $kontrak->periode->format('Y') }}
   </p>
   <br>
   <div class="content">
@@ -392,7 +391,7 @@
       </tr>
     </table>
   </div>
-
+  {{-- END PERJANJIAN KERJA  --}}
 
 
   <div class="page-break"></div>
@@ -400,8 +399,7 @@
   {{-- alokasi  --}}
   <div class="sub-header">
     <p class="bold uppercase">ALOKASI TUGAS {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
-    <p class="bold uppercase">BULAN {{ $kontrak->created_at->translatedFormat('F') }}
-      {{ $kontrak->created_at->format('Y') }} BPS KABUPATEN TAPIN</p>
+    <p class="bold uppercase">BULAN {{ $kontrak->periode->translatedFormat('F Y') }} BPS KABUPATEN TAPIN</p>
   </div>
   <br>
   <table style="border: none">
@@ -478,6 +476,8 @@
       </tr>
     </table>
   </div>
+  {{-- END ALOKASI  --}}
+
   <div class="page-break"></div>
 
 
@@ -485,12 +485,11 @@
   <div class="header">
     <p class="bold">BERITA ACARA SERAH TERIMA PEKERJAAN</p>
     <p class="bold uppercase">{{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI</p>
-    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->created_at->translatedFormat('F') }}
-      {{ $kontrak->created_at->format('Y') }}</p>
+    <p class="bold uppercase">KEGIATAN BULAN {{ $kontrak->periode->translatedFormat('F Y') }}</p>
     <p class="bold">BADAN PUSAT STATISTIK KABUPATEN TAPIN</p>
   </div>
   <p class="nomor-surat">NOMOR:
-    {{ $kontrak->nomor_kontrak }}/BAST/63051/KP.200/{{ $kontrak->created_at->format('Y') }}</p>
+    {{ $kontrak->nomor_kontrak }}/BAST/63051/KP.200/{{ $kontrak->periode->format('Y') }}</p>
   <br>
   <div class="content">
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada hari ini
@@ -555,13 +554,13 @@
     </table>
   </div>
 
-
   <div style="clear: both; text-align: center; margin-top: 50px;">
     <p>Mengetahui,</p>
     <p>Kepala BPS Kabupaten Tapin</p>
     <div class="signature-space"></div>
     <p class="bold underline">Rudy Nooryadi, S.Si. ME</p>
   </div>
+  {{-- end berita acara  --}}
 
   <div class="page-break"></div>
 
@@ -570,8 +569,7 @@
     <p class="bold uppercase">
       REALISASI KEGIATAN {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} DATA SURVEI
     </p>
-    <p class="bold uppercase">BULAN {{ $kontrak->created_at->translatedFormat('F') }}
-      {{ $kontrak->created_at->format('Y') }} BPS KABUPATEN TAPIN
+    <p class="bold uppercase">BULAN {{ $kontrak->periode->translatedFormat('F Y') }} BPS KABUPATEN TAPIN
     </p>
   </div>
   <br>
@@ -652,7 +650,7 @@
       </tr>
     </table>
   </div>
-
+  {{-- end realisasi kegiatan  --}}
 
   <div class="page-break"></div>
 
@@ -678,10 +676,8 @@
     <p>Bertindak untuk dan atas nama Mitra Statistik BPS Kabupaten Tapin</p>
     <p>Sehubungan dengan pelaksanaan kegiatan {{ $kontrak->tugas->first()->anggaran->nama_kegiatan }} data
       Sensus/Survei* TA {{ date('Y') }} bulan : <span
-        class="uppercase">{{ $kontrak->created_at->translatedFormat('F') }}</span>
-      {{ $kontrak->created_at->format('Y') }},
-      dengan ini saya
-      menyatakan bahwa :</p>
+        class="uppercase">{{ $kontrak->periode->translatedFormat('F Y') }}</span>
+      , dengan ini saya menyatakan bahwa :</p>
     <ol>
       <li>Menjaga kerahasian data yang menjadi tugas dan tanggung jawab.</li>
       <li>Menjalankan tugas sesuai dengan ketentuan dan SOP pelaksanaan lapangan.</li>

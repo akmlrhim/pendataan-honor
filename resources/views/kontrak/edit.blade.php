@@ -73,32 +73,52 @@
               </div>
 
               <div class="form-group">
-                <label for="tanggal_kontrak">Tanggal kontrak</label>
-                <input type="date" class="form-control" id="tanggal_kontrak" name="tanggal_kontrak"
-                  value="{{ old('tanggal_kontrak', $kontrak->tanggal_kontrak->format('Y-m-d')) }}"
-                  onclick="this.showPicker()">
-                @error('tanggal_kontrak')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="tanggal_kontrak">Tanggal kontrak</label>
+                    <input type="date" class="form-control" id="tanggal_kontrak" name="tanggal_kontrak"
+                      value="{{ old('tanggal_kontrak', $kontrak->tanggal_kontrak->format('Y-m-d')) }}"
+                      onclick="this.showPicker()">
+                    @error('tanggal_kontrak')
+                      <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="tanggal_surat">Tanggal surat</label>
+                    <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat"
+                      value="{{ old('tanggal_surat', $kontrak->tanggal_surat->format('Y-m-d')) }}"
+                      onclick="this.showPicker()">
+                    @error('tanggal_surat')
+                      <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="tanggal_surat">Tanggal surat</label>
-                <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat"
-                  value="{{ old('tanggal_surat', $kontrak->tanggal_surat->format('Y-m-d')) }}"
-                  onclick="this.showPicker()">
-                @error('tanggal_surat')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
-              </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="tanggal_bast">Tanggal BAST</label>
+                    <input type="date" class="form-control" id="tanggal_bast" name="tanggal_bast"
+                      value="{{ old('tanggal_bast', $kontrak->tanggal_bast->format('Y-m-d')) }}"
+                      onclick="this.showPicker()">
+                    @error('tanggal_bast')
+                      <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                  </div>
 
-              <div class="form-group">
-                <label for="tanggal_bast">Tanggal BAST</label>
-                <input type="date" class="form-control" id="tanggal_bast" name="tanggal_bast"
-                  value="{{ old('tanggal_bast', $kontrak->tanggal_bast->format('Y-m-d')) }}" onclick="this.showPicker()">
-                @error('tanggal_bast')
-                  <small class="text-danger">{{ $message }}</small>
-                @enderror
+                  <div class="col-sm-6">
+                    <label for="periode">Periode Kontrak</label>
+                    <input type="month" class="form-control" id="periode" name="periode"
+                      value="{{ old('periode', $kontrak->periode ? \Carbon\Carbon::parse($kontrak->periode)->format('Y-m') : '') }}"
+                      onclick="this.showPicker()">
+                    @error('periode')
+                      <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                  </div>
+                </div>
+
               </div>
             </div>
 

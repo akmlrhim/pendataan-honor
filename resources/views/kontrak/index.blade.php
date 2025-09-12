@@ -7,7 +7,7 @@
       background-color: #f9fafb;
       border: 1px solid #d1d5db;
       border-radius: 0.5rem;
-      height: 2.5rem !important;
+      height: 2rem !important;
       display: flex;
       align-items: center;
       font-size: 1rem;
@@ -33,25 +33,27 @@
 @endpush
 
 @section('content')
+  {{-- button  --}}
+  @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
+    <div class="d-flex ms-2 mb-3">
+      <a href="{{ route('kontrak.create') }}" class="btn btn-success">Tambah Kontrak</a>
+      <button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#printModal">
+        Cetak Laporan
+      </button>
+    </div>
+  @endif
+
+  {{-- flashdata --}}
+  <x-alert />
+
   <div class="row">
-
-    {{-- button  --}}
-    @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
-      <div class="col-12">
-        <a href="{{ route('kontrak.create') }}" class="btn btn-success mb-3">Tambah kontrak</a>
-      </div>
-    @endif
-
-    {{-- flashdata --}}
-    <x-alert />
-
     <div class="col-sm-6">
       <form action="{{ route('kontrak.index') }}" method="GET">
         <div class="card shadow-sm border-0 rounded-lg">
           <div class="card-body">
             <div class="form-group align-items-center mb-0">
               <label for="mitra_id" class="me-2 text-primary mb-0">Cari Mitra:</label>
-              <select name="mitra_id" id="mitra_id" class="form-select select2" onchange="this.form.submit()"
+              <select name="mitra_id" id="mitra_id" class="form-control select2" onchange="this.form.submit()"
                 style="max-width: 250px;">
                 <option value="">-- Semua Mitra --</option>
                 @foreach ($mitra as $m)
@@ -66,12 +68,27 @@
       </form>
     </div>
 
+    <div class="col-sm-6">
+      <form action="{{ route('kontrak.index') }}" method="GET">
+        <div class="card shadow-sm border-0 rounded-lg">
+          <div class="card-body">
+            <div class="form-group align-items-center mb-0">
+              <label for="periode" class="me-2 text-primary mb-0">Periode:</label>
+              <input type="month" name="periode" id="periode" class="form-control form-control-sm"
+                onchange="this.form.submit()" onclick="this.showPicker()" value="{{ request('periode') }}">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap">
-            <thead>
+            <thead class="bg-danger">
               <tr>
                 <th>#</th>
                 <th>Mitra - NMS</th>
@@ -123,6 +140,32 @@
         </div>
         <!-- /.card -->
       </div>
+    </div>
+  </div>
+
+  {{-- modal print  --}}
+  <div class="modal fade" id="printModal" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="{{ route('kontrak.laporan') }}" method="POST">
+        @csrf
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="printModalLabel">Cetak Laporan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label for="periode">Periode</label>
+            <input type="month" class="form-control form-control-sm" name="periode" id="periode" required
+              onclick="this.showPicker()" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Cetak</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 @endsection
