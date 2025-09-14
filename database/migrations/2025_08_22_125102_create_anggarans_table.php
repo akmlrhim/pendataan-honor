@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_anggaran', 120)->unique();
             $table->string('nama_kegiatan', 255)->index();
-            $table->decimal('batas_honor', 15, 0);
             $table->decimal('sisa_anggaran', 15, 0)->default(0);
+            $table->decimal('pagu', 18, 0)->default(0);
             $table->timestamps();
         });
     }

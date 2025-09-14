@@ -31,31 +31,20 @@
               </a>
 
               <input type="text" name="search" class="form-control" placeholder="Cari nama atau kode anggaran"
-                value="{{ request('search') }}">
-
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-default">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-search">
-                    <path d="m21 21-4.34-4.34" />
-                    <circle cx="11" cy="11" r="8" />
-                  </svg>
-                </button>
-              </div>
+                value="{{ request('search') }}" autocomplete="off" onchange="this.form.submit()" />
             </form>
           </div>
 
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap">
+          <table class="table table-bordered table-sm text-nowrap text-sm">
             <thead class="bg-danger">
               <tr>
                 <th>#</th>
                 <th>Kode Anggaran</th>
                 <th>Nama Kegiatan</th>
-                <th>Batas Honor</th>
+                <th>Pagu</th>
                 <th>Sisa Anggaran</th>
                 <th>Aksi</th>
               </tr>
@@ -66,7 +55,7 @@
                   <td>{{ $index + $anggaran->firstItem() }}</td>
                   <td>{{ $row->kode_anggaran }}</td>
                   <td>{{ $row->nama_kegiatan }}</td>
-                  <td>Rp {{ number_format($row->batas_honor, 0, ',', '.') }}</td>
+                  <td>Rp {{ number_format($row->pagu, 0, ',', '.') }}</td>
                   <td>Rp {{ number_format($row->sisa_anggaran, 0, ',', '.') }}</td>
                   <td>
                     <a href="{{ route('anggaran.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>

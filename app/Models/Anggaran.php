@@ -11,7 +11,7 @@ class Anggaran extends Model
     protected $fillable = [
         'kode_anggaran',
         'nama_kegiatan',
-        'batas_honor',
+        'pagu',
         'sisa_anggaran',
     ];
 

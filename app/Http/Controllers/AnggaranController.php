@@ -42,27 +42,25 @@ class AnggaranController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            'batas_honor' => preg_replace('/[^0-9]/', '', $request->batas_honor),
+            'pagu' => preg_replace('/[^0-9]/', '', $request->pagu),
         ]);
 
         $request->validate([
             'kode_anggaran' => 'required|unique:anggaran,kode_anggaran',
             'nama_kegiatan' => 'required',
-            'batas_honor' => 'required|numeric|min:0',
+            'pagu' => 'required|numeric|min:0'
         ]);
 
         $created = Anggaran::create([
             'kode_anggaran' => Str::upper($request->kode_anggaran),
             'nama_kegiatan' => ucwords(strtolower($request->nama_kegiatan)),
-            'batas_honor' => $request->batas_honor,
-            'sisa_anggaran' => $request->batas_honor,
+            'pagu' => $request->pagu,
+            'sisa_anggaran' => $request->pagu,
         ]);
 
-        if ($created) {
-            return redirect()->route('anggaran.index')->with('success', 'Data anggaran berhasil ditambahkan.');
-        } else {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan data anggaran. Silakan coba lagi.');
-        }
+        return $created
+            ? redirect()->route('anggaran.index')->with('success', 'Anggaran berhasil ditambahkan.')
+            : redirect()->back()->with('error', 'Error.');
     }
 
     /**
@@ -83,25 +81,30 @@ class AnggaranController extends Controller
         $anggaran = Anggaran::findOrFail($id);
 
         $request->merge([
-            'batas_honor' => preg_replace('/[^0-9]/', '', $request->batas_honor),
+            'pagu' => preg_replace('/[^0-9]/', '', $request->pagu),
         ]);
 
         $request->validate([
             'kode_anggaran' => 'required|unique:anggaran,kode_anggaran,' . $anggaran->id,
             'nama_kegiatan' => 'required',
-            'batas_honor' => 'required|numeric|min:0',
+            'pagu' => 'required|numeric|min:0',
         ]);
+
+        if ($request->pagu != $anggaran->pagu) {
+            $selisih = $request->pagu - $anggaran->pagu;
+            $sisaBaru = $anggaran->pagu + $selisih;
+
+            $anggaran->sisa_anggaran = $sisaBaru;
+        }
 
         $anggaran->kode_anggaran = Str::upper($request->kode_anggaran);
         $anggaran->nama_kegiatan = ucwords(strtolower($request->nama_kegiatan));
-        $anggaran->batas_honor = $request->batas_honor;
+        $anggaran->pagu = $request->pagu;
         $updated = $anggaran->save();
 
-        if ($updated) {
-            return redirect()->route('anggaran.index')->with('success', 'Data anggaran berhasil diperbarui.');
-        } else {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data anggaran. Silakan coba lagi.');
-        }
+        return $updated
+            ?  redirect()->route('anggaran.index')->with('success', 'Anggaran berhasil diperbarui.')
+            : redirect()->back()->with('error', 'Error.');
     }
 
     /**

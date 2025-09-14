@@ -12,7 +12,7 @@
             <!-- Kiri -->
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="kode_anggaran">Kode anggaran</label>
+                <label for="kode_anggaran">Kode akun anggaran</label>
                 <input type="text" class="form-control @error('kode_anggaran')
 									is-invalid
 								@enderror"
@@ -36,27 +36,15 @@
               </div>
 
               <div class="form-group">
-                <label for="nama_lengkap">Batas honor</label>
+                <label for="nama_lengkap">Pagu</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="lucide lucide-banknote-icon lucide-banknote">
-                        <rect width="20" height="12" x="2" y="6" rx="2" />
-                        <circle cx="12" cy="12" r="2" />
-                        <path d="M6 12h.01M18 12h.01" />
-                      </svg>
-                    </span>
-                  </div>
                   <input type="text" inputmode="numeric"
-                    class="form-control @error('batas_honor')
+                    class="form-control @error('pagu')
 										is-invalid
-									@enderror" id="batas_honor"
-                    placeholder="Masukkan nominal batas honor" name="batas_honor" value="{{ old('batas_honor') }}"
-                    autocomplete="off" />
+									@enderror" id="pagu"
+                    placeholder="Masukkan nominal pagu" name="pagu" value="{{ old('pagu') }}" autocomplete="off" />
                 </div>
-                @error('batas_honor')
+                @error('pagu')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
@@ -75,7 +63,7 @@
 
   @section('scripts')
     <script>
-      const inputHonor = document.getElementById('batas_honor');
+      const inputHonor = document.getElementById('pagu');
 
       inputHonor.addEventListener('input', function(e) {
         let value = this.value.replace(/[^0-9]/g, ''); // hanya angka

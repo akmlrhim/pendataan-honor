@@ -87,7 +87,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap">
+          <table class="table table-bordered table-sm text-nowrap text-sm">
             <thead class="bg-danger">
               <tr>
                 <th>#</th>
@@ -146,7 +146,7 @@
   {{-- modal print  --}}
   <div class="modal fade" id="printModal" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="{{ route('kontrak.laporan') }}" method="POST">
+      <form action="{{ route('kontrak.laporan') }}" method="POST" target="_blank">
         @csrf
         <div class="modal-content">
           <div class="modal-header">

@@ -9,7 +9,7 @@
           <h5 class="card-title">Data Mitra</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-sm text-sm">
             <tbody>
               <tr>
                 <th style="width:200px;" class="bg-danger">Nama Lengkap</th>
@@ -40,7 +40,7 @@
           <h5 class="card-title">Data Kontrak</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-sm text-sm">
             <tbody>
               <tr>
                 <th class="bg-primary text-uppercase" style="width:200px;">Periode Kontrak</th>
@@ -88,7 +88,7 @@
           <h5 class="card-title">Daftar Tugas</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-sm text-nowrap text-sm">
             <thead class="bg-danger text-sm">
               <tr>
                 <th>#</th>

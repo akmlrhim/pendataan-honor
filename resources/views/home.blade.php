@@ -5,7 +5,7 @@
     <div class="col-lg-12 col-12">
       <div class="small-box bg-light shadow-sm rounded-lg">
         <div class="inner">
-          <h5 class="text-primary">👋 Selamat Datang, {{ auth()->user()->nama_lengkap }}, sebagai
+          <h5 class="text-primary">👋 Selamat Datang {{ auth()->user()->nama_lengkap }}, sebagai
             {{ match (auth()->user()->role) {
                 'ketua_tim' => 'Ketua Tim',
                 'umum' => 'Umum',
@@ -82,7 +82,7 @@
             </form>
             </p>
           </div>
-          <canvas id="visitsChart" height="50px"></canvas>
+          <canvas id="visitsChart" height="100px"></canvas>
         </div>
       </div>
     </div>

@@ -7,27 +7,66 @@
       background-color: #f9fafb;
       border: 1px solid #d1d5db;
       border-radius: 0.5rem;
-      height: 2.5rem !important;
+      height: 2rem !important;
+      padding-right: 1.5rem;
       display: flex;
       align-items: center;
-      font-size: 1rem;
+      font-size: 14px;
       color: #111827;
     }
 
     .select2-selection__rendered {
       color: #111827;
-      font-size: 1rem;
+      font-size: 14px;
+      line-height: 1rem;
     }
 
     .select2-selection__arrow {
       height: 100% !important;
       top: 0 !important;
       right: 0.75rem !important;
+      width: 2rem !important;
+      color: #6b7280;
     }
 
     .select2-dropdown {
+      background-color: white;
+      border: 1px solid #d1d5db;
       border-radius: 0.5rem;
-      font-size: 1rem;
+      font-size: 14px;
+      z-index: 9999;
+    }
+
+    .col-anggaran {
+      width: 15%;
+    }
+
+    .col-deskripsi {
+      width: 35%;
+    }
+
+    .col-target {
+      width: 12%;
+      text-align: right;
+    }
+
+    .col-dicapai {
+      width: 12%;
+      text-align: right;
+    }
+
+    .col-satuan {
+      width: 12%;
+    }
+
+    .col-harga {
+      width: 17%;
+      text-align: right;
+    }
+
+    .col-aksi {
+      width: 5%;
+      text-align: center;
     }
   </style>
 @endpush
@@ -48,7 +87,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="mitra_id">Mitra</label>
-                <select name="mitra_id" id="mitra_id" class="custom-select select2">
+                <select name="mitra_id" id="mitra_id" class="select2">
                   <option value="" disabled {{ old('mitra_id') ? '' : 'selected' }}>-- Pilih Mitra --</option>
                   @foreach ($mitra as $m)
                     <option value="{{ $m->id }}" {{ old('mitra_id') == $m->id ? 'selected' : '' }}>
@@ -153,18 +192,52 @@
           </div>
 
           <hr>
+
+          <div class="">
+            <a class="btn btn-info btn-sm mb-2" data-toggle="collapse" href="#collapseExample" role="button"
+              aria-expanded="false" aria-controls="collapseExample">
+              Lihat Anggaran?
+            </a>
+
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                <div class="table-responsive">
+                  <table class="table table-sm text-sm table-bordered">
+                    <thead class="bg-info">
+                      <tr>
+                        <th scope="col">Kode Akun</th>
+                        <th scope="col">Anggaran</th>
+                        <th scope="col">Sisa</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($anggaran as $item)
+                        <tr>
+                          <td>{{ $item->kode_anggaran }}</td>
+                          <td>{{ $item->nama_kegiatan }}</td>
+                          <td>Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
+                      @endforeach
+                    </tbody>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <!-- Tugas -->
           <h5 class="text-primary">Tugas / Kegiatan</h5>
           <table class="table table-bordered table-responsive" id="tugas-table">
-            <thead>
+            <thead class="text-sm bg-info">
               <tr>
-                <th>Anggaran</th>
-                <th>Deskripsi</th>
-                <th>Jumlah Target</th>
-                <th>Jumlah dicapai</th>
-                <th>Satuan</th>
-                <th>Harga Satuan</th>
-                <th>Aksi</th>
+                <th class="col-anggaran">Anggaran</th>
+                <th class="col-deskripsi">Deskripsi</th>
+                <th class="col-target">Jumlah Target</th>
+                <th class="col-dicapai">Jumlah Dicapai</th>
+                <th class="col-satuan">Satuan</th>
+                <th class="col-harga">Harga Satuan</th>
+                <th class="col-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -181,7 +254,8 @@
                       @foreach ($anggaran as $a)
                         <option value="{{ $a->id }}"
                           {{ isset($tugas['anggaran_id']) && $tugas['anggaran_id'] == $a->id ? 'selected' : '' }}>
-                          {{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}
+                          {{ $a->kode_anggaran }}
+
                         </option>
                       @endforeach
                     </select>
@@ -191,9 +265,9 @@
                   </td>
 
                   <td>
-                    <input type="text" name="tugas[{{ $i }}][deskripsi_tugas]" autocomplete="off"
-                      class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror"
-                      value="{{ $tugas['deskripsi_tugas'] ?? '' }}">
+                    <textarea name="tugas[{{ $i }}][deskripsi_tugas]"
+                      class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror" rows="3"
+                      autocomplete="off">{{ $tugas['deskripsi_tugas'] ?? '' }}</textarea>
                     @error('tugas.' . $i . '.deskripsi_tugas')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -274,14 +348,14 @@
           @foreach ($anggaran as $a)
             <option value="{{ $a->id }}"
               {{ old('tugas.' . '${rowIndex}' . '.anggaran_id') == $a->id ? 'selected' : '' }}>
-              {{ $a->nama_kegiatan }} - {{ $a->kode_anggaran }}
+              {{ $a->kode_anggaran }}
             </option>
           @endforeach
         </select>
       </td>
       <td>
-        <input type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off"
-          value="{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}">
+        <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off"
+          rows="3">{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}</textarea>
       </td>
       <td>
         <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control" autocomplete="off"

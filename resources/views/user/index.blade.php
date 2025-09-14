@@ -31,8 +31,8 @@
               <!-- Input Cari -->
               <div class="col-md-4 mb-2">
                 <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
-                <input type="text" name="search" id="keyword" class="form-control" value="{{ request('keyword') }}"
-                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" />
+                <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
+                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" autocomplete="off" />
               </div>
 
               <!-- Tombol -->
@@ -55,13 +55,10 @@
       </form>
     </div>
 
-
-
-
     <div class="col-12">
       <div class="card">
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-nowrap">
+          <table class="table table-bordered table-sm text-nowrap text-sm">
             <thead class="bg-danger">
               <tr>
                 <th>#</th>

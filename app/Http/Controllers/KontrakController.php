@@ -8,6 +8,7 @@ use App\Models\Anggaran;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class KontrakController extends Controller
 {
@@ -25,18 +26,24 @@ class KontrakController extends Controller
                 $query->where('mitra_id', $mitra_id);
             })
             ->when($periode, function ($query, $periode) {
-                $year  = substr($periode, 0, 4);
-                $month = substr($periode, 5, 2);
+                $tahun  = substr($periode, 0, 4);
+                $bulan = substr($periode, 5, 2);
 
-                $query->whereYear('periode', $year)
-                    ->whereMonth('periode', $month);
+                $query->whereYear('periode', $tahun)
+                    ->whereMonth('periode', $bulan);
             })
             ->paginate(10)
             ->appends($request->all());
 
-        $mitra = Mitra::all();
+        $mitra = Mitra::select('id', 'nama_lengkap', 'nms')->get();
 
-        return view('kontrak.index', compact('title', 'mitra', 'kontrak', 'mitra_id', 'periode'));
+        return view('kontrak.index', compact(
+            'title',
+            'mitra',
+            'kontrak',
+            'mitra_id',
+            'periode'
+        ));
     }
 
     /**
@@ -66,7 +73,7 @@ class KontrakController extends Controller
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
             'tanggal_mulai'    => 'required|date',
-            'tanggal_berakhir'    => 'required|date',
+            'tanggal_berakhir'   => 'required|date|after_or_equal:tanggal_mulai',
             'periode' => 'required|date_format:Y-m',
             'keterangan'      => 'nullable|string',
             'tugas'           => 'required|array|min:1',
@@ -116,7 +123,7 @@ class KontrakController extends Controller
 
             $kontrak->tugas()->create([
                 'anggaran_id'       => $tugasData['anggaran_id'],
-                'deskripsi_tugas'   => $tugasData['deskripsi_tugas'],
+                'deskripsi_tugas'   => Str::ucfirst($tugasData['deskripsi_tugas']),
                 'jumlah_dokumen'    => $tugasData['jumlah_dokumen'],
                 'jumlah_target_dokumen'  => $tugasData['jumlah_target_dokumen'],
                 'satuan'            => $tugasData['satuan'],
@@ -169,7 +176,7 @@ class KontrakController extends Controller
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
             'tanggal_mulai'   => 'required|date',
-            'tanggal_berakhir' => 'required|date',
+            'tanggal_berakhir'   => 'required|date|after_or_equal:tanggal_mulai',
             'periode' => 'required|date_format:Y-m',
             'keterangan'      => 'nullable|string',
 
@@ -241,7 +248,7 @@ class KontrakController extends Controller
 
                     $oldTugas->update([
                         'anggaran_id'       => $t['anggaran_id'],
-                        'deskripsi_tugas'   => $t['deskripsi_tugas'],
+                        'deskripsi_tugas'   => Str::ucfirst($t['deskripsi_tugas']),
                         'jumlah_dokumen'    => $t['jumlah_dokumen'],
                         'jumlah_target_dokumen' => $t['jumlah_target_dokumen'],
                         'satuan'            => $t['satuan'],
@@ -261,7 +268,7 @@ class KontrakController extends Controller
                     // Tambah tugas baru
                     $newTugas = $kontrak->tugas()->create([
                         'anggaran_id'       => $t['anggaran_id'],
-                        'deskripsi_tugas'   => $t['deskripsi_tugas'],
+                        'deskripsi_tugas'   => Str::ucfirst($t['deskripsi_tugas']),
                         'jumlah_dokumen'    => $t['jumlah_dokumen'],
                         'jumlah_target_dokumen' => $t['jumlah_target_dokumen'],
                         'satuan'            => $t['satuan'],
@@ -362,13 +369,18 @@ class KontrakController extends Controller
                 ->whereYear('periode', $tahun)
                 ->whereMonth('periode', $bulan)
                 ->get();
+
+            if ($laporan->isEmpty()) {
+                return back()->with('error', "Data dalam rentang yang dipilih tidak ada.");
+            }
         }
+
 
         $pdf = Pdf::loadView('kontrak.laporan', [
             'periode' => $periode,
             'laporan' => $laporan
-        ])->setPaper('A4', 'portrait');
+        ])->setPaper('A4', 'landscape');
 
-        return $pdf->download("Laporan_Kontrak_{$periode}.pdf");
+        return $pdf->stream("Laporan_Kontrak_{$periode}.pdf");
     }
 }
