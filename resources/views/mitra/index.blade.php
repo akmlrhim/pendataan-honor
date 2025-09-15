@@ -5,7 +5,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('mitra.create') }}" class="btn btn-success mb-3">Tambah Mitra</a>
+      <a href="{{ route('mitra.create') }}" class="btn btn-sm btn-success mb-3">Tambah Mitra</a>
     </div>
 
     {{-- flashdata --}}

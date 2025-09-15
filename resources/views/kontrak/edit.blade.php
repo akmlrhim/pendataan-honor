@@ -204,39 +204,38 @@
               Lihat Anggaran?
             </a>
 
+
             <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <div class="table-responsive">
-                  <table class="table table-sm text-sm table-bordered">
-                    <thead class="bg-info">
-                      <tr>
-                        <th scope="col">Kode Akun</th>
-                        <th scope="col">Anggaran</th>
-                        <th scope="col">Sisa</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($anggaran as $item)
-                        <tr>
-                          <td>{{ $item->kode_anggaran }}</td>
-                          <td>{{ $item->nama_kegiatan }}</td>
-                          <td>Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
-                      @endforeach
-                    </tbody>
+              <div class="table-responsive mb-4">
+                <table class="table table-sm text-sm table-bordered text-nowrap">
+                  <thead class="bg-info">
+                    <tr>
+                      <th scope="col">Kode Akun</th>
+                      <th scope="col">Anggaran</th>
+                      <th scope="col">Sisa</th>
                     </tr>
-                  </table>
-                </div>
+                  </thead>
+                  <tbody>
+                    @foreach ($anggaran as $item)
+                      <tr>
+                        <td>{{ $item->kode_anggaran }}</td>
+                        <td>{{ $item->nama_kegiatan }}</td>
+                        <td>Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
+                    @endforeach
+                  </tbody>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
 
-          <!-- Table tugas -->
+          {{-- <!-- Table tugas --> --}}
           <h5 class="text-primary">Tugas / Kegiatan</h5>
-          <table class="table table-bordered table-responsive text-sm" id="tugas-table">
+          <table class="table table-bordered table-responsive text-sm text-nowrap" id="tugas-table">
             <thead class="bg-info text-sm">
               <tr>
                 <th class="col-anggaran">Anggaran</th>
-                <th class="col-deskripsi">Deskripsi</th>
+                <th class="col-deskripsi">Deskripsi tugas</th>
                 <th class="col-target">Jumlah Target</th>
                 <th class="col-dicapai">Jumlah Dicapai</th>
                 <th class="col-satuan">Satuan</th>
@@ -269,7 +268,7 @@
 
                   <td>
                     <textarea type="text" name="tugas[{{ $i }}][deskripsi_tugas]" autocomplete="off"
-                      class="form-control @error("tugas.$i.deskripsi_tugas") is-invalid @enderror">{{ old("tugas.$i.deskripsi_tugas", $tugas['deskripsi_tugas'] ?? '') }}</textarea>
+                      class="form-control form-control-sm @error("tugas.$i.deskripsi_tugas") is-invalid @enderror">{{ old("tugas.$i.deskripsi_tugas", $tugas['deskripsi_tugas'] ?? '') }}</textarea>
                     @error("tugas.$i.deskripsi_tugas")
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -319,18 +318,18 @@
 
                   </td>
                   <td>
-                    <button type="button" class="btn btn-danger btn-sm btn-remove">Hapus</button>
+                    <button type="button" class="btn btn-danger btn-sm btn-remove">&times;</button>
                   </td>
                 </tr>
               @endforeach
             </tbody>
           </table>
 
-          <button type="button" class="btn btn-success btn-sm" id="addRow">Tambah Tugas</button>
+          <button type="button" class="btn btn-sm btn-success btn-sm" id="addRow">&plus;</button>
 
           <hr>
-          <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
-          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+          <a href="{{ route('kontrak.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
+          <button type="submit" class="btn btn-sm btn-primary">Simpan Perubahan</button>
         </form>
       </div>
     </div>
@@ -360,7 +359,7 @@
           </select>
         </td>
         <td>
-          <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off"></textarea>
+          <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control form-control-sm" autocomplete="off"></textarea>
         </td>
         <td>
           <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control" autocomplete="off">
@@ -378,7 +377,7 @@
           <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" class="harga-satuan-hidden">
         </td>
         <td>
-          <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+          <button type="button" class="btn btn-danger btn-remove btn-sm">&times;</button>
         </td>
       </tr>
     `;

@@ -4,7 +4,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('user.create') }}" class="btn btn-success mb-3">Tambah user</a>
+      <a href="{{ route('user.create') }}" class="btn btn-sm btn-success mb-3">Tambah user</a>
     </div>
 
     {{-- flashdata --}}

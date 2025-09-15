@@ -37,7 +37,7 @@
           <!-- Header -->
           <div class="text-center mb-4">
             <h1 class="mb-1 font-weight-bold text-primary">Login</h1>
-            <h6 class="text-muted">Silakan masuk untuk melanjutkan</h6>
+            <p class="text-muted">Silakan masuk untuk melanjutkan</p>
           </div>
 
           <x-alert />

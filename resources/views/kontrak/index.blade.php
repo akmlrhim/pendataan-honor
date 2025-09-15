@@ -36,8 +36,8 @@
   {{-- button  --}}
   @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
     <div class="d-flex ms-2 mb-3">
-      <a href="{{ route('kontrak.create') }}" class="btn btn-success">Tambah Kontrak</a>
-      <button type="button" class="btn btn-secondary ml-2" data-toggle="modal" data-target="#printModal">
+      <a href="{{ route('kontrak.create') }}" class="btn btn-sm btn-success">Tambah Kontrak</a>
+      <button type="button" class="btn btn-sm btn-secondary ml-2" data-toggle="modal" data-target="#printModal">
         Cetak Laporan
       </button>
     </div>

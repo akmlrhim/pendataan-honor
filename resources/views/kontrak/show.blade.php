@@ -2,14 +2,14 @@
 
 @section('content')
   <div class="row">
-    <!-- Data Mitra -->
+    {{-- data mitra  --}}
     <div class="col-md-12">
       <div class="card">
         <div class="card-header bg-light">
           <h5 class="card-title">Data Mitra</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-sm">
+          <table class="table table-bordered table-sm text-sm text-nowrap">
             <tbody>
               <tr>
                 <th style="width:200px;" class="bg-danger">Nama Lengkap</th>
@@ -40,7 +40,7 @@
           <h5 class="card-title">Data Kontrak</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          <table class="table table-bordered table-sm text-sm">
+          <table class="table table-bordered table-sm text-sm text-nowrap">
             <tbody>
               <tr>
                 <th class="bg-primary text-uppercase" style="width:200px;">Periode Kontrak</th>
@@ -139,10 +139,10 @@
         </div>
 
         <div class="card-footer">
-          <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
+          <a href="{{ route('kontrak.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
 
           @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
-            <a href="{{ route('kontrak.edit', $kontrak->id) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ route('kontrak.edit', $kontrak->id) }}" class="btn btn-sm btn-primary">Edit</a>
           @endif
         </div>
       </div>

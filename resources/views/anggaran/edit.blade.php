@@ -55,9 +55,9 @@
           </div>
 
           <a href="{{ route('anggaran.index') }}">
-            <button type="button" class="btn btn-secondary">Kembali</button>
+            <button type="button" class="btn btn-sm btn-secondary">Kembali</button>
           </a>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
         </form>
       </div>
 

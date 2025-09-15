@@ -200,27 +200,25 @@
             </a>
 
             <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <div class="table-responsive">
-                  <table class="table table-sm text-sm table-bordered">
-                    <thead class="bg-info">
-                      <tr>
-                        <th scope="col">Kode Akun</th>
-                        <th scope="col">Anggaran</th>
-                        <th scope="col">Sisa</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($anggaran as $item)
-                        <tr>
-                          <td>{{ $item->kode_anggaran }}</td>
-                          <td>{{ $item->nama_kegiatan }}</td>
-                          <td>Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
-                      @endforeach
-                    </tbody>
+              <div class="table-responsive p-0">
+                <table class="table table-sm text-sm table-bordered text-nowrap">
+                  <thead class="bg-info">
+                    <tr>
+                      <th scope="col">Kode Akun</th>
+                      <th scope="col">Anggaran</th>
+                      <th scope="col">Sisa</th>
                     </tr>
-                  </table>
-                </div>
+                  </thead>
+                  <tbody>
+                    @foreach ($anggaran as $item)
+                      <tr>
+                        <td>{{ $item->kode_anggaran }}</td>
+                        <td>{{ $item->nama_kegiatan }}</td>
+                        <td>Rp {{ number_format($item->sisa_anggaran, 0, ',', '.') }}</td>
+                    @endforeach
+                  </tbody>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
@@ -232,7 +230,7 @@
             <thead class="text-sm bg-info">
               <tr>
                 <th class="col-anggaran">Anggaran</th>
-                <th class="col-deskripsi">Deskripsi</th>
+                <th class="col-deskripsi">Deskripsi tugas</th>
                 <th class="col-target">Jumlah Target</th>
                 <th class="col-dicapai">Jumlah Dicapai</th>
                 <th class="col-satuan">Satuan</th>
@@ -266,7 +264,7 @@
 
                   <td>
                     <textarea name="tugas[{{ $i }}][deskripsi_tugas]"
-                      class="form-control @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror" rows="3"
+                      class="form-control form-control-sm @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror" rows="3"
                       autocomplete="off">{{ $tugas['deskripsi_tugas'] ?? '' }}</textarea>
                     @error('tugas.' . $i . '.deskripsi_tugas')
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -302,7 +300,6 @@
                       class="form-control currency-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
                       value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
 
-
                     <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
                       autocomplete="off" value="{{ $tugas['harga_satuan'] ?? '' }}">
 
@@ -312,17 +309,18 @@
                   </td>
 
                   <td>
-                    <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+                    <button type="button" class="btn btn-danger btn-remove btn-sm">&times;</button>
                   </td>
                 </tr>
               @endforeach
             </tbody>
           </table>
-          <button type="button" id="add-row" class="btn btn-success mb-3 btn-sm">Tambah Tugas</button>
+          <button type="button" id="add-row" class="btn btn-success mb-3 btn-sm">&plus;</button>
 
-          <br>
-          <a href="{{ route('kontrak.index') }}" class="btn btn-secondary">Kembali</a>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <br />
+
+          <a href="{{ route('kontrak.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
+          <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
         </form>
       </div>
     </div>
@@ -354,7 +352,7 @@
         </select>
       </td>
       <td>
-        <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control" autocomplete="off"
+        <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control form-control-sm" autocomplete="off"
           rows="3">{{ old('tugas.' . '${rowIndex}' . '.deskripsi_tugas') }}</textarea>
       </td>
       <td>
@@ -378,7 +376,7 @@
                value="{{ old('tugas.' . '${rowIndex}' . '.harga_satuan') }}">
       </td>
       <td>
-        <button type="button" class="btn btn-danger btn-remove btn-sm">Hapus</button>
+        <button type="button" class="btn btn-danger btn-remove btn-sm">&times;</button>
       </td>
     </tr>
   `;

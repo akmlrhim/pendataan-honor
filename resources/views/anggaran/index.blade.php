@@ -5,7 +5,7 @@
 
     {{-- button  --}}
     <div class="col-12">
-      <a href="{{ route('anggaran.create') }}" class="btn btn-success mb-3">Tambah Anggaran</a>
+      <a href="{{ route('anggaran.create') }}" class="btn btn-sm btn-success mb-3">Tambah Anggaran</a>
     </div>
 
     {{-- flashdata --}}

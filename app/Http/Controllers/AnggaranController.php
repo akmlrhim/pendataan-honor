@@ -92,7 +92,7 @@ class AnggaranController extends Controller
 
         if ($request->pagu != $anggaran->pagu) {
             $selisih = $request->pagu - $anggaran->pagu;
-            $sisaBaru = $anggaran->pagu + $selisih;
+            $sisaBaru = $anggaran->sisa_anggaran + $selisih;
 
             $anggaran->sisa_anggaran = $sisaBaru;
         }

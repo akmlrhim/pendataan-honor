@@ -48,7 +48,7 @@
                 @enderror
               </div>
 
-              <button type="submit" class="btn btn-primary">Simpan Profil</button>
+              <button type="submit" class="btn btn-sm btn-primary">Simpan Profil</button>
             </form>
           </div>
 
@@ -142,7 +142,7 @@
                 @enderror
               </div>
 
-              <button type="submit" class="btn btn-warning">Ubah Password</button>
+              <button type="submit" class="btn btn-sm btn-warning">Ubah Password</button>
             </form>
           </div>
         </div>
