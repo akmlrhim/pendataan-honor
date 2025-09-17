@@ -198,10 +198,10 @@
 
           <hr>
 
-          <div class="">
+          <div>
             <a class="btn btn-info btn-sm mb-2" data-toggle="collapse" href="#collapseExample" role="button"
               aria-expanded="false" aria-controls="collapseExample">
-              Lihat Anggaran?
+              Lihat Anggaran &#9660;
             </a>
 
 
@@ -276,7 +276,7 @@
 
                   <td>
                     <input type="number" name="tugas[{{ $i }}][jumlah_target_dokumen]" autocomplete="off"
-                      class="form-control @error("tugas.$i.jumlah_target_dokumen") is-invalid @enderror"
+                      class="form-control form-control-sm @error("tugas.$i.jumlah_target_dokumen") is-invalid @enderror"
                       value="{{ old("tugas.$i.jumlah_target_dokumen", $tugas['jumlah_target_dokumen'] ?? '') }}">
                     @error("tugas.$i.jumlah_target_dokumen")
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -285,7 +285,7 @@
 
                   <td>
                     <input type="number" name="tugas[{{ $i }}][jumlah_dokumen]" autocomplete="off"
-                      class="form-control @error("tugas.$i.jumlah_dokumen") is-invalid @enderror"
+                      class="form-control form-control-sm @error("tugas.$i.jumlah_dokumen") is-invalid @enderror"
                       value="{{ old("tugas.$i.jumlah_dokumen", $tugas['jumlah_dokumen'] ?? '') }}">
                     @error("tugas.$i.jumlah_dokumen")
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -294,7 +294,7 @@
 
                   <td>
                     <input type="text" name="tugas[{{ $i }}][satuan]" autocomplete="off"
-                      class="form-control @error("tugas.$i.satuan") is-invalid @enderror"
+                      class="form-control form-control-sm @error("tugas.$i.satuan") is-invalid @enderror"
                       value="{{ old("tugas.$i.satuan", $tugas['satuan'] ?? '') }}">
                     @error("tugas.$i.satuan")
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -304,7 +304,7 @@
                   <td>
                     <!-- input tampilan -->
                     <input type="text"
-                      class="form-control currency-input @error("tugas.$i.harga_satuan") is-invalid @enderror"
+                      class="form-control form-control-sm currency-input @error("tugas.$i.harga_satuan") is-invalid @enderror"
                       autocomplete="off"
                       value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
 
@@ -362,17 +362,17 @@
           <textarea type="text" name="tugas[${rowIndex}][deskripsi_tugas]" class="form-control form-control-sm" autocomplete="off"></textarea>
         </td>
         <td>
-          <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control" autocomplete="off">
+          <input type="number" name="tugas[${rowIndex}][jumlah_target_dokumen]" class="form-control form-control-sm" autocomplete="off">
         </td>
         <td>
-          <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control" autocomplete="off">
+          <input type="number" name="tugas[${rowIndex}][jumlah_dokumen]" class="form-control form-control-sm" autocomplete="off">
         </td>
         <td>
-          <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control" autocomplete="off">
+          <input type="text" name="tugas[${rowIndex}][satuan]" class="form-control form-control-sm" autocomplete="off">
         </td>
         <td>
           <!-- input tampilan -->
-          <input type="text" class="form-control currency-input" autocomplete="off">
+          <input type="text" class="form-control form-control-sm currency-input" autocomplete="off">
           <!-- input hidden untuk validasi -->
           <input type="hidden" name="tugas[${rowIndex}][harga_satuan]" class="harga-satuan-hidden">
         </td>

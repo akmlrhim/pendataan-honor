@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html, charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>BPS Kab.Tapin - Login</title>
+  <title>BPS Tapin - Login</title>
 
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
@@ -17,7 +17,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="{{ asset('css/font.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
@@ -47,9 +46,9 @@
 
             <!-- Email -->
             <div class="form-group mb-3">
-              <label for="email" class="form-label font-weight-bold">Email Address</label>
-              <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                name="email" value="{{ old('email') }}" placeholder="Masukkan email anda" autofocus
+              <label for="email" class="form-label font-weight-bold text-sm">Email</label>
+              <input type="email" class="form-control form-control-sm @error('email') is-invalid @enderror"
+                id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email anda" autofocus
                 autocomplete="off">
               @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -60,16 +59,16 @@
 
             <!-- Password -->
             <div class="form-group mb-4">
-              <label for="password" class="form-label font-weight-bold">Password</label>
+              <label for="password" class="form-label font-weight-bold text-sm">Password</label>
               <div class="input-group">
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                  name="password" placeholder="Masukkan password" autocomplete="off">
+                <input type="password" class="form-control form-control-sm @error('password') is-invalid @enderror"
+                  id="password" name="password" placeholder="Masukkan password" autocomplete="off">
 
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary toggle-password" type="button">
+                  <button class="btn btn-sm btn-outline-secondary toggle-password" type="button">
                     <!-- 👁️ eye (default visible) -->
                     <span class="icon-eye-off d-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-eye">
                         <path d="M2.062 12.348a1 1 0 0 1 0-.696
@@ -82,7 +81,7 @@
 
                     <!-- 🚫👁️ eye-off (hidden by default) -->
                     <span class="icon-eye">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-eye-off">
                         <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575
@@ -90,7 +89,7 @@
                      10.747 10.747 0 0 1-1.444 2.49" />
                         <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
                         <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151
-                     1 1 0 0 1 0-.696
+                           1 1 0 0 1 0-.696
                      10.75 10.75 0 0 1 4.446-5.143" />
                         <path d="m2 2 20 20" />
                       </svg>
@@ -114,15 +113,11 @@
             </button>
           </form>
 
-          {{-- <div class="text-right mt-2 text-sm text-primary">
-            <a href="{{ route('register') }}">Register</a>
-          </div> --}}
-
         </div>
       </div>
 
       <div class="text-center mt-3">
-        <p class="text-muted">&copy; {{ date('Y') }} BPS Kab. Tapin</p>
+        <p class="text-muted">&copy; {{ date('Y') }} BPS Tapin</p>
       </div>
     </div>
   </div>

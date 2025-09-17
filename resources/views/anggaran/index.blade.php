@@ -45,7 +45,7 @@
                 <th>Kode Anggaran</th>
                 <th>Nama Kegiatan</th>
                 <th>Pagu</th>
-                <th>Sisa Anggaran</th>
+                <th>Alokasi anggaran / sisa</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -56,7 +56,13 @@
                   <td>{{ $row->kode_anggaran }}</td>
                   <td>{{ $row->nama_kegiatan }}</td>
                   <td>Rp {{ number_format($row->pagu, 0, ',', '.') }}</td>
-                  <td>Rp {{ number_format($row->sisa_anggaran, 0, ',', '.') }}</td>
+                  <td>
+                    @if ($row->sisa_anggaran == 0)
+                      <a href="{{ route('alocate.anggaran', $row->id) }}" class="btn btn-sm btn-warning">Alokasikan</a>
+                    @else
+                      Rp {{ number_format($row->sisa_anggaran, 0, ',', '.') }}
+                    @endif
+                  </td>
                   <td>
                     <a href="{{ route('anggaran.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
                     <x-confirm-delete action="{{ route('anggaran.destroy', $row->id) }}" />

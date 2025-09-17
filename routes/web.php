@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,9 @@ Route::middleware('throttle:60,1')->group(function () {
 			->except(['index', 'show'])
 			->middleware('role:ketua_tim,umum');
 
+		Route::get('anggaran/alokasi/{id}', [AnggaranController::class, 'editAnggaran'])->name('alocate.anggaran');
+		Route::put('anggaran/alokasi/{id}', [AnggaranController::class, 'alocateAnggaran'])->name('store.alocate.anggaran');
+
 		Route::middleware('role:ketua_tim,umum')->group(function () {
 			Route::get('kontrak/create', [KontrakController::class, 'create'])->name('kontrak.create');
 			Route::post('kontrak', [KontrakController::class, 'store'])->name('kontrak.store');
@@ -55,5 +59,7 @@ Route::middleware('throttle:60,1')->group(function () {
 		Route::get('profil', [ProfilController::class, 'index'])->name('profil.index');
 		Route::patch('profil-info', [ProfilController::class, 'info'])->name('profil.info');
 		Route::patch('profil-pwd', [ProfilController::class, 'password'])->name('profil.pwd');
+
+		Route::resource('tambahan', SettingsController::class);
 	});
 });

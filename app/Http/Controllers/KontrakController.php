@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mitra;
 use App\Models\Kontrak;
 use App\Models\Anggaran;
+use App\Models\Settings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,9 @@ class KontrakController extends Controller
         ]);
 
         // Hitung total honor dulu, sambil cek anggaran
+
+        $batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
+
         $totalHonor = 0;
         foreach ($request->tugas as $i => $tugasData) {
             $hargaTotalTugas = $tugasData['jumlah_dokumen'] * $tugasData['harga_satuan'];
@@ -98,6 +102,10 @@ class KontrakController extends Controller
                     "tugas.$i.harga_satuan" => "Sisa anggaran tidak mencukupi."
                 ]);
             }
+        }
+
+        if ($totalHonor > $batasHonor) {
+            return redirect()->back()->withInput()->with('error', "Total honor melebihi Rp " . number_format($batasHonor, 0, ',', '.'));
         }
 
         // Simpan kontrak
@@ -194,6 +202,7 @@ class KontrakController extends Controller
         $existingTugasIds = $kontrak->tugas()->pluck('id')->toArray();
         $requestTugasIds  = [];
         $totalHonor = 0;
+        $batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
 
         /**
          * =============================
@@ -228,6 +237,10 @@ class KontrakController extends Controller
 
             // kurangi simulasi
             $anggaranMap[$t['anggaran_id']] -= $newTotal;
+        }
+
+        if ($newTotal > $batasHonor) {
+            return redirect()->back()->withInput()->with('error', "Total honor melebihi Rp " . number_format($batasHonor, 0, ',', '.'));
         }
 
         /**
@@ -334,7 +347,7 @@ class KontrakController extends Controller
             return back()->with('error', 'Terjadi kesalahan saat menghapus kontrak.');
         }
 
-        return redirect()->route('kontrak.index')->with('success', 'Kontrak berhasil dihapus dan anggaran dikembalikan.');
+        return redirect()->back()->with('success', 'Kontrak berhasil dihapus dan anggaran dikembalikan.');
     }
 
     public function fileKontrak($id)

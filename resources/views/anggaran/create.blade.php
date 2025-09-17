@@ -36,7 +36,7 @@
               </div>
 
               <div class="form-group">
-                <label for="nama_lengkap">Pagu</label>
+                <label for="pagu">Pagu</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
                     class="form-control @error('pagu')
