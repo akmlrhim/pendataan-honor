@@ -17,7 +17,7 @@
     <li class="nav-item d-flex align-items-center pr-3">
       <div class="text-right">
         <div id="tanggal" class="text-dark font-weight-bold text-xs"></div>
-        <div id="waktu" class="text-primary font-weight-bold"></div>
+        <div id="waktu" class="text-primary font-weight-bold font-noto"></div>
       </div>
     </li>
   </ul>
@@ -42,7 +42,8 @@
       second: '2-digit'
     };
     document.getElementById('waktu').textContent =
-      now.toLocaleTimeString('id-ID', waktuOptions);
+      now.toLocaleTimeString('id-ID', waktuOptions) +
+      " WITA";
   }
 
   setInterval(updateDateTime, 1000);

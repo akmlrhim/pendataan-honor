@@ -87,11 +87,17 @@ class KontrakController extends Controller
         ]);
 
         // Hitung total honor dulu, sambil cek anggaran
-
         $batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
 
         $totalHonor = 0;
         foreach ($request->tugas as $i => $tugasData) {
+
+            if ($tugasData['jumlah_dokumen'] > $tugasData['jumlah_target_dokumen']) {
+                return back()->withInput()->withErrors([
+                    "tugas.$i.jumlah_dokumen" => "Jumlah dokumen melebihi target."
+                ]);
+            }
+
             $hargaTotalTugas = $tugasData['jumlah_dokumen'] * $tugasData['harga_satuan'];
             $totalHonor += $hargaTotalTugas;
 
@@ -104,6 +110,7 @@ class KontrakController extends Controller
             }
         }
 
+        // validasi total honor tidak boleh melebihi batas honor yg tlh di tetapkan 
         if ($totalHonor > $batasHonor) {
             return redirect()->back()->withInput()->with('error', "Total honor melebihi Rp " . number_format($batasHonor, 0, ',', '.'));
         }
@@ -188,6 +195,7 @@ class KontrakController extends Controller
             'periode' => 'required|date_format:Y-m',
             'keterangan'      => 'nullable|string',
 
+            // validasi tugas 
             'tugas'                   => 'required|array|min:1',
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
             'tugas.*.deskripsi_tugas' => 'required|string',
@@ -220,6 +228,13 @@ class KontrakController extends Controller
 
         // cek request tugas
         foreach ($request->tugas as $i => $t) {
+
+            if ($t['jumlah_dokumen'] > $t['jumlah_target_dokumen']) {
+                return back()->withInput()->withErrors([
+                    "tugas.$i.jumlah_dokumen" => "Jumlah dokumen melebihi target."
+                ]);
+            }
+
             $newTotal = $t['jumlah_dokumen'] * $t['harga_satuan'];
 
             if (!isset($anggaranMap[$t['anggaran_id']])) {
@@ -230,8 +245,7 @@ class KontrakController extends Controller
 
             if ($newTotal > $anggaranMap[$t['anggaran_id']]) {
                 return back()->withInput()->withErrors([
-                    "tugas.$i.harga_satuan" =>
-                    "Sisa anggaran tidak mencukupi"
+                    "tugas.$i.harga_satuan" => "Sisa anggaran tidak mencukupi"
                 ]);
             }
 
@@ -239,6 +253,7 @@ class KontrakController extends Controller
             $anggaranMap[$t['anggaran_id']] -= $newTotal;
         }
 
+        // validasi total honor tidak boleh melebihi batas honor yg tlh di tetapkan 
         if ($newTotal > $batasHonor) {
             return redirect()->back()->withInput()->with('error', "Total honor melebihi Rp " . number_format($batasHonor, 0, ',', '.'));
         }

@@ -35,8 +35,8 @@
 
           <!-- Header -->
           <div class="text-center mb-4">
-            <h1 class="mb-1 font-weight-bold text-primary">Login</h1>
-            <p class="text-muted">Silakan masuk untuk melanjutkan</p>
+            <h3 class="mb-1 font-weight-bold text-primary">Login</h3>
+            <p class="text-muted text-sm">Silakan masuk untuk melanjutkan</p>
           </div>
 
           <x-alert />
@@ -117,7 +117,7 @@
       </div>
 
       <div class="text-center mt-3">
-        <p class="text-muted">&copy; {{ date('Y') }} BPS Tapin</p>
+        <p class="text-muted text-sm">&copy; {{ date('Y') }} BPS Tapin</p>
       </div>
     </div>
   </div>

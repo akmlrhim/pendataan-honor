@@ -117,7 +117,7 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="7" class="text-center">Belum ada tugas</td>
+                  <td colspan="9" class="text-center">Belum ada tugas</td>
                 </tr>
               @endforelse
             </tbody>

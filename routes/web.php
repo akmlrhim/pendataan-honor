@@ -48,8 +48,7 @@ Route::middleware('throttle:60,1')->group(function () {
 			Route::delete('kontrak/{kontrak}', [KontrakController::class, 'destroy'])->name('kontrak.destroy');
 		});
 
-		Route::resource('kontrak', KontrakController::class)
-			->only(['index', 'show']);
+		Route::resource('kontrak', KontrakController::class)->only(['index', 'show']);
 
 		Route::get('kontrak/{id}/file', [KontrakController::class, 'fileKontrak'])->name('kontrak.file')->middleware('role:umum');
 		Route::post('kontrak/laporan', [KontrakController::class, 'report'])->name('kontrak.laporan')->middleware('role:ketua_tim,umum');
