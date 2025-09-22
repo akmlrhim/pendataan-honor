@@ -39,7 +39,7 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger">
+            <thead class="bg-success">
               <tr>
                 <th>#</th>
                 <th>Kode Anggaran</th>
@@ -64,7 +64,7 @@
                     @endif
                   </td>
                   <td>
-                    <a href="{{ route('anggaran.edit', $row->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{{ route('anggaran.edit', $row->id) }}" class="btn btn-xs btn-primary">Edit</a>
                     <x-confirm-delete action="{{ route('anggaran.destroy', $row->id) }}" />
                   </td>
                 </tr>

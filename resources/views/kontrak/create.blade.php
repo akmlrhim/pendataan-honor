@@ -86,7 +86,7 @@
             <!-- Kiri -->
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="mitra_id">Mitra</label>
+                <label for="mitra_id" class="text-sm">Mitra</label>
                 <select name="mitra_id" id="mitra_id" class="select2">
                   <option value="" disabled {{ old('mitra_id') ? '' : 'selected' }}>-- Pilih Mitra --</option>
                   @foreach ($mitra as $m)
@@ -96,31 +96,32 @@
                   @endforeach
                 </select>
                 @error('mitra_id')
-                  <small class="text-danger">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="tanggal_kontrak">Tanggal Kontrak</label>
-                    <input type="date" class="form-control @error('tanggal_kontrak') is-invalid @enderror"
+                    <label for="tanggal_kontrak" class="text-sm">Tanggal Kontrak</label>
+                    <input type="date"
+                      class="form-control form-control-sm @error('tanggal_kontrak') is-invalid @enderror"
                       id="tanggal_kontrak" name="tanggal_kontrak" value="{{ old('tanggal_kontrak') }}"
                       onclick="this.showPicker()" />
                     @error('tanggal_kontrak')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
                 </div>
 
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="tanggal_surat">Tanggal Surat</label>
-                    <input type="date" class="form-control @error('tanggal_surat') is-invalid @enderror"
-                      id="tanggal_surat" name="tanggal_surat" value="{{ old('tanggal_surat') }}"
-                      onclick="this.showPicker()" />
+                    <label for="tanggal_surat" class="text-sm">Tanggal Surat</label>
+                    <input type="date"
+                      class="form-control form-control-sm @error('tanggal_surat') is-invalid @enderror" id="tanggal_surat"
+                      name="tanggal_surat" value="{{ old('tanggal_surat') }}" onclick="this.showPicker()" />
                     @error('tanggal_surat')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
                 </div>
@@ -129,23 +130,23 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="tanggal_bast">Tanggal BAST</label>
-                    <input type="date" class="form-control @error('tanggal_bast') is-invalid @enderror"
+                    <label for="tanggal_bast" class="text-sm">Tanggal BAST</label>
+                    <input type="date" class="form-control form-control-sm @error('tanggal_bast') is-invalid @enderror"
                       id="tanggal_bast" name="tanggal_bast" value="{{ old('tanggal_bast') }}"
                       onclick="this.showPicker()" />
                     @error('tanggal_bast')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
                 </div>
 
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="tanggal_bast">Periode Kontrak</label>
-                    <input type="month" class="form-control @error('periode') is-invalid @enderror" id="periode"
-                      name="periode" value="{{ old('periode') }}" onclick="this.showPicker()" />
+                    <label for="tanggal_bast" class="text-sm">Periode Kontrak</label>
+                    <input type="month" class="form-control form-control-sm @error('periode') is-invalid @enderror"
+                      id="periode" name="periode" value="{{ old('periode') }}" onclick="this.showPicker()" />
                     @error('periode')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
                 </div>
@@ -158,33 +159,34 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-sm-6">
-                    <label for="tanggal_mulai">Jadwal (Tgl. Mulai)</label>
-                    <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
-                      id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}"
-                      onclick="this.showPicker()" />
+                    <label for="tanggal_mulai" class="text-sm">Jadwal (Tgl. Mulai)</label>
+                    <input type="date"
+                      class="form-control form-control-sm @error('tanggal_mulai') is-invalid @enderror" id="tanggal_mulai"
+                      name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" onclick="this.showPicker()" />
                     @error('tanggal_mulai')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
 
                   <div class="col-sm-6">
-                    <label for="tanggal_berakhir">Jadwal (Tgl. Berakhir)</label>
-                    <input type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror"
+                    <label for="tanggal_berakhir" class="text-sm">Jadwal (Tgl. Berakhir)</label>
+                    <input type="date"
+                      class="form-control form-control-sm @error('tanggal_berakhir') is-invalid @enderror"
                       id="tanggal_berakhir" name="tanggal_berakhir" value="{{ old('tanggal_berakhir') }}"
                       onclick="this.showPicker()" />
                     @error('tanggal_berakhir')
-                      <small class="text-danger">{{ ucfirst($message) }}</small>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="keterangan">Keterangan</label>
-                <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" rows="2"
+                <label for="keterangan" class="text-sm">Keterangan</label>
+                <textarea class="form-control form-control-sm @error('keterangan') is-invalid @enderror" id="keterangan" rows="2"
                   placeholder="Masukkan keterangan (opsional)" name="keterangan">{{ old('keterangan') }}</textarea>
                 @error('keterangan')
-                  <small class="text-danger">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
             </div>
@@ -236,8 +238,8 @@
               <tr>
                 <th class="col-anggaran">Anggaran</th>
                 <th class="col-deskripsi">Deskripsi tugas</th>
-                <th class="col-target">Jumlah Target</th>
-                <th class="col-dicapai">Jumlah Dicapai</th>
+                <th class="col-target">Jlh. Target</th>
+                <th class="col-dicapai">Jlh. Dicapai</th>
                 <th class="col-satuan">Satuan</th>
                 <th class="col-harga">Harga Satuan</th>
                 <th class="col-aksi">Aksi</th>
@@ -263,7 +265,7 @@
                       @endforeach
                     </select>
                     @error('tugas.' . $i . '.anggaran_id')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
 
@@ -272,7 +274,7 @@
                       class="form-control form-control-sm @error('tugas.' . $i . '.deskripsi_tugas') is-invalid @enderror" rows="3"
                       autocomplete="off">{{ $tugas['deskripsi_tugas'] ?? '' }}</textarea>
                     @error('tugas.' . $i . '.deskripsi_tugas')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
                   <td>
@@ -280,7 +282,7 @@
                       class="form-control form-control-sm @error('tugas.' . $i . '.jumlah_target_dokumen') is-invalid @enderror"
                       value="{{ $tugas['jumlah_target_dokumen'] ?? '' }}">
                     @error('tugas.' . $i . '.jumlah_target_dokumen')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
                   <td>
@@ -288,7 +290,7 @@
                       class="form-control form-control-sm @error('tugas.' . $i . '.jumlah_dokumen') is-invalid @enderror"
                       value="{{ $tugas['jumlah_dokumen'] ?? '' }}">
                     @error('tugas.' . $i . '.jumlah_dokumen')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
                   <td>
@@ -296,7 +298,7 @@
                       class="form-control form-control-sm @error('tugas.' . $i . '.satuan') is-invalid @enderror"
                       value="{{ $tugas['satuan'] ?? '' }}">
                     @error('tugas.' . $i . '.satuan')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
 
@@ -309,7 +311,7 @@
                       autocomplete="off" value="{{ $tugas['harga_satuan'] ?? '' }}">
 
                     @error('tugas.' . $i . '.harga_satuan')
-                      <div class="invalid-feedback">{{ $message }}</div>
+                      <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
 

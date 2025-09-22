@@ -40,7 +40,7 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger">
+            <thead class="bg-success">
               <tr>
                 <th>#</th>
                 <th>NMS</th>
@@ -59,7 +59,7 @@
                   <td>{{ $row->jenis_kelamin }}</td>
                   <td>{{ $row->alamat }}</td>
                   <td>
-                    <a href="{{ route('mitra.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ route('mitra.edit', $row->id) }}" class="btn btn-info btn-xs">Edit</a>
                     <x-confirm-delete action="{{ route('mitra.destroy', $row->id) }}" />
                   </td>
                 </tr>

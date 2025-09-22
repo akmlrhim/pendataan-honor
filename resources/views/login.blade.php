@@ -24,6 +24,10 @@
     body {
       font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
+
+    .g-recaptcha {
+      transform: scale(0.9);
+    }
   </style>
 </head>
 
@@ -104,8 +108,14 @@
               @enderror
             </div>
 
-            {{-- recapthca  --}}
-            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+            <div class="form-group">
+              <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+              </div>
+              @error('g-recaptcha-response')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
+            </div>
+
 
             <!-- Button -->
             <button type="submit" class="btn btn-primary w-100 shadow-sm">
@@ -122,7 +132,8 @@
     </div>
   </div>
 
-  <script src="https://www.google.com/recaptcha/api.js?render={{ env('RECAPTCHA_SITE_KEY') }}"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const toggleBtn = document.querySelector(".toggle-password");
@@ -137,14 +148,6 @@
         // toggle ikon
         eye.classList.toggle("d-none", !isPassword);
         eyeOff.classList.toggle("d-none", isPassword);
-      });
-
-      grecaptcha.ready(function() {
-        grecaptcha.execute('{{ env('RECAPTCHA_SITE_KEY') }}', {
-          action: 'login'
-        }).then(function(token) {
-          document.getElementById('g-recaptcha-response').value = token;
-        });
       });
     });
   </script>

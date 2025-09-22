@@ -1,7 +1,7 @@
 @props(['action' => '', 'label' => 'Hapus'])
 
 <!-- Tombol Hapus: kirim action final lewat data-action -->
-<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"
+<button type="button" class="btn btn-danger text-sm btn-xs" data-toggle="modal" data-target="#confirmDeleteModal"
   data-action="{{ $action }}">
   {{ $label }}
 </button>

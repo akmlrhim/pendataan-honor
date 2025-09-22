@@ -35,8 +35,8 @@ class AuthController extends Controller
 
         $captcha = ReCaptchaServices::verify($request->input('g-recaptcha-response'));
 
-        if (!$captcha['success'] ?? false  || ($captcha['score'] ?? 0) < 0.5) {
-            return back()->withErrors(['captcha' => 'Verifikasi ReCaptcha gagal, coba lagi.']);
+        if (!($captcha['success'] ?? false)) {
+            return back()->with('error', 'Verifikasi ReCaptcha gagal, coba lagi.');
         }
 
         Auth::login($user);

@@ -17,7 +17,7 @@ class HomeController extends Controller
         $anggaran = Anggaran::count();
         $user = User::count();
 
-        $range = request('range', 1);
+        $range = request('range', 7);
 
         $visits = Visit::where('created_at', '>=', now()->subDays($range))
             ->get();

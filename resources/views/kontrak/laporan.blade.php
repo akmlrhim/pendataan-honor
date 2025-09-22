@@ -14,7 +14,7 @@
 <body>
 
   <header>
-  <strong><img src="{{ public_path('img/logo_bps.png') }}" alt="BPS Logo" width="10%"></strong>
+    <strong><img src="{{ public_path('img/logo_bps.png') }}" alt="BPS Logo" width="10%"></strong>
   </header>
 
 
@@ -24,7 +24,6 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Det. Waktu</th>
         <th>Petugas</th>
         <th>Anggaran</th>
         <th>Deskripsi Tugas</th>
@@ -40,18 +39,6 @@
           <tr>
             @if ($i == 0)
               <td rowspan="{{ count($item->tugas) }}">{{ $item->nomor_kontrak }}</td>
-              <td rowspan="{{ count($item->tugas) }}">
-                <ul style="list-style:none; margin:0; padding-left:0;">
-                  <li><strong>Jadwal</strong>:</li>
-                  <li>
-                    {{ $item->tanggal_mulai->translatedFormat('d F Y') }}-{{ $item->tanggal_berakhir->translatedFormat('d F Y') }}
-                  </li>
-                  <br>
-                  <li><strong>Kontrak</strong>:{{ $item->tanggal_kontrak->translatedFormat('d F Y') }}</li>
-                  <li><strong>BAST</strong>:{{ $item->tanggal_bast->translatedFormat('d F Y') }}</li>
-                  <li><strong>Surat</strong>:{{ $item->tanggal_surat->translatedFormat('d F Y') }}</li>
-                </ul>
-              </td>
               <td rowspan="{{ count($item->tugas) }}">
                 <ul style="list-style:none; margin:0; padding-left:0;">
                   <li><strong>{{ $item->mitra->nms }}</strong></li>

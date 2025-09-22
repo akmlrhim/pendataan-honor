@@ -91,7 +91,7 @@
       <div class="card">
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger">
+            <thead class="bg-success">
               <tr>
                 <th>#</th>
                 <th>Mitra - NMS</th>
@@ -105,7 +105,7 @@
                   <td>{{ $k->mitra->nama_lengkap }} - {{ $k->mitra->nms }}</td>
                   <td>
                     @if (Auth::user()->role == 'umum')
-                      <a href="{{ route('kontrak.file', $k->id) }}" class="btn btn-secondary btn-sm" target="_blank"
+                      <a href="{{ route('kontrak.file', $k->id) }}" class="btn btn-secondary btn-xs" target="_blank"
                         title="Cetak">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -119,10 +119,10 @@
                       </a>
                     @endif
 
-                    <a href="{{ route('kontrak.show', $k->id) }}" class="btn btn-info btn-sm" title="Detail">Detail</a>
+                    <a href="{{ route('kontrak.show', $k->id) }}" class="btn btn-info btn-xs" title="Detail">Detail</a>
 
                     @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
-                      <a href="{{ route('kontrak.edit', $k->id) }}" class="btn btn-warning btn-sm"
+                      <a href="{{ route('kontrak.edit', $k->id) }}" class="btn btn-warning btn-xs"
                         title="Edit">Edit</a>
                       <x-confirm-delete action="{{ route('kontrak.destroy', $k->id) }}" />
                     @endif

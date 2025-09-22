@@ -17,7 +17,7 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger">
+            <thead class="bg-success">
               <tr>
                 <th>Key</th>
                 <th>Value</th>
@@ -30,7 +30,7 @@
                   <td>{{ $row->key }}</td>
                   <td>{{ $row->value }}</td>
                   <td>
-                    <a href="{{ route('tambahan.edit', $row->uuid) }}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{{ route('tambahan.edit', $row->uuid) }}" class="btn btn-xs btn-primary">Edit</a>
                     <x-confirm-delete action="{{ route('tambahan.destroy', $row->uuid) }}" />
                   </td>
                 </tr>

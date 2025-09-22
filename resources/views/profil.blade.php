@@ -19,32 +19,32 @@
               @method('PATCH')
 
               <div class="form-group">
-                <label for="nama_lengkap">Nama Lengkap</label>
-                <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="nama_lengkap"
-                  name="nama_lengkap" value="{{ old('nama_lengkap', Auth::user()->nama_lengkap) }}"
+                <label for="nama_lengkap" class="text-sm">Nama Lengkap</label>
+                <input type="text" class="form-control form-control-sm @error('nama_lengkap') is-invalid @enderror"
+                  id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', Auth::user()->nama_lengkap) }}"
                   placeholder="Masukkan Nama Lengkap" autocomplete="off">
                 @error('nama_lengkap')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="nip">NIP</label>
-                <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip"
-                  name="nip" value="{{ old('nip', Auth::user()->nip) }}" placeholder="Masukkan NIP"
+                <label for="nip" class="text-sm">NIP</label>
+                <input type="text" class="form-control form-control-sm @error('nip') is-invalid @enderror"
+                  id="nip" name="nip" value="{{ old('nip', Auth::user()->nip) }}" placeholder="Masukkan NIP"
                   autocomplete="off">
                 @error('nip')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                  name="email" value="{{ old('email', Auth::user()->email) }}" placeholder="Masukkan Email"
-                  autocomplete="off">
+                <label for="email" class="text-sm">Email</label>
+                <input type="email" class="form-control form-control-sm @error('email') is-invalid @enderror"
+                  id="email" name="email" value="{{ old('email', Auth::user()->email) }}"
+                  placeholder="Masukkan Email" autocomplete="off">
                 @error('email')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
@@ -60,13 +60,14 @@
               @method('PATCH')
 
               <div class="form-group">
-                <label for="current_password">Password Saat Ini</label>
+                <label for="current_password" class="text-sm">Password Saat Ini</label>
                 <div class="input-group">
-                  <input type="password" class="form-control @error('current_password') is-invalid @enderror"
+                  <input type="password"
+                    class="form-control form-control-sm @error('current_password') is-invalid @enderror"
                     id="current_password" name="current_password" placeholder="Masukkan Password Saat Ini"
                     autocomplete="off">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary toggle-password"
+                    <button type="button" class="btn btn-sm btn-outline-secondary toggle-password"
                       data-target="current_password">
                       {{-- Default: eye-closed --}}
                       <span class="icon-eye">
@@ -84,17 +85,18 @@
                   </div>
                 </div>
                 @error('current_password')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="new_password">Password Baru</label>
+                <label for="new_password" class="text-sm">Password Baru</label>
                 <div class="input-group">
-                  <input type="password" class="form-control @error('new_password') is-invalid @enderror"
+                  <input type="password" class="form-control form-control-sm @error('new_password') is-invalid @enderror"
                     id="new_password" name="new_password" placeholder="Masukkan Password Baru" autocomplete="off">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary toggle-password" data-target="new_password">
+                    <button type="button" class="btn btn-sm btn-outline-secondary toggle-password"
+                      data-target="new_password">
                       <span class="icon-eye">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -110,18 +112,19 @@
                   </div>
                 </div>
                 @error('new_password')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="new_password_confirmation">Konfirmasi Password</label>
+                <label for="new_password_confirmation" class="text-sm">Konfirmasi Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror"
+                  <input type="password"
+                    class="form-control form-control-sm @error('new_password_confirmation') is-invalid @enderror"
                     id="new_password_confirmation" name="new_password_confirmation"
                     placeholder="Masukkan Konfirmasi Password Baru" autocomplete="off">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary toggle-password"
+                    <button type="button" class="btn btn-sm btn-outline-secondary toggle-password"
                       data-target="new_password_confirmation">
                       <span class="icon-eye">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -138,7 +141,7 @@
                   </div>
                 </div>
                 @error('new_password_confirmation')
-                  <small class="text-danger text-xs">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 

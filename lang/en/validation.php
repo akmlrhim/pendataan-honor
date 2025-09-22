@@ -164,7 +164,8 @@ return [
         'nip' => 'NIP',
         'current_password' => 'Password saat ini',
         'new_password' => 'Password baru',
-        'new_password_confirmation' => 'Konfirmasi password'
+        'new_password_confirmation' => 'Konfirmasi password',
+        'g-recaptcha-response' => 'reCAPTCHA',
     ],
 
 ];

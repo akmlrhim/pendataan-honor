@@ -10,17 +10,17 @@
     {{-- flashdata --}}
     <x-alert />
 
-
     <div class="col-12">
       <form action="{{ route('user.index') }}" method="GET">
         <div class="card shadow-sm rounded-lg">
           <div class="card-body">
             <div class="form-row align-items-center">
 
-              <!-- Filter Role -->
+              {{-- filter role  --}}
               <div class="col-md-3 mb-2">
-                <label for="role" class="text-primary font-weight-bold">Role</label>
-                <select name="role" id="role" class="custom-select" onchange="this.form.submit()">
+                <label for="role" class="text-primary font-weight-bold text-sm">Role</label>
+                <select name="role" id="role" class="form-control form-control-sm text-sm"
+                  onchange="this.form.submit()">
                   <option value="">-- Semua Role --</option>
                   <option value="ketua_tim" {{ request('role') == 'ketua_tim' ? 'selected' : '' }}>Ketua Tim</option>
                   <option value="umum" {{ request('role') == 'umum' ? 'selected' : '' }}>Umum</option>
@@ -28,16 +28,17 @@
                 </select>
               </div>
 
-              <!-- Input Cari -->
+              {{-- search  --}}
               <div class="col-md-4 mb-2">
-                <label for="keyword" class="text-primary font-weight-bold">Cari Nama / NIP</label>
-                <input type="text" name="keyword" id="keyword" class="form-control" value="{{ request('keyword') }}"
-                  placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off" autocomplete="off" />
+                <label for="keyword" class="text-primary font-weight-bold text-sm">Cari Nama / NIP</label>
+                <input type="text" name="keyword" id="keyword" class="form-control form-control-sm"
+                  value="{{ request('keyword') }}" placeholder="Masukkan Nama Lengkap atau NIP" autocomplete="off"
+                  autocomplete="off" />
               </div>
 
-              <!-- Tombol -->
+              {{-- button  --}}
               <div class="col-md-4 mb-2 d-flex align-items-end">
-                <a href="{{ route('user.index') }}" class="btn btn-secondary" title="Reset">
+                <a href="{{ route('user.index') }}" class="btn btn-sm btn-secondary" title="Reset">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-refresh-cw">
@@ -59,7 +60,7 @@
       <div class="card">
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger">
+            <thead class="bg-success">
               <tr>
                 <th>#</th>
                 <th>Nama Lengkap</th>
@@ -84,7 +85,7 @@
                     } }}
                   </td>
                   <td>
-                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ route('user.edit', $row->id) }}" class="btn btn-info btn-xs">Edit</a>
                     <x-confirm-delete action="{{ route('user.destroy', $row->id) }}" />
                   </td>
                 </tr>

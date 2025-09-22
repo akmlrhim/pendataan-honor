@@ -13,41 +13,43 @@
             <!-- Kiri -->
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="kode_anggaran">Kode akun anggaran</label>
-                <input type="text" class="form-control @error('kode_anggaran')
+                <label for="kode_anggaran" class="text-sm">Kode akun anggaran</label>
+                <input type="text"
+                  class="form-control form-control-sm  @error('kode_anggaran')
 									is-invalid
 								@enderror"
                   id="kode_anggaran" name="kode_anggaran" placeholder="Masukkan kode anggaran" autocomplete="off"
                   value="{{ old('kode_anggaran', $anggaran->kode_anggaran) }}">
                 @error('kode_anggaran')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="nama_kegiatan">Nama kegiatan</label>
-                <input type="text" class="form-control @error('nama_kegiatan')
+                <label for="nama_kegiatan" class="text-sm">Nama kegiatan</label>
+                <input type="text"
+                  class="form-control form-control-sm @error('nama_kegiatan')
 									is-invalid
 								@enderror"
                   id="nama_kegiatan" name="nama_kegiatan" placeholder="Masukkan nama kegiatan" autocomplete="off"
                   value="{{ old('nama_kegiatan', $anggaran->nama_kegiatan) }}">
                 @error('nama_kegiatan')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
               <div class="form-group">
-                <label for="pagu">Pagu</label>
+                <label for="pagu" class="text-sm" class="text-sm">Pagu</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
-                    class="form-control @error('pagu')
+                    class="form-control form-control-sm @error('pagu')
 										is-invalid
-									@enderror" id="pagu"
-                    placeholder="Masukkan nominal pagu" name="pagu" value="{{ old('pagu', $anggaran->pagu) }}"
-                    autocomplete="off">
+									@enderror"
+                    id="pagu" placeholder="Masukkan nominal pagu" name="pagu"
+                    value="{{ old('pagu', $anggaran->pagu) }}" autocomplete="off">
                 </div>
                 @error('pagu')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 
@@ -63,7 +65,7 @@
     </div>
 
     <div class="text-center mt-3 text-sm">
-      <p class="text-muted">Diubah {{ $anggaran->updated_at->diffForHumans() }}</p>
+      <i class="text-muted italic text-sm">Diubah {{ $anggaran->updated_at->diffForHumans() }}</i>
     </div>
 
   @section('scripts')
