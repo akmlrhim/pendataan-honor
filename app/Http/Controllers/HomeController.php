@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
+use App\Models\Kontrak;
 use App\Models\Mitra;
 use App\Models\User;
 use App\Models\Visit;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -16,6 +16,7 @@ class HomeController extends Controller
         $mitra = Mitra::count();
         $anggaran = Anggaran::count();
         $user = User::count();
+        $kontrak = Kontrak::where('periode', date('Y-m' . '-01'))->count();
 
         $range = request('range', 7);
 
@@ -44,6 +45,7 @@ class HomeController extends Controller
             'mitra',
             'anggaran',
             'user',
+            'kontrak',
             'totalVisits',
             'uniqueVisitors',
             'visitsPerDay',

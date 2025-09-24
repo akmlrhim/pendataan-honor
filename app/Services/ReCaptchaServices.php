@@ -14,5 +14,5 @@ class ReCaptchaServices
 		]);
 
 		return $response->json();
-	}
+	}	
 }

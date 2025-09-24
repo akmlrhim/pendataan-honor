@@ -24,10 +24,6 @@
     body {
       font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
-
-    .g-recaptcha {
-      transform: scale(0.9);
-    }
   </style>
 </head>
 
@@ -37,7 +33,6 @@
       <div class="card shadow-sm border-0 rounded-lg">
         <div class="card-body p-5">
 
-          <!-- Header -->
           <div class="text-center mb-4">
             <h3 class="mb-1 font-weight-bold text-primary">Login</h3>
             <p class="text-muted text-sm">Silakan masuk untuk melanjutkan</p>
@@ -48,20 +43,17 @@
           <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf
 
-            <!-- Email -->
+
             <div class="form-group mb-3">
               <label for="email" class="form-label font-weight-bold text-sm">Email</label>
               <input type="email" class="form-control form-control-sm @error('email') is-invalid @enderror"
                 id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email anda" autofocus
                 autocomplete="off">
               @error('email')
-                <span class="invalid-feedback" role="alert">
-                  {{ ucfirst($message) }}
-                </span>
+                <x-input-validation>{{ $message }}</x-input-validation>
               @enderror
             </div>
 
-            <!-- Password -->
             <div class="form-group mb-4">
               <label for="password" class="form-label font-weight-bold text-sm">Password</label>
               <div class="input-group">
@@ -70,7 +62,7 @@
 
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-outline-secondary toggle-password" type="button">
-                    <!-- 👁️ eye (default visible) -->
+
                     <span class="icon-eye-off d-none">
                       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -83,7 +75,6 @@
                       </svg>
                     </span>
 
-                    <!-- 🚫👁️ eye-off (hidden by default) -->
                     <span class="icon-eye">
                       <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -102,24 +93,14 @@
                 </div>
               </div>
               @error('password')
-                <span class="invalid-feedback d-block" role="alert">
-                  {{ ucfirst($message) }}
-                </span>
+                <x-input-validation>{{ $message }}</x-input-validation>
               @enderror
             </div>
 
-            <div class="form-group">
-              <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
-              </div>
-              @error('g-recaptcha-response')
-                <small class="text-danger">{{ $message }}</small>
-              @enderror
-            </div>
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
 
-
-            <!-- Button -->
-            <button type="submit" class="btn btn-primary w-100 shadow-sm">
-              <i class="fas fa-sign-in-alt mr-2"></i> Login
+            <button type="submit" class="btn btn-primary w-100 shadow-sm font-weight-bold">
+              Login
             </button>
           </form>
 
@@ -132,7 +113,7 @@
     </div>
   </div>
 
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -145,9 +126,28 @@
         const isPassword = passwordInput.getAttribute("type") === "password";
         passwordInput.setAttribute("type", isPassword ? "text" : "password");
 
-        // toggle ikon
         eye.classList.toggle("d-none", !isPassword);
         eyeOff.classList.toggle("d-none", isPassword);
+      });
+
+      if (!window.grecaptcha) return;
+
+      grecaptcha.ready(function() {
+        grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
+          action: 'login'
+        }).then(function(token) {
+          document.getElementById('g-recaptcha-response').value = token;
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
+            action: 'login'
+          }).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+            e.target.submit();
+          });
+        });
       });
     });
   </script>

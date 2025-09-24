@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KontrakExport;
 use App\Models\Mitra;
 use App\Models\Kontrak;
 use App\Models\Anggaran;
@@ -10,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KontrakController extends Controller
 {
@@ -390,6 +392,10 @@ class KontrakController extends Controller
         $periode = $request->periode;
         $laporan = collect();
 
+        if (!$periode) {
+            return back()->with('error', 'Silahkan pilih periode terlebih dahulu.');
+        }
+
         if ($periode) {
             [$tahun, $bulan] = explode('-', $periode);
 
@@ -399,10 +405,9 @@ class KontrakController extends Controller
                 ->get();
 
             if ($laporan->isEmpty()) {
-                return back()->with('error', "Data dalam rentang yang dipilih tidak ada.");
+                return back()->with('error', "Data dalam periode yang dipilih tidak ada.");
             }
         }
-
 
         $pdf = Pdf::loadView('kontrak.laporan', [
             'periode' => $periode,
@@ -410,5 +415,24 @@ class KontrakController extends Controller
         ])->setPaper('A4', 'landscape');
 
         return $pdf->stream("Laporan_Kontrak_{$periode}.pdf");
+    }
+
+    public function export(Request $request)
+    {
+        $periode = $request->periode;
+
+        if (!$periode) {
+            return back()->with('error', 'Silahkan pilih periode terlebih dahulu.');
+        }
+
+        [$tahun, $bulan] = explode('-', $periode);
+
+        $checkData = Kontrak::whereYear('periode', $tahun)->whereMonth('periode', $bulan)->exists();
+
+        if (!$checkData) {
+            return back()->with('error', "Data dalam periode yang dipilih tidak ada.");
+        }
+
+        return Excel::download(new KontrakExport($bulan, $tahun), "Kontrak_{$periode}" . time() . ".xlsx");
     }
 }

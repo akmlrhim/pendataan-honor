@@ -35,11 +35,14 @@
 @section('content')
   @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
     <div class="btn-group mb-3" role="group" aria-label="Aksi Kontrak">
-      <a href="{{ route('kontrak.create') }}" class="btn btn-sm btn-success">
+      <a href="{{ route('kontrak.create') }}" class="btn btn-sm btn-primary">
         Tambah Kontrak
       </a>
-      <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#printModal">
-        Cetak Laporan
+      <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#printModal">
+        Cetak
+      </button>
+      <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exportModal">
+        Export
       </button>
     </div>
   @endif
@@ -55,7 +58,7 @@
         <div class="card shadow-sm border-0 rounded-lg">
           <div class="card-body">
             <div class="form-group align-items-center mb-0">
-              <label for="mitra_id" class="me-2 text-primary mb-0">Cari Mitra:</label>
+              <label for="mitra_id" class="me-2 text-sm text-primary mb-0">Cari Mitra:</label>
               <select name="mitra_id" id="mitra_id" class="form-control select2" onchange="this.form.submit()"
                 style="max-width: 250px;">
                 <option value="">-- Semua Mitra --</option>
@@ -76,7 +79,7 @@
         <div class="card shadow-sm border-0 rounded-lg">
           <div class="card-body">
             <div class="form-group align-items-center mb-0">
-              <label for="periode" class="me-2 text-primary mb-0">Periode:</label>
+              <label for="periode" class="me-2 text-sm text-primary mb-0">Periode:</label>
               <input type="month" name="periode" id="periode" class="form-control form-control-sm"
                 onchange="this.form.submit()" onclick="this.showPicker()" value="{{ request('periode') }}">
             </div>
@@ -149,23 +152,47 @@
   {{-- modal print  --}}
   <div class="modal fade" id="printModal" tabindex="-1" aria-labelledby="printModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="{{ route('kontrak.laporan') }}" method="POST" target="_blank">
+      <form action="{{ route('kontrak.laporan') }}" method="POST">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="printModalLabel">Cetak Laporan</h5>
+            <h5 class="modal-title" id="printModalLabel">Cetak Rekap</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <label for="periode">Periode</label>
+            <label for="periode" class="text-sm">Periode</label>
             <input type="month" class="form-control form-control-sm" name="periode" id="periode" required
               onclick="this.showPicker()" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary">Cetak</button>
+            <button type="submit" class="btn btn-danger btn-sm" title="Cetak menjadi PDF"> Cetak PDF</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {{-- modal export  --}}
+  <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="{{ route('kontrak.export') }}" method="POST">
+        @csrf
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="printModalLabel"><i>Export</i> Kontrak</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label for="periode" class="text-sm">Periode</label>
+            <input type="month" class="form-control form-control-sm" name="periode" id="periode" required
+              onclick="this.showPicker()" />
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-sm" title="Cetak menjadi PDF"> Cetak Excel</button>
           </div>
         </div>
       </form>

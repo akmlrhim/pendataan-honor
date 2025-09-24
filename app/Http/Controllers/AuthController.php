@@ -39,6 +39,10 @@ class AuthController extends Controller
             return back()->with('error', 'Verifikasi ReCaptcha gagal, coba lagi.');
         }
 
+        if (($captcha['score'] ?? 0) < 0.5) {
+            return back()->with('error', 'Aktivitas mencurigakan terdeteksi (skor reCAPTCHA rendah).');
+        }
+
         Auth::login($user);
         $request->session()->regenerate();
 
