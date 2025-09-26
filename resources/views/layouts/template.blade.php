@@ -12,29 +12,10 @@
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-    rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
   @stack('css-libs')
-
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-    }
-
-    .font-anton {
-      font-family: "Anton", sans-serif;
-    }
-  </style>
 
 </head>
 

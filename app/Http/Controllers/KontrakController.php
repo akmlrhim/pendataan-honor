@@ -8,9 +8,11 @@ use App\Models\Kontrak;
 use App\Models\Anggaran;
 use App\Models\Settings;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KontrakController extends Controller
@@ -70,8 +72,14 @@ class KontrakController extends Controller
      */
     public function store(Request $request)
     {
+        $periode = Carbon::createFromFormat('Y-m', $request->periode)->startOfMonth()->toDateString();
+
         $request->validate([
-            'mitra_id'        => 'required|exists:mitra,id',
+            'mitra_id'  => [
+                'required',
+                Rule::unique('kontrak', 'mitra_id')
+                    ->where(fn($query) => $query->where('periode', $periode))
+            ],
             'tanggal_kontrak' => 'required|date',
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
@@ -187,8 +195,15 @@ class KontrakController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $periode = Carbon::createFromFormat('Y-m', $request->periode)->startOfMonth()->toDateString();
+
         $request->validate([
-            'mitra_id'        => 'required|exists:mitra,id',
+            'mitra_id' => [
+                'required',
+                Rule::unique('kontrak', 'mitra_id')
+                    ->where(fn($query) => $query->where('periode', $periode))
+                    ->ignore($id)
+            ],
             'tanggal_kontrak' => 'required|date',
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',

@@ -1,1 +1,1 @@
-<small class="text-xs text-danger d-block mt-1">{{ ucfirst($slot) }}</small>
+<small class="text-xs text-danger d-block mt-1 text-wrap">{{ ucfirst($slot) }}</small>
