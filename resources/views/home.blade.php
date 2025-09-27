@@ -64,7 +64,7 @@
         <div class="card-body">
           <div class="d-flex">
             <p class="d-flex flex-column">
-              <span class="text-lg font-anton">{{ $totalVisits }}</span>
+              <span class="text-lg font-weight-bold">{{ $totalVisits }}</span>
               <span class="text-sm">Pengunjung Web</span>
             </p>
             <p class="ml-auto d-flex flex-column text-right">

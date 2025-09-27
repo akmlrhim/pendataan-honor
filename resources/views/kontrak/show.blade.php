@@ -12,19 +12,19 @@
           <table class="table table-bordered table-sm text-sm text-nowrap">
             <tbody>
               <tr>
-                <th style="width:200px;" class="bg-danger">Nama Lengkap</th>
+                <th style="width:200px;">Nama Lengkap</th>
                 <td>{{ $kontrak->mitra->nama_lengkap }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">NMS</th>
+                <th>NMS</th>
                 <td>{{ $kontrak->mitra->nms }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Jenis Kelamin</th>
+                <th>Jenis Kelamin</th>
                 <td>{{ $kontrak->mitra->jenis_kelamin ?? '-' }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Alamat</th>
+                <th>Alamat</th>
                 <td>{{ $kontrak->mitra->alamat ?? '-' }}</td>
               </tr>
             </tbody>
@@ -43,35 +43,35 @@
           <table class="table table-bordered table-sm text-sm text-nowrap">
             <tbody>
               <tr>
-                <th class="bg-primary text-uppercase" style="width:200px;">Periode Kontrak</th>
-                <td class="bg-primary font-weight-bold text-uppercase">{{ $kontrak->periode->translatedFormat('F Y') }}
+                <th class="bg-success text-uppercase" style="width:200px;">Periode Kontrak</th>
+                <td class="bg-success font-weight-bold text-uppercase">{{ $kontrak->periode->translatedFormat('F Y') }}
                 </td>
               </tr>
               <tr>
-                <th style="width:200px;" class="bg-danger">Tanggal Kontrak</th>
+                <th style="width:200px;">Tanggal Kontrak</th>
                 <td>{{ $kontrak->tanggal_kontrak->translatedFormat('d F Y') }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Tanggal Surat</th>
+                <th>Tanggal Surat</th>
                 <td>{{ $kontrak->tanggal_surat->translatedFormat('d F Y') }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Tanggal BAST</th>
+                <th>Tanggal BAST</th>
                 <td>{{ $kontrak->tanggal_bast->translatedFormat('d F Y') }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Jadwal</th>
+                <th>Jadwal</th>
                 <td>
                   {{ $kontrak->tanggal_mulai->translatedFormat('d F Y') }} -
                   {{ $kontrak->tanggal_berakhir->translatedFormat('d F Y') }}
                 </td>
               </tr>
               <tr>
-                <th class="bg-danger">Keterangan</th>
+                <th>Keterangan</th>
                 <td>{{ $kontrak->keterangan ?? '-' }}</td>
               </tr>
               <tr>
-                <th class="bg-danger">Total Honor</th>
+                <th>Total Honor</th>
                 <td>Rp {{ number_format($kontrak->total_honor, 0, ',', '.') }}</td>
               </tr>
             </tbody>
@@ -89,7 +89,7 @@
         </div>
         <div class="card-body table-responsive p-0">
           <table class="table table-bordered table-sm text-nowrap text-sm">
-            <thead class="bg-danger text-sm">
+            <thead class="bg-success text-sm">
               <tr>
                 <th>#</th>
                 <th>Kode</th>

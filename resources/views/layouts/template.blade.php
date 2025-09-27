@@ -9,6 +9,10 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>BPS Tapin - {{ $title }}</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
 
@@ -17,11 +21,22 @@
 
   @stack('css-libs')
 
+  <style>
+    body {
+      font-family: "Geist", sans-serif;
+    }
+
+    .flasher-container,
+    .flasher,
+    .toast,
+    .swal2-container {
+      z-index: 2000 !important;
+    }
+  </style>
 </head>
 
 <body class="sidebar-mini layout-footer-fixed layout-fixed layout-navbar-fixed">
   <div class="wrapper">
-
     @include('layouts.navbar')
     @include('layouts.sidebar')
 

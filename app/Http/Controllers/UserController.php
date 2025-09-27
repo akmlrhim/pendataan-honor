@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Pengguna';
+        $title = 'User';
 
         $query = User::where('id', '!=', Auth::id());
 
@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $title = 'Tambah Pengguna';
+        $title = 'Tambah User';
         return view('user.create', compact('title'));
     }
 
@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function edit(int $id)
     {
-        $title = 'Edit Pengguna';
+        $title = 'Edit User';
         $user = User::findOrFail($id);
 
         return view('user.edit', compact('title', 'user'));
@@ -114,6 +114,6 @@ class UserController extends Controller
     public function destroy(int $id)
     {
         User::findOrFail($id)->delete();
-        return redirect()->route('user.index')->with('success', 'Pengguna berhasil dihapus.');
+        return redirect()->route('user.index')->with('success', 'User berhasil dihapus.');
     }
 }
