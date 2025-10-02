@@ -41,7 +41,7 @@
       <div class="small-box bg-light">
         <div class="inner">
           <h2 class="text-info font-anton">{{ $kontrak }}</h2>
-          <p class="text-info text-sm">Kontrak {{ date('F Y') }}</p>
+          <p class="text-info text-sm">Kontrak {{ now()->translatedFormat('F Y') }}</p>
         </div>
       </div>
     </div>
