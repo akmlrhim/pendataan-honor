@@ -78,14 +78,14 @@ class KontrakController extends Controller
             'mitra_id'  => [
                 'required',
                 Rule::unique('kontrak', 'mitra_id')
-                    ->where(fn($query) => $query->where('periode', $periode))
+                    ->where(fn($query) => $query->whereDate('periode', $periode)),
             ],
             'tanggal_kontrak' => 'required|date',
             'tanggal_surat'   => 'required|date',
             'tanggal_bast'    => 'required|date',
             'tanggal_mulai'    => 'required|date',
             'tanggal_berakhir'   => 'required|date|after_or_equal:tanggal_mulai',
-            'periode' => 'required|date_format:Y-m',
+            'periode' => 'required',
             'keterangan'      => 'nullable|string',
             'tugas'           => 'required|array|min:1',
             'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
@@ -94,6 +94,8 @@ class KontrakController extends Controller
             'tugas.*.jumlah_target_dokumen'  => 'required|integer|min:1',
             'tugas.*.satuan'          => 'required|string|max:40',
             'tugas.*.harga_satuan'    => 'required|numeric|min:0',
+        ], [
+            'mitra_id.unique' => 'Mitra ini sudah memiliki kontrak untuk periode tersebut.'
         ]);
 
         // Hitung total honor dulu, sambil cek anggaran
@@ -137,7 +139,7 @@ class KontrakController extends Controller
             'tanggal_bast'    => $request->tanggal_bast,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_berakhir' => $request->tanggal_berakhir,
-            'periode' => $request->periode . '-01',
+            'periode' => $periode,
             'keterangan'      => $request->keterangan,
             'total_honor'     => $totalHonor,
         ]);
@@ -197,30 +199,35 @@ class KontrakController extends Controller
     {
         $periode = Carbon::createFromFormat('Y-m', $request->periode)->startOfMonth()->toDateString();
 
-        $request->validate([
-            'mitra_id' => [
-                'required',
-                Rule::unique('kontrak', 'mitra_id')
-                    ->where(fn($query) => $query->where('periode', $periode))
-                    ->ignore($id)
-            ],
-            'tanggal_kontrak' => 'required|date',
-            'tanggal_surat'   => 'required|date',
-            'tanggal_bast'    => 'required|date',
-            'tanggal_mulai'   => 'required|date',
-            'tanggal_berakhir'   => 'required|date|after_or_equal:tanggal_mulai',
-            'periode' => 'required|date_format:Y-m',
-            'keterangan'      => 'nullable|string',
+        $request->validate(
+            [
+                'mitra_id' => [
+                    'required',
+                    Rule::unique('kontrak', 'mitra_id')
+                        ->where(fn($query) => $query->where('periode', $periode))
+                        ->ignore($id)
+                ],
+                'tanggal_kontrak' => 'required|date',
+                'tanggal_surat'   => 'required|date',
+                'tanggal_bast'    => 'required|date',
+                'tanggal_mulai'   => 'required|date',
+                'tanggal_berakhir'   => 'required|date|after_or_equal:tanggal_mulai',
+                'periode' => 'required|date_format:Y-m',
+                'keterangan'      => 'nullable|string',
 
-            // validasi tugas 
-            'tugas'                   => 'required|array|min:1',
-            'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
-            'tugas.*.deskripsi_tugas' => 'required|string',
-            'tugas.*.jumlah_dokumen'  => 'required|integer|min:1',
-            'tugas.*.jumlah_target_dokumen' => 'required|integer|min:1',
-            'tugas.*.satuan'          => 'required|string|max:40',
-            'tugas.*.harga_satuan'    => 'required|numeric|min:0',
-        ]);
+                // validasi tugas 
+                'tugas'                   => 'required|array|min:1',
+                'tugas.*.anggaran_id'     => 'required|exists:anggaran,id',
+                'tugas.*.deskripsi_tugas' => 'required|string',
+                'tugas.*.jumlah_dokumen'  => 'required|integer|min:1',
+                'tugas.*.jumlah_target_dokumen' => 'required|integer|min:1',
+                'tugas.*.satuan'          => 'required|string|max:40',
+                'tugas.*.harga_satuan'    => 'required|numeric|min:0',
+            ],
+            [
+                'mitra_id.unique' => 'Mitra ini sudah memiliki kontrak untuk periode tersebut.'
+            ]
+        );
 
         $kontrak = Kontrak::with('tugas')->findOrFail($id);
 
@@ -384,8 +391,10 @@ class KontrakController extends Controller
 
     public function fileKontrak($id)
     {
+        $kepalaBps = Settings::where('key', 'kepala_bps_tapin')->value('value');
+        $pjbPembuatKomit = Settings::where('key', 'pejebat_pembuat_komitmen')->value('value');
         $kontrak = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])->findOrFail($id);
-        $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak'))->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak', 'kepalaBps', 'pjbPembuatKomit'))->setPaper('a4', 'portrait');
 
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
@@ -426,10 +435,10 @@ class KontrakController extends Controller
 
         $pdf = Pdf::loadView('kontrak.laporan', [
             'periode' => $periode,
-            'laporan' => $laporan
+            'laporan' => $laporan,
         ])->setPaper('A4', 'landscape');
 
-        return $pdf->stream("Laporan_Kontrak_{$periode}.pdf");
+        return $pdf->stream("Laporan Kontrak_{$periode}.pdf");
     }
 
     public function export(Request $request)

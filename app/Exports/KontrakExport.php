@@ -42,7 +42,6 @@ class KontrakExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                 $kontrak->mitra->alamat;
 
             $totalHonor = $kontrak->total_honor;
-            $detailTanggal = "";
             $first = true;
 
             foreach ($kontrak->tugas as $tugas) {

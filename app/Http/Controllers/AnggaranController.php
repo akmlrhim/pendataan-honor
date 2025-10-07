@@ -55,6 +55,7 @@ class AnggaranController extends Controller
 			'kode_anggaran' => Str::upper($request->kode_anggaran),
 			'nama_kegiatan' => ucwords(strtolower($request->nama_kegiatan)),
 			'pagu' => $request->pagu,
+			'anggaran_diperbarui' => now(),
 			'sisa_anggaran' => 0,
 		]);
 
@@ -92,14 +93,17 @@ class AnggaranController extends Controller
 
 		if ($request->pagu != $anggaran->pagu) {
 			$selisih = $request->pagu - $anggaran->pagu;
-			$sisaBaru = $anggaran->sisa_anggaran + $selisih;
+			$sisaAnggaranBaru = $anggaran->sisa_anggaran + $selisih;
+			$alokasiBaru = $anggaran->alokasi_anggaran + $selisih;
 
-			$anggaran->sisa_anggaran = $sisaBaru;
+			$anggaran->sisa_anggaran = $sisaAnggaranBaru;
+			$anggaran->alokasi_anggaran = $alokasiBaru;
 		}
 
 		$anggaran->kode_anggaran = Str::upper($request->kode_anggaran);
 		$anggaran->nama_kegiatan = ucwords(strtolower($request->nama_kegiatan));
 		$anggaran->pagu = $request->pagu;
+		$anggaran->anggaran_diperbarui = now();
 		$updated = $anggaran->save();
 
 		return $updated
@@ -131,18 +135,17 @@ class AnggaranController extends Controller
 	public function alocateAnggaran(Request $request, $id)
 	{
 		$request->merge([
-			'sisa_anggaran' => preg_replace('/[^0-9]/', '', $request->sisa_anggaran),
+			'alokasi_anggaran' => preg_replace('/[^0-9]/', '', $request->alokasi_anggaran),
 		]);
 
 		$request->validate([
-			'sisa_anggaran' => 'required|numeric|min:1'
-		], [], [
-			'sisa_anggaran' => 'Alokasi'
+			'alokasi_anggaran' => 'required|numeric|min:1',
 		]);
 
 		$anggaran = Anggaran::findOrFail($id);
 
-		$anggaran->sisa_anggaran = $request->sisa_anggaran;
+		$anggaran->alokasi_anggaran = $request->alokasi_anggaran;
+		$anggaran->sisa_anggaran = $request->alokasi_anggaran;
 		$updatedAnggaran = $anggaran->save();
 
 		return $updatedAnggaran

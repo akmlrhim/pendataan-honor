@@ -9,7 +9,10 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>BPS Tapin - {{ $title }}</title>
 
-  <link rel="stylesheet" href="{{ asset('fonts/style.css') }}" type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
@@ -18,6 +21,12 @@
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
   @stack('css-libs')
+
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+  </style>
 </head>
 
 <body class="sidebar-mini layout-footer-fixed layout-fixed layout-navbar-fixed">

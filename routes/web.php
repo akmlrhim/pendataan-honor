@@ -60,6 +60,6 @@ Route::middleware('throttle:60,1')->group(function () {
 		Route::patch('profil-info', [ProfilController::class, 'info'])->name('profil.info');
 		Route::patch('profil-pwd', [ProfilController::class, 'password'])->name('profil.pwd');
 
-		Route::resource('tambahan', SettingsController::class);
+		Route::resource('tambahan', SettingsController::class)->except(['create', 'store']);
 	});
 });

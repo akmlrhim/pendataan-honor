@@ -11,14 +11,14 @@
             <div class="col-sm-12">
 
               <div class="form-group">
-                <label for="sisa_anggaran">Alokasikan sebesar</label>
+                <label for="alokasi_anggaran">Alokasikan sebesar</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
-                    class="form-control @error('sisa_anggaran') is-invalid @enderror" id="sisa_anggaran"
-                    placeholder="Masukkan nominal" name="sisa_anggaran"
-                    value="{{ old('sisa_anggaran', $anggaran->sisa_anggaran) }}" autocomplete="off">
+                    class="form-control @error('alokasi_anggaran') is-invalid @enderror" id="alokasi_anggaran"
+                    placeholder="Masukkan nominal" name="alokasi_anggaran"
+                    value="{{ old('alokasi_anggaran', $anggaran->alokasi_anggaran) }}" autocomplete="off">
                 </div>
-                @error('sisa_anggaran')
+                @error('alokasi_anggaran')
                   <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
                 @enderror
               </div>
@@ -45,7 +45,7 @@
 
 @section('scripts')
   <script>
-    const inputHonor = document.getElementById('sisa_anggaran');
+    const inputHonor = document.getElementById('alokasi_anggaran');
 
     document.addEventListener("DOMContentLoaded", function() {
       if (inputHonor) {

@@ -27,10 +27,7 @@
 
               <div class="form-group">
                 <label for="nama_kegiatan" class="text-sm">Nama kegiatan</label>
-                <input type="text"
-                  class="form-control form-control-sm @error('nama_kegiatan')
-									is-invalid
-								@enderror"
+                <input type="text" class="form-control form-control-sm @error('nama_kegiatan')	is-invalid	@enderror"
                   id="nama_kegiatan" name="nama_kegiatan" placeholder="Masukkan nama kegiatan" autocomplete="off"
                   value="{{ old('nama_kegiatan', $anggaran->nama_kegiatan) }}">
                 @error('nama_kegiatan')
@@ -42,11 +39,9 @@
                 <label for="pagu" class="text-sm" class="text-sm">Pagu</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
-                    class="form-control form-control-sm @error('pagu')
-										is-invalid
-									@enderror"
-                    id="pagu" placeholder="Masukkan nominal pagu" name="pagu"
-                    value="{{ old('pagu', $anggaran->pagu) }}" autocomplete="off">
+                    class="form-control form-control-sm @error('pagu') is-invalid	@enderror" id="pagu"
+                    placeholder="Masukkan nominal pagu" name="pagu" value="{{ old('pagu', $anggaran->pagu) }}"
+                    autocomplete="off">
                 </div>
                 @error('pagu')
                   <x-input-validation>{{ $message }}</x-input-validation>
@@ -65,7 +60,7 @@
     </div>
 
     <div class="text-center mt-3 text-sm">
-      <i class="text-muted italic text-sm">Diubah {{ $anggaran->updated_at->diffForHumans() }}</i>
+      <i class="text-muted italic text-sm">Diubah {{ $anggaran->anggaran_diperbarui->diffForHumans() ?? '-' }}</i>
     </div>
 
   @section('scripts')

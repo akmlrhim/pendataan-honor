@@ -137,7 +137,7 @@
       Pusat Statistik Kabupaten Tapin Jalan Haryono MT Rantau, yang bertanda tangan di bawah ini:</p>
     <table style="border: none">
       <tr style="border: none;">
-        <td style="border: none; width: 20%;">Warkani, SE</td>
+        <td style="border: none; width: 20%;">{{ $pjbPembuatKomit }}</td>
         <td style="border: none; width: 3%;">:</td>
         <td style="border: none; text-align:justify">Pejabat Pembuat Komitmen Badan Pusat Statistik Kabupaten Tapin,
           berkedudukan di Jl. Haryono MT Rantau, bertindak untuk dan atas nama Badan Pusat Statistik Kabupaten Tapin,
@@ -386,7 +386,7 @@
         </td>
         <td style="border:none; width:50%; text-align:center;">
           PIHAK PERTAMA,<br><br><br><br>
-          <span class="bold underline">Warkani, SE</span>
+          <span class="bold underline">{{ $pjbPembuatKomit }}</span>
         </td>
       </tr>
     </table>
@@ -471,7 +471,7 @@
         </td>
         <td style="border:none; width:50%; text-align:center;">
           PIHAK PERTAMA,<br><br><br><br>
-          <span class="bold underline">Warkani, SE</span>
+          <span class="bold underline">{{ $pjbPembuatKomit }}</span>
         </td>
       </tr>
     </table>
@@ -498,7 +498,7 @@
     </p>
     <table style="border: none;">
       <tr style="border: none;">
-        <td style="border: none; width: 20%;">Warkani, SE</td>
+        <td style="border: none; width: 20%;">{{ $pjbPembuatKomit }}</td>
         <td style="border: none; width: 5%;">:</td>
         <td style="border: none;text-align:justify;">Pejabat Pembuat Komitmen Badan Pusat Statistik BPS Kabupaten
           Tapin, alamat Jl. Haryono MT Rantau bertindak untuk dan atas nama Badan Pusat Statistik BPS Kabupaten Tapin
@@ -548,7 +548,7 @@
         </td>
         <td style="border:none; width:50%; text-align:center;">
           PIHAK PERTAMA,<br><br><br><br>
-          <span class="bold underline">Warkani, SE</span>
+          <span class="bold underline">{{ $pjbPembuatKomit }}</span>
         </td>
       </tr>
     </table>
@@ -558,7 +558,7 @@
     <p>Mengetahui,</p>
     <p>Kepala BPS Kabupaten Tapin</p>
     <div class="signature-space"></div>
-    <p class="bold underline">Rudy Nooryadi, S.Si. ME</p>
+    <p class="bold underline">{{ $kepalaBps }}</p>
   </div>
   {{-- end berita acara  --}}
 
@@ -645,7 +645,7 @@
         </td>
         <td style="border:none; width:50%; text-align:center;" class="bold">
           PIHAK PERTAMA,<br><br><br><br>
-          <span class="bold">Warkani, SE</span>
+          <span class="bold">{{ $pjbPembuatKomit }}</span>
         </td>
       </tr>
     </table>

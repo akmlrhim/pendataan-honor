@@ -144,7 +144,8 @@
                   <div class="form-group">
                     <label for="tanggal_bast" class="text-sm">Periode Kontrak</label>
                     <input type="month" class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                      id="periode" name="periode" value="{{ old('periode') }}" onclick="this.showPicker()" />
+                      id="periode" name="periode" value="{{ old('periode', now()->format('Y-m')) }}"
+                      onclick="this.showPicker()" />
                     @error('periode')
                       <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror

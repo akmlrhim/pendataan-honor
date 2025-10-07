@@ -12,7 +12,15 @@ class Anggaran extends Model
         'kode_anggaran',
         'nama_kegiatan',
         'pagu',
+        'anggaran_diperbarui',
         'sisa_anggaran',
+        'alokasi_anggaran'
+    ];
+
+    protected $casts = [
+        'anggaran_diperbarui' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function tugas()

@@ -3,11 +3,6 @@
 @section('content')
   <div class="row">
 
-    {{-- button  --}}
-    <div class="col-12">
-      <a href="{{ route('tambahan.create') }}" class="btn btn-sm btn-success mb-3">Tambah</a>
-    </div>
-
     {{-- flashdata --}}
     <x-alert />
 
