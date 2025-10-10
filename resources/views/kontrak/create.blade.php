@@ -142,7 +142,7 @@
 
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="tanggal_bast" class="text-sm">Periode Kontrak</label>
+                    <label for="tanggal_bast" class="text-sm text-danger">Periode Kontrak</label>
                     <input type="month" class="form-control form-control-sm @error('periode') is-invalid @enderror"
                       id="periode" name="periode" value="{{ old('periode', now()->format('Y-m')) }}"
                       onclick="this.showPicker()" />
@@ -306,7 +306,7 @@
                   <td>
                     <input type="text" name="tugas[{{ $i }}][harga_satuan_display]" autocomplete="off"
                       class="form-control form-control-sm currency-input @error('tugas.' . $i . '.harga_satuan') is-invalid @enderror"
-                      value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
+                      value="{{ isset($tugas['harga_satuan']) ? number_format((float) preg_replace('/[^\d.]/', '', $tugas['harga_satuan']), 0, ',', '.') : '' }}">
 
                     <input type="hidden" name="tugas[{{ $i }}][harga_satuan]" class="harga-satuan-hidden"
                       autocomplete="off" value="{{ $tugas['harga_satuan'] ?? '' }}">
@@ -315,6 +315,7 @@
                       <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
                   </td>
+
 
                   <td>
                     <button type="button" class="btn btn-danger btn-remove btn-sm">&times;</button>

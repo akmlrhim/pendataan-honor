@@ -306,11 +306,10 @@
                   </td>
 
                   <td>
-                    <!-- input tampilan -->
                     <input type="text"
                       class="form-control form-control-sm currency-input @error("tugas.$i.harga_satuan") is-invalid @enderror"
                       autocomplete="off"
-                      value="{{ isset($tugas['harga_satuan']) ? number_format($tugas['harga_satuan'], 0, ',', '.') : '' }}">
+                      value="{{ isset($tugas['harga_satuan']) ? number_format((float) preg_replace('/[^\d.]/', '', $tugas['harga_satuan']), 0, ',', '.') : '' }}">
 
                     <input type="hidden" name="tugas[{{ $i }}][harga_satuan]"
                       class="harga-satuan-hidden @error("tugas.$i.harga_satuan") is-invalid @enderror"
@@ -319,8 +318,8 @@
                     @error("tugas.$i.harga_satuan")
                       <x-input-validation>{{ $message }}</x-input-validation>
                     @enderror
-
                   </td>
+
                   <td>
                     <button type="button" class="btn btn-danger btn-sm btn-remove">&times;</button>
                   </td>

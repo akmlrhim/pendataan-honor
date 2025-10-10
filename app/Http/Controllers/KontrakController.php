@@ -233,8 +233,6 @@ class KontrakController extends Controller
 
         $existingTugasIds = $kontrak->tugas()->pluck('id')->toArray();
         $requestTugasIds  = [];
-        $totalHonor = 0;
-        $batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
 
         /**
          * =============================
@@ -251,6 +249,8 @@ class KontrakController extends Controller
         }
 
         // cek request tugas
+        $totalHonor = 0;
+        $batasHonor = (int) Settings::where('key', 'batas_honor')->value('value');
         foreach ($request->tugas as $i => $t) {
 
             if ($t['jumlah_dokumen'] > $t['jumlah_target_dokumen']) {
@@ -275,10 +275,13 @@ class KontrakController extends Controller
 
             // kurangi simulasi
             $anggaranMap[$t['anggaran_id']] -= $newTotal;
+
+            // tambahkan total honor keseluruhan
+            $totalHonor += $newTotal;
         }
 
         // validasi total honor tidak boleh melebihi batas honor yg tlh di tetapkan 
-        if ($newTotal > $batasHonor) {
+        if ($totalHonor > $batasHonor) {
             return redirect()->back()->withInput()->with('error', "Total honor melebihi Rp " . number_format($batasHonor, 0, ',', '.'));
         }
 
@@ -331,8 +334,6 @@ class KontrakController extends Controller
                     $anggaran->decrement('sisa_anggaran', $newTotal);
                     $requestTugasIds[] = $newTugas->id;
                 }
-
-                $totalHonor += $newTotal;
             }
 
             // hapus tugas yang tidak ada di request
@@ -345,6 +346,8 @@ class KontrakController extends Controller
                 $tugas->delete();
             }
 
+            $totalHonorBaru = $kontrak->tugas()->sum('harga_total_tugas');
+
             // update kontrak utama
             $kontrak->update([
                 'mitra_id'        => $request->mitra_id,
@@ -355,7 +358,7 @@ class KontrakController extends Controller
                 'tanggal_berakhir' => $request->tanggal_berakhir,
                 'periode' => $request->periode . '-01',
                 'keterangan'      => $request->keterangan,
-                'total_honor'     => $totalHonor,
+                'total_honor'     => $totalHonorBaru,
             ]);
         });
 

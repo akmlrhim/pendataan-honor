@@ -95,7 +95,8 @@
             <thead class="bg-success">
               <tr>
                 <th>#</th>
-                <th>Mitra - NMS</th>
+                <th>NMS</th>
+                <th>Nama Mitra</th>
                 <th>Total Honor Mitra</th>
                 <th>Aksi</th>
               </tr>
@@ -104,7 +105,8 @@
               @forelse ($kontrak as $index => $k)
                 <tr>
                   <td>{{ $index + $kontrak->firstItem() }}</td>
-                  <td>{{ $k->mitra->nama_lengkap }} - {{ $k->mitra->nms }}</td>
+                  <td>{{ $k->mitra->nms }}</td>
+                  <td>{{ $k->mitra->nama_lengkap }}</td>
                   <td>Rp {{ number_format($k->total_honor, 0, ',', '.') }}</td>
                   <td>
                     @if (Auth::user()->role == 'umum')
