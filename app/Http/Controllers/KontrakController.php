@@ -390,7 +390,7 @@ class KontrakController extends Controller
   public function fileKontrak($id)
   {
     $kepalaBps = Settings::where('key', 'kepala_bps_tapin')->value('value');
-    $pjbPembuatKomit = Settings::where('key', 'pejebat_pembuat_komitmen')->value('value');
+    $pjbPembuatKomit = Settings::where('key', 'pejabat_pembuat_komitmen')->value('value');
     $kontrak = Kontrak::with(['mitra', 'tugas.anggaran', 'tugas'])->findOrFail($id);
     $pdf = Pdf::loadView('kontrak.file_kontrak', compact('kontrak', 'kepalaBps', 'pjbPembuatKomit'))->setPaper('a4', 'portrait');
 

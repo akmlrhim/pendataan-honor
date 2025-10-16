@@ -28,10 +28,7 @@
 
 
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column font-weight-bold" data-widget="treeview" role="menu"
-        data-accordion="false">
-        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-header text-muted">Utama</li>
 
@@ -89,7 +86,7 @@
           </li>
         @endif
 
-        @if (!Auth::user()->role == 'admin')
+        @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
           <li class="nav-item">
             <a href="{{ route('kontrak.index') }}"
               class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">

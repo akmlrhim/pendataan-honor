@@ -9,10 +9,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>BPS Tapin - Login</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
   <link rel="shortcut icon" href="{{ asset('img/logo_bps.ico') }}" type="image/x-icon">
@@ -21,7 +19,7 @@
 
   <style>
     body {
-      font-family: "Plus Jakarta Sans", sans-serif;
+      font-family: "Inter", sans-serif;
     }
   </style>
 </head>
