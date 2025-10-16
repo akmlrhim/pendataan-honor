@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h2 class="m-0 font-weight-bold text-capitalize">{{ $title }}</h2>
+        <h3 class="m-0 font-weight-bold text-capitalize">{{ $title }}</h3>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">

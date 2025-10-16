@@ -7,11 +7,19 @@
 
   <title>@yield('title')</title>
 
-  <link rel="stylesheet" href="{{ asset('fonts/style.css') }}" type="text/css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
 </head>
 
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">

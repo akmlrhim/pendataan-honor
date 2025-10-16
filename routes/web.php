@@ -8,6 +8,7 @@ use App\Http\Controllers\MitraController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
+use App\Models\Visit;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('throttle:60,1')->group(function () {
@@ -54,7 +55,7 @@ Route::middleware('throttle:60,1')->group(function () {
 		Route::post('kontrak/laporan', [KontrakController::class, 'report'])->name('kontrak.laporan')->middleware('role:ketua_tim,umum');
 		Route::post('kontrak/export', [KontrakController::class, 'export'])->name('kontrak.export')->middleware('role:ketua_tim,umum');
 
-		Route::resource('user', UserController::class)->except('show')->middleware('role:ketua_tim,umum');
+		Route::resource('user', UserController::class)->except('show')->middleware('role:ketua_tim,umum,admin');
 
 		Route::get('profil', [ProfilController::class, 'index'])->name('profil.index');
 		Route::patch('profil-info', [ProfilController::class, 'info'])->name('profil.info');
@@ -62,4 +63,11 @@ Route::middleware('throttle:60,1')->group(function () {
 
 		Route::resource('tambahan', SettingsController::class)->except(['create', 'store']);
 	});
+
+	Route::get('pengunjung-web', function () {
+		$title = 'Pengunjung Web';
+		$visitor = Visit::with('users')->paginate(10);
+
+		return view('visit', compact('visitor', 'title'));
+	})->name('visit')->middleware('role:admin');
 });

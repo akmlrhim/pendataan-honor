@@ -11,8 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
     rel="stylesheet">
 
   <link rel="icon" href="{{ asset('img/logo_bps.png') }}" type="image/png">
@@ -22,7 +21,7 @@
 
   <style>
     body {
-      font-family: "Inter", sans-serif;
+      font-family: "Plus Jakarta Sans", sans-serif;
     }
   </style>
 </head>
@@ -120,7 +119,7 @@
           </div>
         </div>
         <div class="text-center mt-3">
-          <p class="text-muted text-sm">&copy; {{ date('Y') }} BPS Tapin</p>
+          <p class="text-muted text-sm">&copy; {{ date('Y') }} SIKOMBAT</p>
         </div>
       </div>
     </div>

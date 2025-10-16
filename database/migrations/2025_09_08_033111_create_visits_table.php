@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-            $table->ipAddress('ip');
+            $table->foreignId('user_id')->index()->nullable()->constrained()->onDelete('cascade');
+            $table->ipAddress('ip')->index();
+            $table->string('browser', 170)->nullable();
             $table->timestamps();
-
-            $table->index(['ip', 'created_at']);
-            $table->index(['user_id', 'created_at']);
         });
     }
 

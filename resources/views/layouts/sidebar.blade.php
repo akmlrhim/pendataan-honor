@@ -3,7 +3,7 @@
   <a href="{{ route('home') }}" class="brand-link">
     <img src="{{ asset('img/logo_bps.webp') }}" loading="lazy" title="Logo" alt="Logo"
       class="brand-image img-circle" />
-    <span class="brand-text font-weight-bold text-md">BPS Tapin</span>
+    <span class="brand-text font-weight-bold text-md">SIKOMBAT</span>
   </a>
 
   <!-- Sidebar -->
@@ -20,6 +20,7 @@
               'ketua_tim' => 'Ketua Tim',
               'umum' => 'Umum',
               'user' => 'User',
+              'admin' => 'Admin',
           } }}
         </small>
       </div>
@@ -27,7 +28,8 @@
 
 
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column font-weight-bold" data-widget="treeview" role="menu"
+        data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
@@ -87,25 +89,28 @@
           </li>
         @endif
 
-        <li class="nav-item">
-          <a href="{{ route('kontrak.index') }}"
-            class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-signature-icon lucide-signature nav-icon">
-              <path
-                d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" />
-              <path d="M3 21h18" />
-            </svg>
-            <p>
-              Kontrak
-            </p>
-          </a>
-        </li>
+        @if (!Auth::user()->role == 'admin')
+          <li class="nav-item">
+            <a href="{{ route('kontrak.index') }}"
+              class="nav-link {{ request()->routeIs('kontrak.*') ? 'active' : '' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-signature-icon lucide-signature nav-icon">
+                <path
+                  d="m21 17-2.156-1.868A.5.5 0 0 0 18 15.5v.5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1c0-2.545-3.991-3.97-8.5-4a1 1 0 0 0 0 5c4.153 0 4.745-11.295 5.708-13.5a2.5 2.5 0 1 1 3.31 3.284" />
+                <path d="M3 21h18" />
+              </svg>
+              <p>
+                Kontrak
+              </p>
+            </a>
+          </li>
+        @endif
 
-        <li class="nav-header text-muted">User</li>
 
-        @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum')
+        <li class="nav-header text-muted">Tambahan</li>
+
+        @if (Auth::user()->role == 'ketua_tim' || Auth::user()->role == 'umum' || Auth::user()->role == 'admin')
           <li class="nav-item">
             <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -160,10 +165,26 @@
               <line x1="8" x2="16" y1="12" y2="12" />
             </svg>
             <p>
-              Tambahan
+              Lainnya
             </p>
           </a>
         </li>
+
+        @if (Auth::user()->role == 'admin')
+          <li class="nav-item">
+            <a href="{{ route('visit') }}" class="nav-link {{ request()->routeIs('visit.*') ? 'active' : '' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-activity-icon lucide-activity nav-icon">
+                <path
+                  d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
+              </svg>
+              <p>
+                Pengunjung Web
+              </p>
+            </a>
+          </li>
+        @endif
 
         <li class="nav-item">
           <a href="#" class="nav-link"

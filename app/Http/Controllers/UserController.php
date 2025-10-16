@@ -16,7 +16,7 @@ class UserController extends Controller
     {
         $title = 'User';
 
-        $query = User::where('id', '!=', Auth::id());
+        $query = User::where('id', '!=', Auth::id())->where('role', '!=', 'admin');
 
         if ($request->filled('role')) {
             $query->where('role', $request->role);

@@ -77,7 +77,7 @@
         <div class="card shadow-sm border-0 rounded-lg">
           <div class="card-body">
             <div class="form-group align-items-center mb-0">
-              <label for="periode" class="me-2 text-sm text-primary mb-0">Periode:</label>
+              <label for="periode" class="me-2 text-sm text-primary mb-0">Filter berdasarkan periode</label>
               <input type="month" name="periode" id="periode" class="form-control form-control-sm"
                 onchange="this.form.submit()" onclick="this.showPicker()" value="{{ request('periode') }}">
             </div>
@@ -134,7 +134,7 @@
                 </tr>
               @empty
                 <tr>
-                  <td colspan="3" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
+                  <td colspan="5" class="text-center text-muted text-sm">Tidak ada data dalam tabel</td>
                 </tr>
               @endforelse
             </tbody>

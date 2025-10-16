@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Visit extends Model
 {
-    protected $with = ['users'];
     protected $table = 'visits';
-    protected $fillable = ['ip', 'user_id'];
+    protected $fillable = ['ip', 'user_id', 'browser'];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
