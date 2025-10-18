@@ -2,11 +2,6 @@
 
 @push('css-libs')
   <style>
-    #sales-chart {
-      min-height: 300px;
-      height: 100%;
-    }
-
     #visitsChart {
       width: 100% !important;
       height: 100% !important;
@@ -63,7 +58,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex">
-            <p class="d-flex flex-column">
+            <p class="d-flex flex-column mb-0">
               <span class="text-lg font-weight-bold">{{ $totalVisits }}</span>
               <span class="text-sm">Pengunjung Web</span>
             </p>
@@ -101,7 +96,9 @@
           borderColor: 'blue',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           fill: true,
-          tension: 0.3
+          tension: 0.3,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgba(54, 162, 235, 1)',
         }]
       },
       options: {
@@ -114,11 +111,20 @@
         },
         scales: {
           x: {
-            display: true
+            title: {
+              display: true,
+              text: 'Tanggal'
+            }
           },
           y: {
-            display: true,
-            beginAtZero: true
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Jumlah Kunjungan'
+            },
+            ticks: {
+              precision: 0
+            }
           }
         }
       }

@@ -20,25 +20,22 @@ class HomeController extends Controller
 
         $range = request('range', 7);
 
-        $visits = Visit::where('created_at', '>=', now()->subDays($range))
-            ->get();
+        $visits = Visit::where('created_at', '>=', now()->subDays($range))->get();
 
-        // Total kunjungan
         $totalVisits = $visits->count();
 
-        // Pengunjung unik
-        $uniqueVisitors = $visits->map(function ($v) {
-            return $v->user_id ?? $v->ip;
-        })->unique()->count();
+        $dates = collect();
+        for ($i = $range - 1; $i >= 0; $i--) {
+            $dates->push(now()->subDays($i)->format('Y-m-d'));
+        }
 
-        // Statistik per hari
-        $visitsPerDay = $visits->groupBy(fn($v) => $v->created_at->format('Y-m-d'))
-            ->map(fn($group) => $group->map(function ($v) {
-                return $v->user_id ?? $v->ip;
-            })->unique()->count())
-            ->map(function ($count, $date) {
-                return ['date' => $date, 'count' => $count];
-            })->values();
+        $visitsPerDay = $dates->map(function ($date) use ($visits) {
+            $count = $visits->filter(fn($v) => $v->created_at->format('Y-m-d') === $date)->count();
+            return [
+                'date' => $date,
+                'count' => $count,
+            ];
+        });
 
         return view('home', compact(
             'title',
@@ -47,7 +44,6 @@ class HomeController extends Controller
             'user',
             'kontrak',
             'totalVisits',
-            'uniqueVisitors',
             'visitsPerDay',
             'range'
         ));

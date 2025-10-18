@@ -60,8 +60,12 @@ class KontrakController extends Controller
     $mitra = Mitra::select('id', 'nama_lengkap', 'nms')->get();
     $anggaran = Anggaran::select('id', 'kode_anggaran', 'nama_kegiatan', 'sisa_anggaran')->get();
 
-    if ($mitra->isEmpty() && $anggaran->isEmpty()) {
-      return redirect()->back()->with('error', 'Data anggaran atau mitra masih kosong silahkan isi terlebih dahulu.');
+    if ($mitra->isEmpty()) {
+      return redirect()->back()->with('error', 'Data mitra masih kosong silahkan isi terlebih dahulu.');
+    }
+
+    if ($anggaran->isEmpty()) {
+      return redirect()->back()->with('error', 'Data anggaran masih kosong silahkan isi terlebih dahulu.');
     }
 
     return view('kontrak.create', compact('title', 'mitra', 'anggaran'));

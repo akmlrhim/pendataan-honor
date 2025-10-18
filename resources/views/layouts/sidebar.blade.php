@@ -27,7 +27,7 @@
     </div>
 
 
-    <nav class="mt-2">
+    <nav class="mt-2 text-sm">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         <li class="nav-header text-muted">Utama</li>

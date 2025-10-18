@@ -17,7 +17,7 @@
 
     .select2-selection__rendered {
       color: #111827;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1rem;
     }
 
@@ -39,34 +39,45 @@
 
     .col-anggaran {
       width: 15%;
+      white-space: nowrap;
     }
 
     .col-deskripsi {
-      width: 35%;
+      width: 40%;
+      white-space: nowrap;
     }
 
     .col-target {
       width: 12%;
       text-align: right;
+      white-space: nowrap;
     }
 
     .col-dicapai {
       width: 12%;
       text-align: right;
+      white-space: nowrap;
     }
 
     .col-satuan {
       width: 12%;
+      white-space: nowrap;
     }
 
     .col-harga {
       width: 17%;
       text-align: right;
+      white-space: nowrap;
     }
 
     .col-aksi {
       width: 5%;
       text-align: center;
+      white-space: nowrap;
+    }
+
+    .text-xs {
+      font-size: 0.60rem !important;
     }
   </style>
 @endpush
@@ -83,7 +94,6 @@
         <form method="POST" action="{{ route('kontrak.store') }}">
           @csrf
           <div class="row">
-            <!-- Kiri -->
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="mitra_id" class="text-sm">Mitra</label>
@@ -154,7 +164,6 @@
               </div>
             </div>
 
-            <!-- Kanan -->
             <div class="col-sm-6">
 
               <div class="form-group">
@@ -234,16 +243,16 @@
 
           <!-- Tugas -->
           <h5 class="text-primary">Tugas / Kegiatan</h5>
-          <table class="table table-bordered table-responsive" id="tugas-table">
-            <thead class="text-sm bg-info">
+          <table class="table table-bordered table-responsive-md" id="tugas-table">
+            <thead class="text-sm bg-info text-nowrap">
               <tr>
                 <th class="col-anggaran">Anggaran</th>
-                <th class="col-deskripsi">Deskripsi tugas</th>
-                <th class="col-target">Jlh. Target</th>
-                <th class="col-dicapai">Jlh. Dicapai</th>
+                <th class="col-deskripsi">Deskripsi Tugas</th>
+                <th class="col-target">Jlh.Target</th>
+                <th class="col-dicapai">Jlh.Dicapai</th>
                 <th class="col-satuan">Satuan</th>
                 <th class="col-harga">Harga Satuan</th>
-                <th class="col-aksi">Aksi</th>
+                <th class="col-aksi"></th>
               </tr>
             </thead>
             <tbody>

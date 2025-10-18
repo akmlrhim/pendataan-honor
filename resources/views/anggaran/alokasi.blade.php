@@ -11,11 +11,11 @@
             <div class="col-sm-12">
 
               <div class="form-group">
-                <label for="alokasi_anggaran">Alokasikan sebesar</label>
+                <label for="alokasi_anggaran" class="text-sm">Alokasikan sebesar</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
-                    class="form-control @error('alokasi_anggaran') is-invalid @enderror" id="alokasi_anggaran"
-                    placeholder="Masukkan nominal" name="alokasi_anggaran"
+                    class="form-control form-control-sm @error('alokasi_anggaran') is-invalid @enderror"
+                    id="alokasi_anggaran" placeholder="Masukkan nominal" name="alokasi_anggaran"
                     value="{{ old('alokasi_anggaran', $anggaran->alokasi_anggaran) }}" autocomplete="off">
                 </div>
                 @error('alokasi_anggaran')
