@@ -93,11 +93,12 @@ class AnggaranController extends Controller
 
 		if ($request->pagu != $anggaran->pagu) {
 			$selisih = $request->pagu - $anggaran->pagu;
-			$sisaAnggaranBaru = $anggaran->sisa_anggaran + $selisih;
-			$alokasiBaru = $anggaran->alokasi_anggaran + $selisih;
+			$anggaran->sisa_anggaran += $selisih;
+			$anggaran->alokasi_anggaran += $selisih;
+		}
 
-			$anggaran->sisa_anggaran = $sisaAnggaranBaru;
-			$anggaran->alokasi_anggaran = $alokasiBaru;
+		if ($request->pagu < $anggaran->pagu) {
+			return redirect()->back()->withErrors(['pagu' => 'Pagu tidak boleh kurang dari pagu sebelumnya.']);
 		}
 
 		$anggaran->kode_anggaran = Str::upper($request->kode_anggaran);
@@ -144,12 +145,42 @@ class AnggaranController extends Controller
 
 		$anggaran = Anggaran::findOrFail($id);
 
+		if ($request->alokasi_anggaran > $anggaran->pagu) {
+			return redirect()->back()->withErrors(['alokasi_anggaran' => 'Alokasi anggaran tidak boleh melebihi pagu.']);
+		}
+
 		$anggaran->alokasi_anggaran = $request->alokasi_anggaran;
 		$anggaran->sisa_anggaran = $request->alokasi_anggaran;
 		$updatedAnggaran = $anggaran->save();
 
 		return $updatedAnggaran
 			? redirect()->route('anggaran.index')->with('success', 'Anggaran sudah dialokasikan')
+			:	back()->with('error', 'Error.');
+	}
+
+	public function advanceEdit(Request $request, $id)
+	{
+		$anggaran = Anggaran::findOrFail($id);
+
+		$request->merge([
+			'alokasi_anggaran' => preg_replace('/[^0-9]/', '', $request->alokasi_anggaran),
+			'sisa_anggaran' => preg_replace('/[^0-9]/', '', $request->sisa_anggaran),
+			'pagu' => preg_replace('/[^0-9]/', '', $request->pagu),
+		]);
+
+		$request->validate([
+			'alokasi_anggaran' => 'required|numeric|min:1',
+			'sisa_anggaran' => 'required|numeric|min:1',
+			'pagu' => 'required|numeric|min:1',
+		]);
+
+		$anggaran->alokasi_anggaran = $request->alokasi_anggaran;
+		$anggaran->sisa_anggaran = $request->sisa_anggaran;
+		$anggaran->pagu = $request->pagu;
+		$success = $anggaran->save();
+
+		return $success
+			? redirect()->route('anggaran.index')->with('success', 'Anggaran berhasil diubah.')
 			:	back()->with('error', 'Error.');
 	}
 }

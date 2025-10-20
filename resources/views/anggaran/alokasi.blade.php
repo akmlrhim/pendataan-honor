@@ -19,7 +19,7 @@
                     value="{{ old('alokasi_anggaran', $anggaran->alokasi_anggaran) }}" autocomplete="off">
                 </div>
                 @error('alokasi_anggaran')
-                  <small class="text-danger text-sm">{{ ucfirst($message) }}</small>
+                  <x-input-validation>{{ $message }}</x-input-validation>
                 @enderror
               </div>
 

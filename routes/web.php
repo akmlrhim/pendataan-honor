@@ -40,6 +40,8 @@ Route::middleware('throttle:60,1')->group(function () {
 
 		Route::get('anggaran/alokasi/{id}', [AnggaranController::class, 'editAnggaran'])->name('alocate.anggaran');
 		Route::put('anggaran/alokasi/{id}', [AnggaranController::class, 'alocateAnggaran'])->name('store.alocate.anggaran');
+		Route::put('anggaran/advance/{id}', [AnggaranController::class, 'advanceEdit'])->name('advance.edit.anggaran');
+
 
 		Route::middleware('role:ketua_tim,umum')->group(function () {
 			Route::get('kontrak/create', [KontrakController::class, 'create'])->name('kontrak.create');

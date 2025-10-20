@@ -2,8 +2,7 @@
 
 @section('content')
   <div class="col-md-12">
-    <div class="card card-primary">
-
+    <div class="card">
       <!-- form start -->
       <div class="card-body">
         <form method="POST" action="{{ route('anggaran.store') }}">
@@ -35,7 +34,7 @@
                 <label for="pagu" class="text-sm">Pagu</label>
                 <div class="input-group">
                   <input type="text" inputmode="numeric"
-                    class="form-control form-control-sm @error('pagu') is-invalid	@enderror" id="pagu"
+                    class="form-control form-control-sm @error('pagu') is-invalid	@enderror" id="pagu-adv"
                     placeholder="Masukkan nominal pagu" name="pagu" value="{{ old('pagu') }}" autocomplete="off" />
                 </div>
                 @error('pagu')
@@ -52,36 +51,44 @@
           <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
         </form>
       </div>
-
     </div>
+  </div>
+@endsection
 
-  @section('scripts')
-    <script>
-      const inputHonor = document.getElementById('pagu');
 
-      inputHonor.addEventListener('input', function(e) {
-        let value = this.value.replace(/[^0-9]/g, ''); // hanya angka
-        if (value) {
-          // Format ke Rupiah
-          this.value = formatRupiah(value, 'Rp ');
-        } else {
-          this.value = '';
+@section('scripts')
+  <script>
+    const rupiahFields = ['pagu'];
+
+    document.addEventListener("DOMContentLoaded", function() {
+      rupiahFields.forEach(function(id) {
+        const input = document.getElementById(id);
+        if (input) {
+          let value = input.value.replace(/[^0-9]/g, '');
+          if (value) {
+            input.value = formatRupiah(value, 'Rp ');
+          }
+
+          input.addEventListener('input', function(e) {
+            let val = this.value.replace(/[^0-9]/g, '');
+            this.value = val ? formatRupiah(val, 'Rp ') : '';
+          });
         }
       });
+    });
 
-      function formatRupiah(angka, prefix) {
-        let number_string = angka.toString(),
-          sisa = number_string.length % 3,
-          rupiah = number_string.substr(0, sisa),
-          ribuan = number_string.substr(sisa).match(/\d{3}/g);
+    function formatRupiah(angka, prefix) {
+      let number_string = angka.toString(),
+        sisa = number_string.length % 3,
+        rupiah = number_string.substr(0, sisa),
+        ribuan = number_string.substr(sisa).match(/\d{3}/g);
 
-        if (ribuan) {
-          let separator = sisa ? '.' : '';
-          rupiah += separator + ribuan.join('.');
-        }
-
-        return prefix + rupiah;
+      if (ribuan) {
+        let separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
       }
-    </script>
-  @endsection
+
+      return prefix + rupiah;
+    }
+  </script>
 @endsection
