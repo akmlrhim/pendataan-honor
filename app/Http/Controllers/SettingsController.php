@@ -16,27 +16,27 @@ class SettingsController extends Controller
         return view('tambahan.index', compact('title', 'sett'));
     }
 
-    public function create()
-    {
-        $title = 'Tambahan';
-        return view('tambahan.create', compact('title'));
-    }
+    // public function create()
+    // {
+    //     $title = 'Tambahan';
+    //     return view('tambahan.create', compact('title'));
+    // }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'key' => 'required|unique:settings,key',
-            'value' => 'required'
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'key' => 'required|unique:settings,key',
+    //         'value' => 'required'
+    //     ]);
 
-        Settings::create([
-            'uuid' => Str::uuid(),
-            'key' => Str::snake($request->key),
-            'value' => $request->value
-        ]);
+    //     Settings::create([
+    //         'uuid' => Str::uuid(),
+    //         'key' => Str::snake($request->key),
+    //         'value' => $request->value
+    //     ]);
 
-        return redirect()->route('tambahan.index')->with('success', 'Berhasil disimpan.');
-    }
+    //     return redirect()->route('tambahan.index')->with('success', 'Berhasil disimpan.');
+    // }
 
     public function edit($uuid)
     {
@@ -50,22 +50,12 @@ class SettingsController extends Controller
         $sett = Settings::where('uuid', $uuid)->first();
 
         $req->validate([
-            'key' => 'required|unique:settings,key,' . $sett->uuid,
             'value' => 'required'
         ]);
 
-        $sett->key = $req->key;
         $sett->value = $req->value;
         $sett->save();
 
         return redirect()->route('tambahan.index')->with('success', 'Berhasil diperbarui.');
-    }
-
-    public function destroy($uuid)
-    {
-        $sett = Settings::where('uuid', $uuid)->first();
-        $sett->delete();
-
-        return redirect()->route('tambahan.index')->with('success', 'Berhasil dihapus.');
     }
 }

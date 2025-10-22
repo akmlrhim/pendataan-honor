@@ -11,5 +11,12 @@
         </svg>
       </a>
     </li>
+
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="{{ asset('buku_panduan/Buku Panduan SIKOMBAT_V1.pdf') }}" target="_blank" class="nav-link text-sm">
+        Buku Panduan
+      </a>
+    </li>
+    
   </ul>
 </nav>

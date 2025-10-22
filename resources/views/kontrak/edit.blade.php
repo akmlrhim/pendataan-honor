@@ -68,6 +68,10 @@
       width: 5%;
       text-align: center;
     }
+
+    .text-xs {
+      font-size: 0.60rem !important;
+    }
   </style>
 @endpush
 

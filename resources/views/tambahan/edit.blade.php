@@ -10,18 +10,6 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="key" class="text-sm">Key</label>
-                <div class="input-group">
-                  <input type="text" class="form-control form-control-sm @error('key') is-invalid @enderror"
-                    id="key" placeholder="Masukkan key" name="key" value="{{ old('key', $sett->key) }}"
-                    autocomplete="off" />
-                </div>
-                @error('key')
-                  <x-input-validation>{{ $message }}</x-input-validation>
-                @enderror
-              </div>
-
-              <div class="form-group">
                 <label for="value" class="text-sm">Value
                   <span class="text-xs text-danger">
                     (Perhatikan baik-baik jika value yang dimasukkan adalah nominal uang!.)

@@ -1,11 +1,14 @@
 @extends('layouts.template')
 
 @section('content')
+  {{-- flashdata --}}
+  <x-alert />
+
   <div class="row">
     <div class="col-12">
       {{-- box informasi  --}}
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading">Catatan!</h4>
+        <h4 class="alert-heading">Catatan</h4>
         <p class="text-sm mb-0">
           Jika ingin mengubah batas honor, perhatikan penulisan nominal.
           <br>Gunakan angka tanpa titik pemisah dan tanpa awalan <strong>Rp</strong>.
@@ -31,7 +34,6 @@
                   <td>{{ $row->value }}</td>
                   <td>
                     <a href="{{ route('tambahan.edit', $row->uuid) }}" class="btn btn-xs btn-primary">Edit</a>
-                    <x-confirm-delete action="{{ route('tambahan.destroy', $row->uuid) }}" />
                   </td>
                 </tr>
               @empty
